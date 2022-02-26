@@ -14,7 +14,7 @@ public class Intake {
     private CANSparkMax intake = new CANSparkMax(12, MotorType.kBrushless);
     private CANSparkMax translate = new CANSparkMax(2, MotorType.kBrushless);
 
-    Solenoid intakeSolenoid = new Solenoid(1, PneumaticsModuleType.CTREPCM, 1);
+    // Solenoid intakeSolenoid = new Solenoid(1, PneumaticsModuleType.CTREPCM, 1);
 
 
     public void intakeMotor(){
@@ -24,6 +24,6 @@ public class Intake {
         translate.set(oi.translateSpeed());
     }
     public void intakeSolenoid(){
-        intakeSolenoid.set(oi.intakeSolenoid());
+        // intakeSolenoid.set(oi.intakeSolenoid());
     }
 }

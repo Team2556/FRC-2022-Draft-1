@@ -25,10 +25,12 @@ public class Drive {
     OI oi = new OI();
     Limelight limeLight = new Limelight();
 
-    private CANSparkMax rFMotor = new CANSparkMax(3, MotorType.kBrushless);
-    private CANSparkMax rRMotor = new CANSparkMax(1, MotorType.kBrushless);
-    private CANSparkMax lFMotor = new CANSparkMax(12, MotorType.kBrushless);
+    private CANSparkMax rFMotor = new CANSparkMax(4, MotorType.kBrushless);
+    private CANSparkMax rRMotor = new CANSparkMax(8, MotorType.kBrushless);
+    private CANSparkMax lFMotor = new CANSparkMax(3, MotorType.kBrushless);
     private CANSparkMax lRMotor = new CANSparkMax(1, MotorType.kBrushless);
+    //Checked these in rev
+
 
     DigitalInput rFLimit = new DigitalInput(0);
     DigitalInput rRLimit = new DigitalInput(1);
@@ -40,19 +42,19 @@ public class Drive {
 
     
 
-    PneumaticsControlModule PCM1 = new PneumaticsControlModule(0);
-    PneumaticsControlModule PCM2 = new PneumaticsControlModule(1);
+    // PneumaticsControlModule PCM1 = new PneumaticsControlModule(0);
+    // PneumaticsControlModule PCM2 = new PneumaticsControlModule(1);
  
-    Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
-    private DoubleSolenoid drivePistons = new DoubleSolenoid(0, PneumaticsModuleType.CTREPCM, 0, 1);
+    // Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
+    // private DoubleSolenoid drivePistons = new DoubleSolenoid(0, PneumaticsModuleType.CTREPCM, 0, 1);
 
     // private Solenoid rWSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, 3);
     // private Solenoid lWSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, 4);
 
     //drive objects
     //MecanumDrive driveMecanum = new MecanumDrive(lFMotor, lRMotor, rFMotor, rRMotor);
-    MotorControllerGroup leftSide = new MotorControllerGroup(lFMotor, lRMotor);
-    MotorControllerGroup rightSide = new MotorControllerGroup(rFMotor, rRMotor); 
+    MotorControllerGroup leftSide = new MotorControllerGroup(lRMotor, lFMotor);
+    MotorControllerGroup rightSide = new MotorControllerGroup(rRMotor, rFMotor); 
     DifferentialDrive differentialDrive = new DifferentialDrive(leftSide, rightSide);
 
 
@@ -72,13 +74,16 @@ public class Drive {
 
 
 
-
+    public void testDrivebase(){
+        differentialDrive.tankDrive(0.2, 0.2);
+    }
 
 
 
     public void drivebaseInit(){
         rFMotor.setInverted(true);
         rRMotor.setInverted(true);
+        SmartDashboard.putString("Right motors reversed", "Yes");
     }
 
     // public void ethanisDumb(){
@@ -100,23 +105,23 @@ public class Drive {
         // double mRotate = oi.mRotate();
 
         double tLeft = oi.tLeft();
-        double tRight = oi.tRight();
+        double tRight = -oi.tRight();
         //Values taken from the OI to be fed into this program. 
 
-        if (drivePistons.get() == Value.kForward){ //Puts piston data to the smart dashboard
-            SmartDashboard.putBoolean("Drive Pistons Down", true);
-        }
-        else if (drivePistons.get() == Value.kReverse){
-            SmartDashboard.putBoolean("Drive Pistons Down", false);
-        }
+        // if (drivePistons.get() == Value.kForward){ //Puts piston data to the smart dashboard
+        //     SmartDashboard.putBoolean("Drive Pistons Down", true);
+        // }
+        // else if (drivePistons.get() == Value.kReverse){
+        //     SmartDashboard.putBoolean("Drive Pistons Down", false);
+        // }
 
         
-        if (dropped){ //Takes in boolean and switches solenoid output based on it. 
-            drivePistons.set(Value.kForward);
-            }
-        else {
-            drivePistons.set(Value.kReverse);
-            }
+        // if (dropped){ //Takes in boolean and switches solenoid output based on it. 
+        //     drivePistons.set(Value.kForward);
+        //     }
+        // else {
+        //     drivePistons.set(Value.kReverse);
+        //     }
         
 
         SmartDashboard.putBoolean("dropped", dropped); 
@@ -124,6 +129,7 @@ public class Drive {
     
         if (dropped){ //Takes in boolean and switches drive output based on it. 
             differentialDrive.tankDrive(tLeft, tRight);
+            SmartDashboard.putString("Ethan is a fucking dumbass", "not mecanum and dropped");
         }
         else if (dropped == false && lFLimit.get() && lRLimit.get() && rFLimit.get() && rRLimit.get()){
             // If solenoids don't drop the motors and all the limits are switched 
