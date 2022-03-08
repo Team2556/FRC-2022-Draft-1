@@ -66,15 +66,16 @@ public class OI {
 
 
     double winchSpeed(){
-        if(Xbox1.getLeftTriggerAxis() == 1){
-            return -1;
-        }
-        else if(Xbox1.getRightTriggerAxis() == 1){
-            return 1;
-        }
-        else{
-            return 0;
-        }
+        // if(Xbox1.getAButton()){
+        //     return -0.2;
+        // }
+        // else if(Xbox1.getBButton()){
+        //     return 0.1;
+        // }
+        // else{
+        //     return 0;
+        // }
+        return 0;
     }
     boolean winchUp = false;
     boolean winchUp(){
@@ -101,29 +102,34 @@ public class OI {
    
     double intakeSpeed(){
         if(Xbox1.getLeftBumper()){
-            return -1;
+            return -0.1;
         }
         else if(Xbox1.getRightBumper()){
-            return 1;
+            return 0.1;
         }
         else{
             return 0;
         }
       }
     double translateSpeed(){
-        if(Xbox2.getLeftBumper()){
-            return -1;
-        }   
-        else if(Xbox2.getRightBumper()){
-            return 1;
-        }
-        else{
-            return 0;
-        }
+        // if(Xbox1.getLeftBumper()){
+        //     return -0.1;
+        // }   
+        // else if(Xbox1.getRightBumper()){
+        //     return 0.1;
+        // }
+        // else{
+        //     return 0;
+        // }
+        return 0;
     }
-
+    boolean intakeOut = true;
     boolean intakeSolenoid(){
-        return Xbox2.getAButton();
+        if(Xbox2.getAButtonReleased()){
+            intakeOut = !intakeOut;
+        }
+        return intakeOut;
+        // return Xbox1.getAButton();
     }
 
 
@@ -143,7 +149,18 @@ public class OI {
                return 0;
         }
       }
-    
+    double hoodSpeed(){
+        // if (Xbox1.getAButton()){
+        //     return 0.1;
+        // }
+        // else if (Xbox1.getBButton()){
+        //     return -0.1;
+        // }
+        // else{
+        //     return 0;
+        // }
+        return 0;
+    }
 
 
 
