@@ -83,7 +83,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     // drive.drivebaseInit();
-    //  climber.climbInit();
+    climber.climbInit();
   }
 
   /** This function is called periodically during operator control. */
@@ -95,7 +95,7 @@ public class Robot extends TimedRobot {
     // climber.winchPistons(); // temp x button
     // climber.clampPiston(); // temp a button
     // climber.winchMotor(); // temp b button y botton
-     climber.climbDraft2();
+    climber.climbDraft2();
   }
 
   /** This function is called once when the robot is disabled. */

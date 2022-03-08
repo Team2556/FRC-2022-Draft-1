@@ -70,16 +70,18 @@ The winch moves
             clampPiston.set(Value.kForward);
             break;
         case 4:
-            winchMotor.set(ControlMode.PercentOutput, winchspeedF);
+            winchMotor.set(ControlMode.PercentOutput, -winchspeedF);
             break;
         case 5: 
             yellowLeft.set(Value.kForward);
             yellowRight.set(Value.kForward);
+            winchMotor.set(ControlMode.PercentOutput, 0);
             break;
         case 6: 
-            winchMotor.set(ControlMode.PercentOutput,-winchspeedF);
+            winchMotor.set(ControlMode.PercentOutput,winchspeedF);
             break;
         case 7:
+            winchMotor.set(ControlMode.PercentOutput, 0);    
             yellowLeft.set(Value.kReverse);
             yellowRight.set(Value.kReverse);
             break;
@@ -87,16 +89,17 @@ The winch moves
             clampPiston.set(Value.kReverse);
             break;
         case 9:
-            winchMotor.set(ControlMode.PercentOutput, -winchspeedF);
+            winchMotor.set(ControlMode.PercentOutput, winchspeedF);
             break;
         //repeat 3-8
         case 10:
         clampPiston.set(Value.kForward);
         break;
     case 11:
-        winchMotor.set(ControlMode.PercentOutput, winchspeedF);
+        winchMotor.set(ControlMode.PercentOutput, -winchspeedF);
         break;
     case 12: 
+        winchMotor.set(ControlMode.PercentOutput, 0);
         yellowLeft.set(Value.kForward);
         yellowRight.set(Value.kForward);
         break;
@@ -104,6 +107,7 @@ The winch moves
         winchMotor.set(ControlMode.PercentOutput,-winchspeedF);
         break;
     case 14:
+        winchMotor.set(ControlMode.PercentOutput, 0);
         yellowLeft.set(Value.kReverse);
         yellowRight.set(Value.kReverse);
         break;
