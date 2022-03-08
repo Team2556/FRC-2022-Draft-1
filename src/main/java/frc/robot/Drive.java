@@ -49,7 +49,7 @@ public class Drive {
     
 
     PneumaticsControlModule PCM1 = new PneumaticsControlModule(10); //left
-    // PneumaticsControlModule PCM2 = new PneumaticsControlModule(11); //right
+    PneumaticsControlModule PCM2 = new PneumaticsControlModule(11); //right
  
     Compressor compressor = new Compressor(11, PneumaticsModuleType.CTREPCM); //pcm 11
     // private DoubleSolenoid frontdrivePistons = new DoubleSolenoid(11, PneumaticsModuleType.CTREPCM, 0, 1);

@@ -66,16 +66,16 @@ public class OI {
 
 
     double winchSpeed(){
-        // if(Xbox1.getAButton()){
-        //     return -0.2;
-        // }
-        // else if(Xbox1.getBButton()){
-        //     return 0.1;
-        // }
-        // else{
-        //     return 0;
-        // }
-        return 0;
+        if(Xbox1.getYButton()){
+            return -0.3;
+        }
+        else if(Xbox1.getBButton()){
+            return 0.3;
+        }
+        else{
+            return 0;
+        }
+        // return 0;
     }
     boolean winchUp = false;
     boolean winchUp(){
@@ -85,7 +85,13 @@ public class OI {
         }
         return winchUp;
     }
-
+    boolean clampOut = false;
+    boolean clampOut(){
+        if(Xbox1.getAButtonReleased()){
+            clampOut = !clampOut;
+        }
+        return clampOut;
+    }
 
 
 
@@ -185,8 +191,20 @@ public class OI {
         limeLightTurn = false;
     }
     return limeLightTurn;
+    
     }
 
+
+
+
+
+ 
+
+
+
+
+
+    
 
 }
 

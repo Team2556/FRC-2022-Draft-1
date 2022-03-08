@@ -66,8 +66,8 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-
-    drive.testDrivebase();
+   // climber.climbDraft();
+    //drive.testDrivebase();
     // switch (m_autoSelected) {
     //   case kCustomAuto:
     //     // Put custom auto code here
@@ -82,7 +82,8 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
-    drive.drivebaseInit();
+    // drive.drivebaseInit();
+    //  climber.climbInit();
   }
 
   /** This function is called periodically during operator control. */
@@ -91,7 +92,10 @@ public class Robot extends TimedRobot {
     // drive.dualDrivebase();
     // drive.limitSwitchTest();
    //drive.backleftmotortest();
-    climber.winchPistons();
+    // climber.winchPistons(); // temp x button
+    // climber.clampPiston(); // temp a button
+    // climber.winchMotor(); // temp b button y botton
+     climber.climbDraft2();
   }
 
   /** This function is called once when the robot is disabled. */
