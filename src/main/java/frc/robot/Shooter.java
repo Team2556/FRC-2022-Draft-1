@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter {
     OI oi = new OI();
-    private TalonFX shooterMotor = new TalonFX(7);
-    private TalonSRX hoodMotor = new TalonSRX(8);
+    private TalonFX shooterMotor = new TalonFX(Constants.shooterMotorPort);
+    private TalonSRX hoodMotor = new TalonSRX(Constants.hoodMotorPort);
 
     public void shooterMotor(){
         //shooter motor runs as of 3/7/22

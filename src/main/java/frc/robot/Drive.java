@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-// import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -31,34 +31,33 @@ public class Drive {
     OI oi = new OI();
     Limelight limeLight = new Limelight();
 
-    private CANSparkMax rFMotor = new CANSparkMax(4, MotorType.kBrushless);
-    private CANSparkMax rRMotor = new CANSparkMax(8, MotorType.kBrushless);
-    private CANSparkMax lFMotor = new CANSparkMax(3, MotorType.kBrushless);
-    private CANSparkMax lRMotor = new CANSparkMax(1, MotorType.kBrushless);
+    private CANSparkMax rFMotor = new CANSparkMax(Constants.rFMotorPort, MotorType.kBrushless);
+    private CANSparkMax rRMotor = new CANSparkMax(Constants.rRMotorPort, MotorType.kBrushless);
+    private CANSparkMax lFMotor = new CANSparkMax(Constants.lFMotorPort, MotorType.kBrushless);
+    private CANSparkMax lRMotor = new CANSparkMax(Constants.lRMotorPort, MotorType.kBrushless);
     //Checked these in rev
 
 
-    DigitalInput rFLimit = new DigitalInput(0);
-    DigitalInput rRLimit = new DigitalInput(1);
-    DigitalInput lFLimit = new DigitalInput(3);
-    DigitalInput lRLimit = new DigitalInput(2);
+    DigitalInput rFLimit = new DigitalInput(Constants.rFLimitPort);
+    DigitalInput rRLimit = new DigitalInput(Constants.rRLimitPort);
+    DigitalInput lFLimit = new DigitalInput(Constants.lFLimitPort);
+    DigitalInput lRLimit = new DigitalInput(Constants.lRLimitPort);
     //false means limit switch active
 
     
 
     
 
-    PneumaticsControlModule PCM1 = new PneumaticsControlModule(10); //left
-    PneumaticsControlModule PCM2 = new PneumaticsControlModule(11); //right
+    PneumaticsControlModule PCML = new PneumaticsControlModule(Constants.PCMLPort); //left
+    PneumaticsControlModule PCMR = new PneumaticsControlModule(Constants.PCMRPort); //right
  
-    Compressor compressor = new Compressor(11, PneumaticsModuleType.CTREPCM); //pcm 11
-    // private DoubleSolenoid frontdrivePistons = new DoubleSolenoid(11, PneumaticsModuleType.CTREPCM, 0, 1);
-    // private DoubleSolenoid reardrivePistons = new DoubleSolenoid(11, PneumaticsModuleType.CTREPCM, 3, 2);
-    // private Solenoid rWSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, 3);
-    // private Solenoid lWSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, 4);
+    Compressor compressor = new Compressor(Constants.PCMRPort, PneumaticsModuleType.CTREPCM); //pcm 11
+    private DoubleSolenoid frontdrivePistons = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.fDPForwardChannel, Constants.fDPReverseChannel);
+    private DoubleSolenoid reardrivePistons = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.fDPForwardChannel, Constants.fDPReverseChannel);
+
 
     //drive objects
-    //MecanumDrive driveMecanum = new MecanumDrive(lFMotor, lRMotor, rFMotor, rRMotor);
+    MecanumDrive driveMecanum = new MecanumDrive(lFMotor, lRMotor, rFMotor, rRMotor);
     MotorControllerGroup leftSide = new MotorControllerGroup(lRMotor, lFMotor);
     MotorControllerGroup rightSide = new MotorControllerGroup(rRMotor, rFMotor); 
     DifferentialDrive differentialDrive = new DifferentialDrive(leftSide, rightSide);
@@ -92,9 +91,7 @@ public class Drive {
         SmartDashboard.putString("Right motors reversed", "Yes");
     }
 
-    // public void ethanisDumb(){
-    //     lRMotor.set(oi.shit());
-    // } //I hate ethan lindsay >:(
+
    
 
 
@@ -106,9 +103,9 @@ public class Drive {
         boolean dropped = oi.dropped(); 
         SmartDashboard.putBoolean("dropped", dropped);
         
-        // double mForward = oi.mForward(); 
-        // double mStrafe = oi.mStrafe(); 
-        // double mRotate = oi.mRotate();
+        double mForward = oi.mForward(); 
+        double mStrafe = oi.mStrafe(); 
+        double mRotate = oi.mRotate();
 
         double tLeft = -oi.tLeft();
         double tRight = -oi.tRight();
@@ -133,22 +130,22 @@ public class Drive {
         //     reardrivePistons.set(Value.kReverse);
         //     }
         
-
+            
         SmartDashboard.putBoolean("dropped", dropped); 
         
     
         if (dropped){ //Takes in boolean and switches drive output based on it. 
             differentialDrive.tankDrive(tLeft, tRight);
-            SmartDashboard.putString("Ethan is a fucking dumbass", "not mecanum and dropped");
+            SmartDashboard.putString("Drivebase", "not mecanum and dropped");
         }
         else if (dropped == false && lFLimit.get() == false && lRLimit.get() == false && rFLimit.get() == false && rRLimit.get() == false){
             // If solenoids don't drop the motors and all the limits are switched. False means switch is clicked
-            //driveMecanum.driveCartesian(mForward, mStrafe, mRotate);
-            SmartDashboard.putString("Ethan is a fucking dumbass", "Mecanum go");
+            driveMecanum.driveCartesian(mForward, mStrafe, mRotate);
+            SmartDashboard.putString("Drivebase", "Mecanum go");
         }
         else{
             differentialDrive.tankDrive(0, 0);
-            SmartDashboard.putString("Ethan is a fucking dumbass", "Not mecanum");
+            SmartDashboard.putString("Drivebase", "Not mecanum");
         }
 
         
