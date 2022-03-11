@@ -60,7 +60,7 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
-    drive.drivebaseInit();
+    //drive.drivebaseInit();
   }
 
   /** This function is called periodically during autonomous. */
@@ -82,14 +82,14 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
-    // drive.drivebaseInit();
+    //drive.drivebaseInit(); can't have this because mecanum does not work with it
     //climber.climbInit();
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    //drive.dualDrivebase();
+   drive.dualDrivebase();
  
     // climber.winchPistons(); // temp x button
     // climber.clampPiston(); // temp a button

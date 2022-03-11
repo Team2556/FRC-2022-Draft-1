@@ -45,7 +45,7 @@ public class Constants {
     public static int rDPReverseChannel = 2; 
 
     //climber yellow pistons left and right
-    public static int yLForwarcChannel = 3;
+    public static int yLForwardChannel = 3;
     public static int yLReverseChannel = 2;
     public static int yRForwardChannel = 0;
     public static int yRReverseChannel = 1;

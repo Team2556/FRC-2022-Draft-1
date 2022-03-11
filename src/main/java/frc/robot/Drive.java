@@ -51,9 +51,9 @@ public class Drive {
     PneumaticsControlModule PCML = new PneumaticsControlModule(Constants.PCMLPort); //left
     PneumaticsControlModule PCMR = new PneumaticsControlModule(Constants.PCMRPort); //right
  
-    Compressor compressor = new Compressor(Constants.PCMRPort, PneumaticsModuleType.CTREPCM); //pcm 11
+    Compressor compressor = new Compressor(Constants.PCMLPort, PneumaticsModuleType.CTREPCM); //pcm 11
     private DoubleSolenoid frontdrivePistons = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.fDPForwardChannel, Constants.fDPReverseChannel);
-    private DoubleSolenoid reardrivePistons = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.fDPForwardChannel, Constants.fDPReverseChannel);
+    private DoubleSolenoid reardrivePistons = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.rDPForwardChannel, Constants.rDPReverseChannel);
 
 
     //drive objects
@@ -79,9 +79,9 @@ public class Drive {
 
 
 
-    public void testDrivebase(){
-        differentialDrive.tankDrive(0.2, 0.2);
-    }
+    // public void testDrivebase(){
+    //     differentialDrive.tankDrive(0.2, 0.2);
+    // }
 
 
 
@@ -103,14 +103,13 @@ public class Drive {
         boolean dropped = oi.dropped(); 
         SmartDashboard.putBoolean("dropped", dropped);
         
-        double mForward = oi.mForward(); 
+        double mForward = -oi.mForward(); 
         double mStrafe = oi.mStrafe(); 
         double mRotate = oi.mRotate();
 
         double tLeft = -oi.tLeft();
         double tRight = -oi.tRight();
-        // double tLeft = 0;
-        // double tRight = 0;
+  
         //Values taken from the OI to be fed into this program. 
 
         // if (frontdrivePistons.get() == Value.kForward){ //Puts piston data to the smart dashboard
@@ -144,9 +143,12 @@ public class Drive {
             SmartDashboard.putString("Drivebase", "Mecanum go");
         }
         else{
-            differentialDrive.tankDrive(0, 0);
+           // differentialDrive.tankDrive(0, 0);
             SmartDashboard.putString("Drivebase", "Not mecanum");
         }
+        SmartDashboard.putNumber("mForward", mForward);
+        SmartDashboard.putNumber("mStrafe", mStrafe);
+        SmartDashboard.putNumber("mRotate", mRotate);
 
         
     
@@ -176,19 +178,6 @@ public class Drive {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     public void triDrivebase(){
         //This if statement decides if the limelight turn button is clicked and changes how its driven accordingly.
         if(oi.limeLightTurn()){
@@ -198,28 +187,6 @@ public class Drive {
             dualDrivebase();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

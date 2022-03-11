@@ -15,11 +15,11 @@ public class Climber {
     //Drive drive = new Drive();
     OI oi = new OI();
     // as of 3/8/22, yellow pistons work.
-    private DoubleSolenoid yellowLeft  = new DoubleSolenoid(Constants.PCMLPort, PneumaticsModuleType.CTREPCM, Constants.yLForwarcChannel, Constants.yLReverseChannel);
+    private DoubleSolenoid yellowLeft  = new DoubleSolenoid(Constants.PCMLPort, PneumaticsModuleType.CTREPCM, Constants.yLForwardChannel, Constants.yLReverseChannel);
     private DoubleSolenoid yellowRight = new DoubleSolenoid(Constants.PCMLPort, PneumaticsModuleType.CTREPCM, Constants.yRForwardChannel, Constants.yRReverseChannel);
     private DoubleSolenoid clampPiston = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.clampForwardChannel, Constants.clampReverseChannel); //double solenoid 4,5
     private TalonSRX winchMotor = new TalonSRX(Constants.winchMotorPort);
-    private DutyCycleEncoder winchEncoder = new DutyCycleEncoder(Constants.winchEncoderPort);
+   // private DutyCycleEncoder winchEncoder = new DutyCycleEncoder(Constants.winchEncoderPort);
 
 
 
@@ -128,8 +128,8 @@ The winch moves
 
     public void winchEncoder(){
         // winchMotor.
-         winchEncoder.get();
-         SmartDashboard.putNumber("winchEncoder", winchEncoder.get());
+        //  winchEncoder.get();
+        //  SmartDashboard.putNumber("winchEncoder", winchEncoder.get());
          
      }
 
