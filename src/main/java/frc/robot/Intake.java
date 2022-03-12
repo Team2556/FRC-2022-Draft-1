@@ -42,14 +42,14 @@ Translate motor works
 
 
     public void intakeSolenoid(){
-        // intakeSolenoid.set(oi.intakeSolenoid());
-        //  if (oi.intakeSolenoid()){ //Takes in boolean and switches solenoid output based on it. 
-        //     intakeSolenoid.set(Value.kForward);
-        //     }
-        // else {
-        //     intakeSolenoid.set(Value.kReverse);
-        //     }
-        // SmartDashboard.putBoolean("intakeSolenoid", oi.intakeSolenoid());
+        //intakeSolenoid.set(oi.intakeSolenoid());
+         if (oi.intakeSolenoid()){ //Takes in boolean and switches solenoid output based on it. 
+            intakeSolenoid.set(Value.kForward);
+            }
+        else {
+            intakeSolenoid.set(Value.kReverse);
+            }
+        SmartDashboard.putBoolean("intakeSolenoid", oi.intakeSolenoid());
 
     }
 }

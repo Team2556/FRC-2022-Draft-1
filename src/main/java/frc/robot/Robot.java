@@ -89,12 +89,16 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-   drive.dualDrivebase();
- 
+   //drive.dualDrivebase();
+  //  intake.intakeMotor();
+    intake.intakeSolenoid();
+    intake.translateMotor();
+    shooter.shooterMotor();
     // climber.winchPistons(); // temp x button
-    // climber.clampPiston(); // temp a button
-    // climber.winchMotor(); // temp b button y botton
+    //  climber.clampPiston(); // temp a button
+    //  climber.winchMotor(); // temp leftbumper button rightbumper botton
    // climber.climbDraft2();
+   
   }
 
   /** This function is called once when the robot is disabled. */

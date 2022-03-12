@@ -2,6 +2,7 @@ package frc.robot;
 //import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class OI {
     
@@ -66,11 +67,11 @@ public class OI {
 
 
     double winchSpeed(){
-        if(Xbox1.getYButton()){
-            return -0.3;
+        if(Xbox1.getRightBumper()){
+            return -0.5;
         }
-        else if(Xbox1.getBButton()){
-            return 0.3;
+        else if(Xbox1.getLeftBumper()){
+            return 0.5;
         }
         else{
             return 0;
@@ -118,20 +119,20 @@ public class OI {
         }
       }
     double translateSpeed(){
-        // if(Xbox1.getLeftBumper()){
-        //     return -0.1;
-        // }   
-        // else if(Xbox1.getRightBumper()){
-        //     return 0.1;
-        // }
-        // else{
-        //     return 0;
-        // }
-        return 0;
+        if(Xbox1.getLeftBumper()){
+            return -1;
+        }   
+        else if(Xbox1.getRightBumper()){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+      //  return 0;
     }
     boolean intakeOut = true;
     boolean intakeSolenoid(){
-        if(Xbox2.getAButtonReleased()){
+        if(Xbox1.getAButtonReleased()){
             intakeOut = !intakeOut;
         }
         return intakeOut;
@@ -146,15 +147,48 @@ public class OI {
 
 
 
-
+    int shooterSpeed = 0;
+    double speed = 0;
     double shooterSpeed(){
+     SmartDashboard.putNumber("Talon FX Case", shooterSpeed);
+     SmartDashboard.putNumber("Talon FX Set Speed", speed);
+        if(Xbox1.getXButtonReleased()){
+            shooterSpeed++;
+        }
+        switch(shooterSpeed){
+            case 0:
+                speed = 0.25;
+                break;
+            case 1:
+                speed = 0.375;
+                break;
+            case 2:
+                speed = 0.5;
+                break;
+            case 3: 
+                speed = 0.625;
+                break;
+            case 4: 
+                speed = 0.75;
+                break;
+            case 5:
+                speed = 0.875;
+                break;
+            case 6:
+                speed = 1;
+                break;
+            case 7:
+                shooterSpeed = 0;
+                break;
+        }
         if(Xbox1.getYButton()){
-              return 1;
+              return speed;
         }
         else{
                return 0;
         }
       }
+
     double hoodSpeed(){
         // if (Xbox1.getAButton()){
         //     return 0.1;

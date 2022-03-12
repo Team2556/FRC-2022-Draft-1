@@ -112,22 +112,22 @@ public class Drive {
   
         //Values taken from the OI to be fed into this program. 
 
-        // if (frontdrivePistons.get() == Value.kForward){ //Puts piston data to the smart dashboard
-        //     SmartDashboard.putBoolean("Front Drive Pistons Down", true);
-        // }
-        // else if (frontdrivePistons.get() == Value.kReverse){
-        //     SmartDashboard.putBoolean("Front Drive Pistons Down", false);
-        // }
+        if (frontdrivePistons.get() == Value.kForward){ //Puts piston data to the smart dashboard
+            SmartDashboard.putBoolean("Front Drive Pistons Down", true);
+        }
+        else if (frontdrivePistons.get() == Value.kReverse){
+            SmartDashboard.putBoolean("Front Drive Pistons Down", false);
+        }
 
         
-        // if (dropped){ //Takes in boolean and switches solenoid output based on it. 
-        //     frontdrivePistons.set(Value.kForward);
-        //     reardrivePistons.set(Value.kForward);
-        //     }
-        // else {
-        //     frontdrivePistons.set(Value.kReverse);
-        //     reardrivePistons.set(Value.kReverse);
-        //     }
+        if (dropped){ //Takes in boolean and switches solenoid output based on it. 
+            frontdrivePistons.set(Value.kForward);
+            reardrivePistons.set(Value.kForward);
+            }
+        else {
+            frontdrivePistons.set(Value.kReverse);
+            reardrivePistons.set(Value.kReverse);
+            }
         
             
         SmartDashboard.putBoolean("dropped", dropped); 
