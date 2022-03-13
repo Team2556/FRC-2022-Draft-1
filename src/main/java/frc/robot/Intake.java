@@ -14,11 +14,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Intake {
     OI oi = new OI();
+    
     private CANSparkMax intake = new CANSparkMax(Constants.intakeMotorPort, MotorType.kBrushless);
     private CANSparkMax translate = new CANSparkMax(Constants.translateMotorPort, MotorType.kBrushless);
     DigitalInput translateSwitch = new DigitalInput(4);
     DoubleSolenoid intakeSolenoid = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.intakeForwardChannel, Constants.intakeReverseChannel);
-/*
+/* test
 3/7/22
 Tested intakeMotor. Right motor is powered on, but it is not moving even though 
 smart dashboard says it is
