@@ -2,7 +2,6 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -27,7 +26,6 @@ public class Shooter {
     }
 
     public void shooterInit(){
-
         hoodMotor.configFactoryDefault();
         hoodMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         hoodMotor.setSelectedSensorPosition(0);
@@ -38,48 +36,34 @@ public class Shooter {
 
 
     
-    //double CurrentPercentOutput = 0;
     public void shooterMotor(){
-        //shooter motor runs as of 3/7/22
-       // double motorSpeed = -oi.shooterSpeed();
-       // double motorSpeed = oi.Xbox1.getLeftY();
-       shooterMotor.setNeutralMode(NeutralMode.Coast);
+        shooterMotor.setNeutralMode(NeutralMode.Coast);
         double fxspd = shooterMotor.getSelectedSensorVelocity();
-        
-    
-
-        // double difference   = Math.abs(oi.shooterSpeed()) - Math.abs(fxspd);
-    double difference  = Math.abs(oi.targetSpeed()) - Math.abs(fxspd);
-    double error = difference*Kp;
-    LastOutput = LastOutput + error;
+        double difference  = Math.abs(oi.targetSpeed()) - Math.abs(fxspd);
+        double error = difference*Kp;
+        LastOutput = LastOutput + error;
         percentOutput = LastOutput;
-
         shooterMotor.set(ControlMode.PercentOutput, -percentOutput);
    
-        SmartDashboard.putNumber("difference", difference);
-        SmartDashboard.putNumber("FX speed", fxspd);
-        SmartDashboard.putNumber("oitargetSpeed", oi.targetSpeed());
-        SmartDashboard.putNumber("percentOutput", percentOutput);
-        SmartDashboard.putNumber("error", error);
-
+        // SmartDashboard.putNumber("difference", difference);
+        // SmartDashboard.putNumber("FX speed", fxspd);
+        // SmartDashboard.putNumber("oitargetSpeed", oi.targetSpeed());
+        // SmartDashboard.putNumber("percentOutput", percentOutput);
+        // SmartDashboard.putNumber("error", error);
     }
 
     public void hoodMotor(){
-        //hood motor runs as of 3/7/22
         hoodMotor.set(ControlMode.PercentOutput, oi.hoodSpeed());
-            
         }
 
     public void hoodEncoder(){
         double hoodPos = hoodMotor.getSelectedSensorPosition();
-      
-
         SmartDashboard.putNumber("HoodPosition", hoodPos);
     }
     
     
     
     
-    }
+}
 
 

@@ -208,11 +208,6 @@ public class OI {
 
 
 
-    // double shit(){
-    // return Xbox1.getLeftY();  
-    // }
-
-
     boolean limeLightTurn = false;
     boolean limeLightTurn(){
     if(Xbox1.getAButton()){

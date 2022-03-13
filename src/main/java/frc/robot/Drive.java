@@ -9,25 +9,15 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 // import edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.DigitalInput;
-
-
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Drive {
 
-
-
-    //3/7/22
-    //Tested drivebase and it all works except lRMotor. Pneumatics good. Commented out bc loud AF
-    
-    //Placeholder values for all motors
     OI oi = new OI();
     Limelight limeLight = new Limelight();
 
@@ -35,7 +25,6 @@ public class Drive {
     private CANSparkMax rRMotor = new CANSparkMax(Constants.rRMotorPort, MotorType.kBrushless);
     private CANSparkMax lFMotor = new CANSparkMax(Constants.lFMotorPort, MotorType.kBrushless);
     private CANSparkMax lRMotor = new CANSparkMax(Constants.lRMotorPort, MotorType.kBrushless);
-    //Checked these in rev
 
 
     DigitalInput rFLimit = new DigitalInput(Constants.rFLimitPort);
@@ -51,7 +40,7 @@ public class Drive {
     PneumaticsControlModule PCML = new PneumaticsControlModule(Constants.PCMLPort); //left
     PneumaticsControlModule PCMR = new PneumaticsControlModule(Constants.PCMRPort); //right
  
-    Compressor compressor = new Compressor(Constants.PCMLPort, PneumaticsModuleType.CTREPCM); //pcm 11
+    Compressor compressor = new Compressor(Constants.PCMLPort, PneumaticsModuleType.CTREPCM);
     private DoubleSolenoid frontdrivePistons = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.fDPForwardChannel, Constants.fDPReverseChannel);
     private DoubleSolenoid reardrivePistons = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.rDPForwardChannel, Constants.rDPReverseChannel);
 
@@ -63,25 +52,6 @@ public class Drive {
     DifferentialDrive differentialDrive = new DifferentialDrive(leftSide, rightSide);
 
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-    // public void testDrivebase(){
-    //     differentialDrive.tankDrive(0.2, 0.2);
-    // }
 
 
 
@@ -129,23 +99,20 @@ public class Drive {
             frontdrivePistons.set(Value.kReverse);
             reardrivePistons.set(Value.kReverse);
             }
-        
-            
-        SmartDashboard.putBoolean("dropped", dropped); 
-        
+                
     
         if (dropped){ //Takes in boolean and switches drive output based on it. 
             differentialDrive.arcadeDrive(aForward,  aRotate);
-            SmartDashboard.putString("Drivebase", "not mecanum and dropped");
+            SmartDashboard.putString("Drivebase", "Arcade");
         }
         else if (dropped == false && lFLimit.get() == false && lRLimit.get() == false && rFLimit.get() == false && rRLimit.get() == false){
             // If solenoids don't drop the motors and all the limits are switched. False means switch is clicked
             driveMecanum.driveCartesian(mForward, mStrafe, mRotate);
-            SmartDashboard.putString("Drivebase", "Mecanum go");
+            SmartDashboard.putString("Drivebase", "Mecanum");
         }
         else{
            // differentialDrive.tankDrive(0, 0);
-            SmartDashboard.putString("Drivebase", "Not mecanum");
+            SmartDashboard.putString("Drivebase", "Issues with drivebase");
         }
         SmartDashboard.putNumber("mForward", mForward);
         SmartDashboard.putNumber("mStrafe", mStrafe);
@@ -167,7 +134,6 @@ public class Drive {
             }
             else if(oi.dropped == false){
                 //driveMecanum.driveCartesian(0, 0, limeLight.PIDC(), 0);
-                SmartDashboard.putString("No mecanum until we proof check everything", "Dylan");
             }
         }
         
