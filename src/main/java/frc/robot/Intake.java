@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -15,7 +16,7 @@ public class Intake {
     OI oi = new OI();
     private CANSparkMax intake = new CANSparkMax(Constants.intakeMotorPort, MotorType.kBrushless);
     private CANSparkMax translate = new CANSparkMax(Constants.translateMotorPort, MotorType.kBrushless);
-
+    DigitalInput translateSwitch = new DigitalInput(4);
     DoubleSolenoid intakeSolenoid = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.intakeForwardChannel, Constants.intakeReverseChannel);
 /*
 3/7/22
@@ -34,9 +35,17 @@ Translate motor works
     public void intakeMotor(){
         intake.set(oi.intakeSpeed());
         SmartDashboard.putNumber("Intake", intake.get());
+ 
     }
     public void translateMotor(){
-        translate.set(oi.translateSpeed());
+        
+        if(oi.Xbox1.getLeftBumper() && translateSwitch.get() == true){
+            translate.set(oi.translateRunSpeed);
+        }
+        else
+        {
+            translate.set(oi.translateSpeed());
+        }
     }
 
 

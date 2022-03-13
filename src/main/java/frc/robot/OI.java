@@ -128,10 +128,10 @@ public class OI {
    
    
    
-   
+    double intakeRunSpeed = 0.75;
     double intakeSpeed(){
         if(Xbox1.getLeftBumper()){
-            return -0.75;
+            return intakeRunSpeed;
         }
         // else if(Xbox1.getRightBumper()){
         //     return 0.5;
@@ -140,9 +140,11 @@ public class OI {
             return 0;
         }
       }
+
+    double translateRunSpeed = -0.75;
     double translateSpeed(){
         if(Xbox2.getLeftBumper()){
-            return -1;
+            return translateRunSpeed;
         }   
         // else if(Xbox1.getRightBumper()){
         //     return 1;
