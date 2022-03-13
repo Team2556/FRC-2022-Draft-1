@@ -11,7 +11,7 @@ public class OI {
     XboxController Xbox1 = new XboxController(0);
     XboxController Xbox2 = new XboxController(1);
 
-
+    double deadzone = 0.2;
 
 
 
@@ -25,30 +25,52 @@ public class OI {
    
    
     //drive piston drops
-    boolean dropped = true;
+    boolean dropped = false;
     boolean dropped(){
        
-        if(Xbox1.getBButtonReleased()){
+        if(Xbox1.getBButtonReleased() && Xbox1.getRightTriggerAxis() >= 0.5){
             dropped = !dropped;
         }
         return dropped;
+       
     }
     //mecanum drive values
+    double mForwardSpeed = 0;
     double mForward(){
-        return Xbox1.getLeftY();
+        if (Math.abs(Xbox1.getLeftY()) <= deadzone){
+            mForwardSpeed = 0;
+        }
+        else{
+            mForwardSpeed = Xbox1.getLeftY();
+        }
+        return mForwardSpeed;
     }
+    double mStrafeSpeed = 0;
     double mStrafe(){
-        return Xbox1.getLeftX();
+        if (Math.abs(Xbox1.getLeftX()) <= deadzone){
+            mStrafeSpeed = 0;
+        }
+        else{
+            mStrafeSpeed = Xbox1.getLeftX();
+        }
+        return mStrafeSpeed;
     }
+    double mRotateSpeed = 0;
     double mRotate(){
-        return Xbox1.getRightX();
+        if (Math.abs(Xbox1.getRightX()) <= deadzone){
+            mRotateSpeed = 0;
+        }
+        else{
+            mRotateSpeed = Xbox1.getRightX();
+        }
+        return mRotateSpeed;
     }
     //tank drive values
-    double tLeft(){
+    double aForward(){
         return Xbox1.getLeftY();
     }
-    double tRight(){
-        return Xbox1.getRightY();
+    double aRotate(){
+        return Xbox1.getRightX();
     }
 
 
@@ -109,22 +131,22 @@ public class OI {
    
     double intakeSpeed(){
         if(Xbox1.getLeftBumper()){
-            return -0.1;
+            return -0.75;
         }
-        else if(Xbox1.getRightBumper()){
-            return 0.1;
-        }
+        // else if(Xbox1.getRightBumper()){
+        //     return 0.5;
+        // }
         else{
             return 0;
         }
       }
     double translateSpeed(){
-        if(Xbox1.getLeftBumper()){
+        if(Xbox2.getLeftBumper()){
             return -1;
         }   
-        else if(Xbox1.getRightBumper()){
-            return 1;
-        }
+        // else if(Xbox1.getRightBumper()){
+        //     return 1;
+        // }
         else{
             return 0;
         }
@@ -132,56 +154,29 @@ public class OI {
     }
     boolean intakeOut = true;
     boolean intakeSolenoid(){
-        if(Xbox1.getAButtonReleased()){
-            intakeOut = !intakeOut;
+        if(Xbox1.getLeftBumper()){
+            intakeOut = false;
+        }
+        else{
+            intakeOut = true;
         }
         return intakeOut;
         // return Xbox1.getAButton();
     }
 
-
-
-
-
-
-
-
-
-    int shooterSpeed = 0;
-    double speed = 0;
-    double shooterSpeed(){
-     SmartDashboard.putNumber("Talon FX Case", shooterSpeed);
-     SmartDashboard.putNumber("Talon FX Set Speed", speed);
-        if(Xbox1.getXButtonReleased()){
-            shooterSpeed++;
+    double speed = -13000;
+    double targetSpeed(){
+     SmartDashboard.putNumber("Target Shooter Speed", speed);
+        if(Xbox2.getBackButtonReleased()){
+            speed += 250;
         }
-        switch(shooterSpeed){
-            case 0:
-                speed = 0.25;
-                break;
-            case 1:
-                speed = 0.375;
-                break;
-            case 2:
-                speed = 0.5;
-                break;
-            case 3: 
-                speed = 0.625;
-                break;
-            case 4: 
-                speed = 0.75;
-                break;
-            case 5:
-                speed = 0.875;
-                break;
-            case 6:
-                speed = 1;
-                break;
-            case 7:
-                shooterSpeed = 0;
-                break;
+        if(Xbox2.getStartButtonReleased()){
+            speed += -250;
         }
-        if(Xbox1.getYButton()){
+        if(speed > 0){
+            speed = 0;
+        }
+        if(Xbox2.getRightBumper()){
               return speed;
         }
         else{
@@ -190,16 +185,16 @@ public class OI {
       }
 
     double hoodSpeed(){
-        // if (Xbox1.getAButton()){
-        //     return 0.1;
-        // }
-        // else if (Xbox1.getBButton()){
-        //     return -0.1;
-        // }
-        // else{
-        //     return 0;
-        // }
-        return 0;
+        if (Xbox1.getLeftTriggerAxis() == 1){
+            return 0.15;
+        }
+        else if (Xbox1.getRightTriggerAxis() == 1){
+            return -0.15;
+        }
+        else{
+            return 0;
+        }
+        //return 0;
     }
 
 

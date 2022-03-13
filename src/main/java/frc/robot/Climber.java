@@ -1,5 +1,6 @@
 package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
@@ -19,7 +20,7 @@ public class Climber {
     private DoubleSolenoid yellowRight = new DoubleSolenoid(Constants.PCMLPort, PneumaticsModuleType.CTREPCM, Constants.yRForwardChannel, Constants.yRReverseChannel);
     private DoubleSolenoid clampPiston = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.clampForwardChannel, Constants.clampReverseChannel); //double solenoid 4,5
     private TalonSRX winchMotor = new TalonSRX(Constants.winchMotorPort);
-   // private DutyCycleEncoder winchEncoder = new DutyCycleEncoder(Constants.winchEncoderPort);
+    private DutyCycleEncoder winchEncoder = new DutyCycleEncoder(Constants.winchEncoderPort);
 
 
 
@@ -39,6 +40,8 @@ The winch moves
     yellowLeft.set(Value.kReverse);
     yellowRight.set(Value.kReverse);
     clampPiston.set(Value.kReverse);
+    winchMotor.configFactoryDefault();
+    winchMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 }
 
 
@@ -125,12 +128,19 @@ The winch moves
 
 
 
-
+    public void resetWinchEncoder(){
+        if(oi.Xbox1.getAButton()){
+            winchMotor.setSelectedSensorPosition(0);
+        }
+    }
     public void winchEncoder(){
         // winchMotor.
-        //  winchEncoder.get();
-        //  SmartDashboard.putNumber("winchEncoder", winchEncoder.get());
-         
+         //winchEncoder.get();
+        double y = winchMotor.getSelectedSensorVelocity();
+         double x = winchMotor.getSelectedSensorPosition();
+         SmartDashboard.putBoolean("winchBool", winchEncoder.isConnected());
+         SmartDashboard.putNumber("winchEncoder", y);
+         SmartDashboard.putNumber("winchEncoder2", x);
      }
 
     public void winchMotor(){

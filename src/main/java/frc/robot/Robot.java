@@ -19,6 +19,7 @@ public class Robot extends TimedRobot {
   Intake intake = new Intake();
   Shooter shooter = new Shooter();
   Climber climber = new Climber();
+ // OI oi = new OI();
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
@@ -33,6 +34,8 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    drive.drivebaseInit();
+    shooter.shooterInit();
   }
 
   /**
@@ -82,22 +85,31 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
-    //drive.drivebaseInit(); can't have this because mecanum does not work with it
+     //initializes each time teleop is enabled
     //climber.climbInit();
+
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-   //drive.dualDrivebase();
-  //  intake.intakeMotor();
-    intake.intakeSolenoid();
-    intake.translateMotor();
-    shooter.shooterMotor();
+   // SmartDashboard.putBoolean("dropped robot", oi.dropped());
+    // SmartDashboard.putNumber("right trigger", oi.Xbox1.getRightTriggerAxis());
+    // SmartDashboard.putBoolean("getBButton", oi.Xbox1.getBButtonReleased());
+   drive.dualDrivebase(); 
+  //   drive.motorSpeedTest();
+   intake.intakeMotor(); 
+  //  shooter.hoodMotor(); 
+    intake.intakeSolenoid(); //temp a button
+    intake.translateMotor(); // temp bumpers
+    shooter.shooterMotor(); //temp y button
+    shooter.hoodEncoder();
     // climber.winchPistons(); // temp x button
-    //  climber.clampPiston(); // temp a button
+    // climber.clampPiston(); // temp a button
+    //   climber.resetWinchEncoder();
     //  climber.winchMotor(); // temp leftbumper button rightbumper botton
-   // climber.climbDraft2();
+    // climber.winchEncoder();
+      // climber.climbDraft2();
    
   }
 

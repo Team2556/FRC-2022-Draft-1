@@ -86,6 +86,7 @@ public class Drive {
 
 
     public void drivebaseInit(){
+        
         rFMotor.setInverted(true);
         rRMotor.setInverted(true);
         SmartDashboard.putString("Right motors reversed", "Yes");
@@ -101,14 +102,14 @@ public class Drive {
     
     public void dualDrivebase(){
         boolean dropped = oi.dropped(); 
-        SmartDashboard.putBoolean("dropped", dropped);
+        SmartDashboard.putBoolean("dropped drive", dropped);
         
         double mForward = -oi.mForward(); 
         double mStrafe = oi.mStrafe(); 
-        double mRotate = oi.mRotate();
+        double mRotate = 0.75*oi.mRotate();
 
-        double tLeft = -oi.tLeft();
-        double tRight = -oi.tRight();
+        double aForward = -oi.aForward();
+        double aRotate = -0.75 *oi.aRotate();
   
         //Values taken from the OI to be fed into this program. 
 
@@ -134,7 +135,7 @@ public class Drive {
         
     
         if (dropped){ //Takes in boolean and switches drive output based on it. 
-            differentialDrive.tankDrive(tLeft, tRight);
+            differentialDrive.arcadeDrive(aForward,  aRotate);
             SmartDashboard.putString("Drivebase", "not mecanum and dropped");
         }
         else if (dropped == false && lFLimit.get() == false && lRLimit.get() == false && rFLimit.get() == false && rRLimit.get() == false){
@@ -207,6 +208,13 @@ public class Drive {
 
     }
 
+    public void motorSpeedTest(){
+        SmartDashboard.putNumber("rFMotor Speed", rFMotor.get());
+        SmartDashboard.putNumber("rRMotor Speed", rRMotor.get());
+        SmartDashboard.putNumber("lFMotor Speed", lFMotor.get());
+        SmartDashboard.putNumber("lRMotor Speed", lRMotor.get());
+    
+    }
 
 }
 

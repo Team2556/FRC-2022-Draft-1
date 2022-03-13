@@ -18,7 +18,7 @@ public class Constants {
     
     //winch talon ports and encoder
     public static int winchMotorPort = 9;
-    public static int winchEncoderPort = 1;
+    public static int winchEncoderPort = 9;
 
     //intake and translate motor ports
     public static int intakeMotorPort = 12;
