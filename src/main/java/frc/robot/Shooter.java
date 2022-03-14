@@ -36,10 +36,14 @@ public class Shooter {
     }
 
 
-
+    public double shooterConfig(){
+        double distanceLimelight = 1;
+        
+        return 0;
+    }
     
     //double CurrentPercentOutput = 0;
-    public void shooterMotor(){
+    public void shooterMotor(double targetSpeed){
         //shooter motor runs as of 3/7/22
        // double motorSpeed = -oi.shooterSpeed();
        // double motorSpeed = oi.Xbox1.getLeftY();
@@ -49,7 +53,7 @@ public class Shooter {
     
 
         // double difference   = Math.abs(oi.shooterSpeed()) - Math.abs(fxspd);
-    double difference  = Math.abs(oi.targetSpeed()) - Math.abs(fxspd);
+    double difference  = targetSpeed - Math.abs(fxspd);
     double error = difference*Kp;
     LastOutput = LastOutput + error;
         percentOutput = LastOutput;
@@ -78,7 +82,9 @@ public class Shooter {
     }
     
     
-    
+    public double talonFXSpeed(){
+        return shooterMotor.getSelectedSensorVelocity();
+    }
     
     }
 

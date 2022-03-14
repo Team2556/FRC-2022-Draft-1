@@ -22,7 +22,15 @@ public class Climber {
     private TalonSRX winchMotor = new TalonSRX(Constants.winchMotorPort);
     private DutyCycleEncoder winchEncoder = new DutyCycleEncoder(Constants.winchEncoderPort);
 
+    private double currentPosition;
+    private double targetPosition;
+    private double kP;
+    private double percentOutputWinch;
+    public Climber(){
+        kP = 0.0000001;
+        percentOutputWinch = 0;
 
+    }
 
 
 
@@ -71,7 +79,8 @@ The winch moves
             clampPiston.set(Value.kForward);
             break;
         case 4:
-            winchMotor.set(ControlMode.PercentOutput, -winchspeedF);
+           // winchMotor.set(ControlMode.PercentOutput, -winchspeedF);
+           winchMotorRunByEncoder(Constants.winchPos1);
             break;
         case 5: 
             yellowLeft.set(Value.kForward);
@@ -79,7 +88,7 @@ The winch moves
             winchMotor.set(ControlMode.PercentOutput, 0);
             break;
         case 6: 
-            winchMotor.set(ControlMode.PercentOutput,winchspeedF);
+        winchMotorRunByEncoder(Constants.winchPos2);
             break;
         case 7:
             winchMotor.set(ControlMode.PercentOutput, 0);    
@@ -90,7 +99,7 @@ The winch moves
             clampPiston.set(Value.kReverse);
             break;
         case 9:
-            winchMotor.set(ControlMode.PercentOutput, winchspeedF);
+        winchMotorRunByEncoder(Constants.winchPos3);
             break;
         //repeat 3-8
         case 10:
@@ -105,7 +114,7 @@ The winch moves
         yellowRight.set(Value.kForward);
         break;
     case 13: 
-        winchMotor.set(ControlMode.PercentOutput,-winchspeedF);
+    winchMotorRunByEncoder(Constants.winchPos4);
         break;
     case 14:
         winchMotor.set(ControlMode.PercentOutput, 0);
@@ -148,7 +157,15 @@ The winch moves
         } // temp b button and y button
         // y in b out. negative speed in, positive speed out.
 
+    public void winchMotorRunByEncoder(double inputTargetPosition){
+        targetPosition = inputTargetPosition;
+        currentPosition = winchMotor.getSelectedSensorPosition();
+        double difference = targetPosition - currentPosition;
+        double error = difference *kP;
+        percentOutputWinch += error;
+        winchMotor.set(ControlMode.PercentOutput, percentOutputWinch);
 
+    }
 
     public void winchPistons(){
         boolean winchUp = oi.winchUp();

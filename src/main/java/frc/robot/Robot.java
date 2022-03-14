@@ -19,7 +19,7 @@ public class Robot extends TimedRobot {
   Intake intake = new Intake();
   Shooter shooter = new Shooter();
   Climber climber = new Climber();
- // OI oi = new OI();
+  OI oi = new OI();
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
@@ -102,7 +102,7 @@ public class Robot extends TimedRobot {
   //  shooter.hoodMotor(); 
     intake.intakeSolenoid(); //temp a button
     intake.translateMotor(); // temp bumpers
-    shooter.shooterMotor(); //temp y button
+    shooter.shooterMotor(Math.abs(oi.targetSpeed())); //temp y button
     shooter.hoodEncoder();
     // climber.winchPistons(); // temp x button
     // climber.clampPiston(); // temp a button

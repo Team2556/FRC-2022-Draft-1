@@ -28,7 +28,10 @@ public class Constants {
     public static int shooterMotorPort = 7;
     public static int hoodMotorPort = 8;
 
-
+    public static double winchPos1 = 0;
+    public static double winchPos2 = 0;
+    public static double winchPos3 = 0;
+    public static double winchPos4 = 0;
 
 
 
