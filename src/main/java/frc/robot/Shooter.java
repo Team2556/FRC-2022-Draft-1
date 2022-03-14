@@ -66,6 +66,9 @@ public class Shooter {
         return hoodPos;
     }
     
+    public double talonFXSpeed(){
+        return shooterMotor.getSelectedSensorVelocity();
+    }
     
     
     

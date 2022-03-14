@@ -62,6 +62,9 @@ public class Drive {
         SmartDashboard.putString("Right motors reversed", "Yes");
     }
 
+    public void mecanumDrive(double ySpeed, double xSpeed, double zRotate){
+        driveMecanum.driveCartesian(ySpeed, xSpeed, zRotate);
+    }
 
    
 
@@ -140,8 +143,19 @@ public class Drive {
 
 
 
+    boolean toggle = false;
+    public void reverseRightMotors(boolean input){
+    
+        if (input){
+            toggle = !toggle;
+        }
+        boolean reverse = toggle;
 
-
+            rFMotor.setInverted(reverse);
+            rRMotor.setInverted(reverse);
+            SmartDashboard.putBoolean("rF is Inverted", rFMotor.getInverted());
+    
+    }
 
 
 

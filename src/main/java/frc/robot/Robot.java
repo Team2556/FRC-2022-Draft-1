@@ -13,6 +13,9 @@ public class Robot extends TimedRobot {
   Intake intake = new Intake();
   Shooter shooter = new Shooter();
   Climber climber = new Climber();
+  Limelight limelight = new Limelight();
+  OI oi = new OI();
+  Auto auto = new Auto(drive, intake, shooter, limelight);
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
@@ -24,8 +27,8 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    drive.drivebaseInit();
-    shooter.shooterInit();
+    //drive.drivebaseInit(); apparently motors can't be reversed 
+    //shooter.shooterInit();
   }
 
  
@@ -37,23 +40,24 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
+    auto.step = 0;
 
-    //drive.drivebaseInit();
   }
 
   @Override
   public void autonomousPeriodic() {
-  
+  auto.autoDraft1();
   }
 
   @Override
   public void teleopInit() {
-
+    //intake.intakeSolenoid(true);
   }
 
   @Override
   public void teleopPeriodic() {
-
+    //drive.dualDrivebase();
+    //drive.reverseRightMotors(oi.Xbox1.getAButtonReleased());
   }
 
   @Override

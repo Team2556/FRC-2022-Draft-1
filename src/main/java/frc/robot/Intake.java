@@ -12,7 +12,7 @@ public class Intake {
     
     private CANSparkMax intake = new CANSparkMax(Constants.intakeMotorPort, MotorType.kBrushless);
     private CANSparkMax translate = new CANSparkMax(Constants.translateMotorPort, MotorType.kBrushless);
-    DigitalInput translateSwitch = new DigitalInput(4);
+    DigitalInput translateSwitch = new DigitalInput(8);
     DoubleSolenoid intakeSolenoid = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.intakeForwardChannel, Constants.intakeReverseChannel);
 
     public void intakeTeleop(){
@@ -24,6 +24,7 @@ public class Intake {
         else{
             translateMotor(oi.translateSpeed());
         }
+        intakeSolenoid(oi.intakeSolenoid());
     }
 
     public void intakeMotor(double intakeSpeed){
@@ -35,8 +36,8 @@ public class Intake {
 
 
 
-    public void intakeSolenoid(){
-         if (oi.intakeSolenoid()){ //Takes in boolean and switches solenoid output based on it. 
+    public void intakeSolenoid(boolean intakeSolenoidOut){
+         if (intakeSolenoidOut){ //Takes in boolean and switches solenoid output based on it. 
             intakeSolenoid.set(Value.kForward);
             }
         else {
