@@ -80,17 +80,8 @@ public class Drive {
 
         double aForward = -oi.aForward();
         double aRotate = -0.75 *oi.aRotate();
-  
         //Values taken from the OI to be fed into this program. 
 
-        if (frontdrivePistons.get() == Value.kForward){ //Puts piston data to the smart dashboard
-            SmartDashboard.putBoolean("Front Drive Pistons Down", true);
-        }
-        else if (frontdrivePistons.get() == Value.kReverse){
-            SmartDashboard.putBoolean("Front Drive Pistons Down", false);
-        }
-
-        
         if (dropped){ //Takes in boolean and switches solenoid output based on it. 
             frontdrivePistons.set(Value.kForward);
             reardrivePistons.set(Value.kForward);
@@ -99,8 +90,6 @@ public class Drive {
             frontdrivePistons.set(Value.kReverse);
             reardrivePistons.set(Value.kReverse);
             }
-                
-    
         if (dropped){ //Takes in boolean and switches drive output based on it. 
             differentialDrive.arcadeDrive(aForward,  aRotate);
             SmartDashboard.putString("Drivebase", "Arcade");
@@ -113,13 +102,7 @@ public class Drive {
         else{
            // differentialDrive.tankDrive(0, 0);
             SmartDashboard.putString("Drivebase", "Issues with drivebase");
-        }
-        SmartDashboard.putNumber("mForward", mForward);
-        SmartDashboard.putNumber("mStrafe", mStrafe);
-        SmartDashboard.putNumber("mRotate", mRotate);
-
-        
-    
+        }    
     }
 
 
@@ -161,26 +144,7 @@ public class Drive {
 
 
 
-    public void backleftmotortest(){
-        lRMotor.set(0.1);
-        rRMotor.set(0.1);
-    }
 
-    public void limitSwitchTest(){
-        SmartDashboard.putBoolean("LF Switch", lFLimit.get());
-        SmartDashboard.putBoolean("LR Switch", lRLimit.get());
-        SmartDashboard.putBoolean("RF Switch", rFLimit.get());
-        SmartDashboard.putBoolean("RR Switch", rRLimit.get());
-
-    }
-
-    public void motorSpeedTest(){
-        SmartDashboard.putNumber("rFMotor Speed", rFMotor.get());
-        SmartDashboard.putNumber("rRMotor Speed", rRMotor.get());
-        SmartDashboard.putNumber("lFMotor Speed", lFMotor.get());
-        SmartDashboard.putNumber("lRMotor Speed", lRMotor.get());
-    
-    }
 
 }
 

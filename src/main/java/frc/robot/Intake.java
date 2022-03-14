@@ -15,17 +15,22 @@ public class Intake {
     DigitalInput translateSwitch = new DigitalInput(4);
     DoubleSolenoid intakeSolenoid = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.intakeForwardChannel, Constants.intakeReverseChannel);
 
-
-    public void intakeMotor(){
-        intake.set(oi.intakeSpeed()); 
-    }
-    public void translateMotor(){
+    public void intakeTeleop(){
+        intakeMotor(oi.intakeSpeed());
+        
         if(oi.Xbox1.getLeftBumper() && translateSwitch.get() == true){
-            translate.set(oi.translateRunSpeed);
+            translateMotor(oi.translateRunSpeed);
         }
         else{
-            translate.set(oi.translateSpeed());
+            translateMotor(oi.translateSpeed());
         }
+    }
+
+    public void intakeMotor(double intakeSpeed){
+        intake.set(intakeSpeed); 
+    }
+    public void translateMotor(double translateSpeed){
+        translate.set(translateSpeed);
     }
 
 

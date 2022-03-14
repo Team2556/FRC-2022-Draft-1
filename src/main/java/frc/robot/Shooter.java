@@ -33,13 +33,17 @@ public class Shooter {
         shooterMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
     }
 
+    public void shooterTeleop(){
+        shooterMotor(Math.abs(oi.targetSpeed()));
+        hoodMotor(oi.hoodSpeed());
+    }
 
 
     
-    public void shooterMotor(){
+    public void shooterMotor(double targetSpeed){
         shooterMotor.setNeutralMode(NeutralMode.Coast);
         double fxspd = shooterMotor.getSelectedSensorVelocity();
-        double difference  = Math.abs(oi.targetSpeed()) - Math.abs(fxspd);
+        double difference  = targetSpeed - Math.abs(fxspd);
         double error = difference*Kp;
         LastOutput = LastOutput + error;
         percentOutput = LastOutput;
@@ -52,13 +56,14 @@ public class Shooter {
         // SmartDashboard.putNumber("error", error);
     }
 
-    public void hoodMotor(){
-        hoodMotor.set(ControlMode.PercentOutput, oi.hoodSpeed());
+    public void hoodMotor(double hoodSpeed){
+        hoodMotor.set(ControlMode.PercentOutput, hoodSpeed);
         }
 
-    public void hoodEncoder(){
+    public double hoodEncoder(){
         double hoodPos = hoodMotor.getSelectedSensorPosition();
         SmartDashboard.putNumber("HoodPosition", hoodPos);
+        return hoodPos;
     }
     
     
