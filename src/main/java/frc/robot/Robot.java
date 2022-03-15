@@ -63,7 +63,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    //drive.reverseRightMotors(oi.Xbox1.getAButtonReleased());
+    drive.reverseRightMotors(oi.Xbox1.getAButtonReleased());
     drive.driveTeleop();
     intake.intakeTeleop();
     shooter.shooterTeleop();

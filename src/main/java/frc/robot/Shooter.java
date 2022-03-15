@@ -35,7 +35,7 @@ public class Shooter {
 
     public void shooterTeleop(){
         shooterMotor(Math.abs(oi.targetSpeedManual()));
-        hoodMotor(oi.hoodSpeed());
+        //hoodMotor(oi.hoodSpeed());
     }
 
 

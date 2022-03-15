@@ -19,7 +19,7 @@ public class Intake {
     public void intakeTeleop(){
         intakeMotor(oi.intakeSpeed());
         
-        if(oi.Xbox1.getLeftBumper() && translateSwitch.get() == true){
+        if(oi.Xbox1.getRightTriggerAxis() >=0.9 && translateSwitch.get() == true){
             translateMotor(-0.1);
         }
         else{

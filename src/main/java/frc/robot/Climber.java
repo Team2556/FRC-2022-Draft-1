@@ -31,12 +31,14 @@ public class Climber {
         winchMotor.configFactoryDefault();
         winchMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         winchMotor.setSelectedSensorPosition(0);
+
     }
 
     public void climbTeleop(){
        // winchMotor(oi.winchSpeed());
        // winchPistons(oi.winchUp());
         //clampPiston(oi.clampOut());
+        yellowMotor(oi.winchSpeed());
     }
 
 

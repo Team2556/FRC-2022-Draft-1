@@ -89,7 +89,7 @@ public class Drive {
         double mRotate = 0.75*oi.mRotate();
 
         double aForward = -oi.aForward();
-        double aRotate = -0.75 *oi.aRotate();
+        double aRotate = 0.75 *oi.aRotate();
         //Values taken from the OI to be fed into this program. 
 
         if (dropped){ //Takes in boolean and switches solenoid output based on it. 

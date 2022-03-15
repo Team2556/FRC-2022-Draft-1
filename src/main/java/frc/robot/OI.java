@@ -31,7 +31,7 @@ public class OI {
     boolean dropped = false;
     boolean dropped(){
        
-        if(Xbox1.getBButtonReleased() && Xbox1.getRightTriggerAxis() >= 0.5){
+        if(Xbox1.getBButtonReleased() && Xbox1.getLeftTriggerAxis() >= 0.5){
             dropped = !dropped;
         }
         return dropped;
@@ -146,7 +146,7 @@ public class OI {
    
     double intakeRunSpeed = -1;
     double intakeSpeed(){
-        if(Xbox1.getLeftBumper()){
+        if(Xbox1.getRightTriggerAxis() >=0.9){
             return intakeRunSpeed;
         }
         // else if(Xbox1.getRightBumper()){
@@ -172,7 +172,7 @@ public class OI {
     }
     boolean intakeOut = true;
     boolean intakeSolenoid(){
-        if(Xbox1.getLeftBumper()){
+        if(Xbox1.getRightTriggerAxis() >=0.9){
             intakeOut = false;
         }
         else{
