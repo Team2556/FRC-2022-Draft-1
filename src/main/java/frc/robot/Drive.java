@@ -154,6 +154,7 @@ public class Drive {
             rFMotor.setInverted(reverse);
             rRMotor.setInverted(reverse);
             SmartDashboard.putBoolean("rF is Inverted", rFMotor.getInverted());
+            SmartDashboard.putBoolean("rR is inverted", rRMotor.getInverted());
     
     }
 

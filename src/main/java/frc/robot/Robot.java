@@ -56,7 +56,16 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    //drive.dualDrivebase();
+    drive.dualDrivebase();
+    SmartDashboard.putBoolean("limitswitch1", drive.lFLimit.get());
+    SmartDashboard.putBoolean("limitswitch2", drive.lRLimit.get());
+    SmartDashboard.putBoolean("limitswitch3", drive.rFLimit.get());
+    SmartDashboard.putBoolean("limitswitch4", drive.rRLimit.get());
+   drive.reverseRightMotors(oi.Xbox1.getAButtonReleased());
+   
+   
+   
+   
     //drive.reverseRightMotors(oi.Xbox1.getAButtonReleased());
   }
 
