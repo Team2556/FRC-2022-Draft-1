@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
@@ -16,15 +17,15 @@ public class Intake {
     DoubleSolenoid intakeSolenoid = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.intakeForwardChannel, Constants.intakeReverseChannel);
 
     public void intakeTeleop(){
-        intakeMotor(oi.intakeSpeed());
+       // intakeMotor(oi.intakeSpeed());
         
         if(oi.Xbox1.getLeftBumper() && translateSwitch.get() == true){
-            translateMotor(oi.translateRunSpeed);
+            translateMotor(-0.1);
         }
         else{
             translateMotor(oi.translateSpeed());
         }
-        intakeSolenoid(oi.intakeSolenoid());
+       // intakeSolenoid(oi.intakeSolenoid());
     }
 
     public void intakeMotor(double intakeSpeed){
@@ -34,8 +35,6 @@ public class Intake {
         translate.set(translateSpeed);
     }
 
-
-
     public void intakeSolenoid(boolean intakeSolenoidOut){
          if (intakeSolenoidOut){ //Takes in boolean and switches solenoid output based on it. 
             intakeSolenoid.set(Value.kForward);
@@ -43,5 +42,9 @@ public class Intake {
         else {
             intakeSolenoid.set(Value.kReverse);
             }
+    }
+
+    public void translateSwitchTest(){
+        SmartDashboard.putBoolean("translateSwitch", translateSwitch.get());
     }
 }

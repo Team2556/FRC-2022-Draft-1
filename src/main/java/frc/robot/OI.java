@@ -1,6 +1,8 @@
 package frc.robot;
 //import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
 
+import javax.lang.model.util.ElementScanner6;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -116,6 +118,19 @@ public class OI {
         return clampOut;
     }
 
+    double yellowMotorSpeed(){
+        if(Xbox2.getRightTriggerAxis() >= 0.5)
+        {
+            return 0.5;
+        }
+        else if (Xbox2.getLeftTriggerAxis() >=0.5)
+        {
+            return -0.5;
+        }
+        else{
+            return 0; 
+        }
+    }
 
 
 
@@ -128,7 +143,7 @@ public class OI {
    
    
    
-    double intakeRunSpeed = 0.75;
+    double intakeRunSpeed = -1;
     double intakeSpeed(){
         if(Xbox1.getLeftBumper()){
             return intakeRunSpeed;
@@ -141,7 +156,7 @@ public class OI {
         }
       }
 
-    double translateRunSpeed = -0.75;
+    double translateRunSpeed = -0.5;
     double translateSpeed(){
         if(Xbox2.getLeftBumper()){
             return translateRunSpeed;
@@ -166,7 +181,7 @@ public class OI {
         // return Xbox1.getAButton();
     }
 
-    double speed = -13000;
+    double speed = -19250;
     double targetSpeed(){
      SmartDashboard.putNumber("Target Shooter Speed", speed);
         if(Xbox2.getBackButtonReleased()){

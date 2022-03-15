@@ -1,11 +1,18 @@
 package frc.robot;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
+import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+
+import java.util.concurrent.CancellationException;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class Climber {
@@ -15,7 +22,8 @@ public class Climber {
     private DoubleSolenoid clampPiston = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.clampForwardChannel, Constants.clampReverseChannel); //double solenoid 4,5
     private TalonSRX winchMotor = new TalonSRX(Constants.winchMotorPort);
     private DutyCycleEncoder winchEncoder = new DutyCycleEncoder(Constants.winchEncoderPort);
-
+    private CANSparkMax yellowMotor = new CANSparkMax(Constants.yellowMotorPort, MotorType.kBrushless);
+    RelativeEncoder yellowEncoder = yellowMotor.getEncoder();
     public void climbInit(){
         yellowLeft.set(Value.kReverse);
         yellowRight.set(Value.kReverse);
@@ -53,6 +61,10 @@ public class Climber {
             yellowLeft.set(Value.kReverse);
             yellowRight.set(Value.kReverse);
             }
+    }
+
+    public void yellowMotor(double yellowSpeed){
+
     }
            
     public void clampPiston(boolean clampOn){

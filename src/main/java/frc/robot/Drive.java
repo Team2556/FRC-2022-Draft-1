@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 // import edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 
@@ -13,7 +14,11 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.DigitalInput;
+
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxRelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Drive {
@@ -25,8 +30,8 @@ public class Drive {
     private CANSparkMax rRMotor = new CANSparkMax(Constants.rRMotorPort, MotorType.kBrushless);
     private CANSparkMax lFMotor = new CANSparkMax(Constants.lFMotorPort, MotorType.kBrushless);
     private CANSparkMax lRMotor = new CANSparkMax(Constants.lRMotorPort, MotorType.kBrushless);
-
-
+   // RelativeEncoder rFEncoder = new RelativeEncoder(SparkMaxRelativeEncoder.Type,Constants.rFMotorPort);
+    RelativeEncoder lFEncoder = lFMotor.getEncoder();
     DigitalInput rFLimit = new DigitalInput(Constants.rFLimitPort);
     DigitalInput rRLimit = new DigitalInput(Constants.rRLimitPort);
     DigitalInput lFLimit = new DigitalInput(Constants.lFLimitPort);
@@ -43,7 +48,7 @@ public class Drive {
     Compressor compressor = new Compressor(Constants.PCMLPort, PneumaticsModuleType.CTREPCM);
     private DoubleSolenoid frontdrivePistons = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.fDPForwardChannel, Constants.fDPReverseChannel);
     private DoubleSolenoid reardrivePistons = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.rDPForwardChannel, Constants.rDPReverseChannel);
-
+    
 
     //drive objects
     MecanumDrive driveMecanum = new MecanumDrive(lFMotor, lRMotor, rFMotor, rRMotor);
@@ -154,9 +159,13 @@ public class Drive {
             rFMotor.setInverted(reverse);
             rRMotor.setInverted(reverse);
             SmartDashboard.putBoolean("rF is Inverted", rFMotor.getInverted());
-    
     }
-
+    public boolean rightMotorsReversed(){
+        return rFMotor.getInverted();
+    }
+    public double lFEncoderValue(){
+        return lFEncoder.getPosition(); //negative position is forward
+    }
 
 
 

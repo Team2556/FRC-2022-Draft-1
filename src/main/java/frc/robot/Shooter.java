@@ -22,7 +22,7 @@ public class Shooter {
         hoodMotor = new TalonSRX(Constants.hoodMotorPort);
         percentOutput = 0;
         LastOutput = 0;
-        Kp = 0.000002;
+        Kp = 0.00000105;
     }
 
     public void shooterInit(){
@@ -43,21 +43,39 @@ public class Shooter {
     public void shooterMotor(double targetSpeed){
         shooterMotor.setNeutralMode(NeutralMode.Coast);
         double fxspd = shooterMotor.getSelectedSensorVelocity();
-        double difference  = targetSpeed - Math.abs(fxspd);
+        double difference  = Math.abs(targetSpeed) - Math.abs(fxspd);
         double error = difference*Kp;
         LastOutput = LastOutput + error;
         percentOutput = LastOutput;
+        if(percentOutput > 1){
+            percentOutput = 1;
+        }
+        if (targetSpeed == 0){
+            percentOutput = 0;
+            difference = 0;
+            error = 0;
+            LastOutput = 0;
+        }
+       // if(oi.Xbox2.getRightBumper()){
         shooterMotor.set(ControlMode.PercentOutput, -percentOutput);
-   
-        // SmartDashboard.putNumber("difference", difference);
-        // SmartDashboard.putNumber("FX speed", fxspd);
-        // SmartDashboard.putNumber("oitargetSpeed", oi.targetSpeed());
-        // SmartDashboard.putNumber("percentOutput", percentOutput);
-        // SmartDashboard.putNumber("error", error);
+       // }
+        // else{
+        //     shooterMotor.set(ControlMode.PercentOutput, 0);
+        // }
+        SmartDashboard.putNumber("difference", difference);
+        SmartDashboard.putNumber("FX speed", fxspd);
+        SmartDashboard.putNumber("oitargetSpeed", oi.targetSpeed());
+        SmartDashboard.putNumber("percentOutput", percentOutput);
+        SmartDashboard.putNumber("error", error);
     }
 
     public void hoodMotor(double hoodSpeed){
+        if(hoodSpeed!=0){
         hoodMotor.set(ControlMode.PercentOutput, hoodSpeed);
+        }
+        else{
+            hoodMotor.set(ControlMode.PercentOutput, 0);
+        }
         }
 
     public double hoodEncoder(){

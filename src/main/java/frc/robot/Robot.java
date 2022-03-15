@@ -33,7 +33,11 @@ public class Robot extends TimedRobot {
 
  
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    SmartDashboard.putBoolean("rF is Inverted", drive.rightMotorsReversed());
+    // drive.lFEncoder.setInverted(true);
+    // SmartDashboard.putBoolean("lFEncoder Inverted", drive.lFEncoder.getInverted());
+  }
 
   @Override
   public void autonomousInit() {
@@ -41,7 +45,7 @@ public class Robot extends TimedRobot {
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
     auto.step = 0;
-
+    drive.lFEncoder.setPosition(0);
   }
 
   @Override
@@ -51,13 +55,22 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    //intake.intakeSolenoid(true);
+   // intake.intakeSolenoid(true); //up
+    drive.lFEncoder.setPosition(0);
+    shooter.shooterInit();
+    
+    //climber.clampPiston(true);
   }
 
   @Override
   public void teleopPeriodic() {
+    SmartDashboard.putNumber("encoder lF", drive.lFEncoderValue());
+    // intake.translateSwitchTest();
     //drive.dualDrivebase();
     //drive.reverseRightMotors(oi.Xbox1.getAButtonReleased());
+    intake.intakeTeleop();
+    shooter.shooterTeleop();
+    SmartDashboard.putNumber("hood Encoder", shooter.hoodEncoder());
   }
 
   @Override

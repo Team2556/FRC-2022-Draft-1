@@ -27,6 +27,7 @@ public class Auto {
         double currentDistance = limelight.limeLightDistanceInches();
         double targetDistance = 135;
         double targetDistance2 = 120;
+        double encoderSafetyVal = -20;
 
         double shooterSpeed = Math.abs(-14000); //0
         // boolean twoBallsPickedUp = false;
@@ -38,10 +39,10 @@ public class Auto {
         switch(step){
             case 0:
                 shooter.shooterMotor(shooterSpeed);
-                if (currentDistance < targetDistance){
+                if (currentDistance < targetDistance || drive.lFEncoder.getPosition() > encoderSafetyVal){
                   drive.mecanumDrive(-0.2, 0, 0);
                 }
-                else if (currentDistance >= targetDistance){
+                else if (currentDistance >= targetDistance && drive.lFEncoder.getPosition() < encoderSafetyVal){
                     step = 1;
                 }
                 else
