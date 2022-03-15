@@ -34,7 +34,7 @@ public class Shooter {
     }
 
     public void shooterTeleop(){
-        shooterMotor(Math.abs(oi.targetSpeed()));
+        shooterMotor(Math.abs(oi.targetSpeedManual()));
         hoodMotor(oi.hoodSpeed());
     }
 
@@ -64,7 +64,7 @@ public class Shooter {
         // }
         SmartDashboard.putNumber("difference", difference);
         SmartDashboard.putNumber("FX speed", fxspd);
-        SmartDashboard.putNumber("oitargetSpeed", oi.targetSpeed());
+        SmartDashboard.putNumber("oitargetSpeed", oi.targetSpeedManual());
         SmartDashboard.putNumber("percentOutput", percentOutput);
         SmartDashboard.putNumber("error", error);
     }
@@ -77,6 +77,10 @@ public class Shooter {
             hoodMotor.set(ControlMode.PercentOutput, 0);
         }
         }
+
+    public void hoodMotorRunToPos(double targetPos){
+        hoodMotor.set(ControlMode.Position, targetPos);
+    }
 
     public double hoodEncoder(){
         double hoodPos = hoodMotor.getSelectedSensorPosition();

@@ -58,13 +58,15 @@ public class Drive {
 
 
 
-
+    public void driveTeleop(){
+        dualDrivebase();
+    }
 
     public void drivebaseInit(){
         
-        rFMotor.setInverted(true);
-        rRMotor.setInverted(true);
-        SmartDashboard.putString("Right motors reversed", "Yes");
+        // rFMotor.setInverted(true);
+        // rRMotor.setInverted(true);
+        // SmartDashboard.putString("Right motors reversed", "Yes");
     }
 
     public void mecanumDrive(double ySpeed, double xSpeed, double zRotate){

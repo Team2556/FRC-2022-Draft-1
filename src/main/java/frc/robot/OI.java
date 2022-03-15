@@ -14,7 +14,8 @@ public class OI {
     XboxController Xbox2 = new XboxController(1);
 
     double deadzone = 0.2;
-
+    double shootAutomatedPos = 0;
+    double hoodAutomatedPos = 0;
 
 
    
@@ -182,7 +183,7 @@ public class OI {
     }
 
     double speed = -19250;
-    double targetSpeed(){
+    double targetSpeedManual(){
      SmartDashboard.putNumber("Target Shooter Speed", speed);
         if(Xbox2.getBackButtonReleased()){
             speed += 250;
@@ -200,7 +201,7 @@ public class OI {
                return 0;
         }
       }
-
+      
     double hoodSpeed(){
         if (Xbox1.getLeftTriggerAxis() == 1){
             return 0.15;
@@ -214,7 +215,13 @@ public class OI {
         //return 0;
     }
 
-
+    
+    double hoodConfigs(){
+    return hoodAutomatedPos;
+    }
+    double shootConfigs(){
+    return shootAutomatedPos;
+    }
 
 
 

@@ -17,7 +17,7 @@ public class Intake {
     DoubleSolenoid intakeSolenoid = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.intakeForwardChannel, Constants.intakeReverseChannel);
 
     public void intakeTeleop(){
-       // intakeMotor(oi.intakeSpeed());
+        intakeMotor(oi.intakeSpeed());
         
         if(oi.Xbox1.getLeftBumper() && translateSwitch.get() == true){
             translateMotor(-0.1);
@@ -25,7 +25,7 @@ public class Intake {
         else{
             translateMotor(oi.translateSpeed());
         }
-       // intakeSolenoid(oi.intakeSolenoid());
+        intakeSolenoid(oi.intakeSolenoid());
     }
 
     public void intakeMotor(double intakeSpeed){

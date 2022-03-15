@@ -22,8 +22,8 @@ public class Climber {
     private DoubleSolenoid clampPiston = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.clampForwardChannel, Constants.clampReverseChannel); //double solenoid 4,5
     private TalonSRX winchMotor = new TalonSRX(Constants.winchMotorPort);
     private DutyCycleEncoder winchEncoder = new DutyCycleEncoder(Constants.winchEncoderPort);
-    private CANSparkMax yellowMotor = new CANSparkMax(Constants.yellowMotorPort, MotorType.kBrushless);
-    RelativeEncoder yellowEncoder = yellowMotor.getEncoder();
+    //private CANSparkMax yellowMotor = new CANSparkMax(Constants.yellowMotorPort, MotorType.kBrushless);
+    //RelativeEncoder yellowEncoder = yellowMotor.getEncoder();
     public void climbInit(){
         yellowLeft.set(Value.kReverse);
         yellowRight.set(Value.kReverse);
@@ -34,9 +34,9 @@ public class Climber {
     }
 
     public void climbTeleop(){
-        winchMotor(oi.winchSpeed());
-        winchPistons(oi.winchUp());
-        clampPiston(oi.clampOut());
+       // winchMotor(oi.winchSpeed());
+       // winchPistons(oi.winchUp());
+        //clampPiston(oi.clampOut());
     }
 
 

@@ -50,27 +50,23 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-  auto.autoDraft1();
+  //auto.autoDraft1();
   }
 
   @Override
   public void teleopInit() {
-   // intake.intakeSolenoid(true); //up
+    //intake.intakeSolenoid(true); //up
     drive.lFEncoder.setPosition(0);
     shooter.shooterInit();
-    
     //climber.clampPiston(true);
   }
 
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putNumber("encoder lF", drive.lFEncoderValue());
-    // intake.translateSwitchTest();
-    //drive.dualDrivebase();
     //drive.reverseRightMotors(oi.Xbox1.getAButtonReleased());
+    drive.driveTeleop();
     intake.intakeTeleop();
     shooter.shooterTeleop();
-    SmartDashboard.putNumber("hood Encoder", shooter.hoodEncoder());
   }
 
   @Override
