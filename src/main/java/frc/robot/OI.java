@@ -1,8 +1,5 @@
 package frc.robot;
 //import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
-
-import javax.lang.model.util.ElementScanner6;
-
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -14,7 +11,7 @@ public class OI {
     XboxController Xbox2 = new XboxController(1);
 
     double deadzone = 0.2;
-    double shootAutomatedPos = 0;
+    double shootAutomatedSpeed = 0;
     double hoodAutomatedPos = 0;
 
 
@@ -68,7 +65,7 @@ public class OI {
         }
         return mRotateSpeed;
     }
-    //tank drive values
+    //arcade drive values
     double aForward(){
         return Xbox1.getLeftY();
     }
@@ -92,11 +89,11 @@ public class OI {
 
 
     double winchSpeed(){
-        if(Xbox1.getRightBumper()){
-            return -0.5;
+        if(Xbox2.getRightTriggerAxis() >=0.5){
+            return -1;
         }
-        else if(Xbox1.getLeftBumper()){
-            return 0.5;
+        else if(Xbox2.getLeftTriggerAxis() >=0.5){
+            return 1;
         }
         else{
             return 0;
@@ -106,14 +103,14 @@ public class OI {
     boolean winchUp = false;
     boolean winchUp(){
        
-        if(Xbox1.getXButtonReleased()){
+        if(Xbox2.getXButtonReleased()){
             winchUp = !winchUp;
         }
         return winchUp;
     }
     boolean clampOut = false;
     boolean clampOut(){
-        if(Xbox1.getAButtonReleased()){
+        if(Xbox2.getAButtonReleased()){
             clampOut = !clampOut;
         }
         return clampOut;
@@ -216,11 +213,44 @@ public class OI {
     }
 
     
-    double hoodConfigs(){
+    int shooterConfigInt = 1;
+    public void shooterTeleopConfigSwitch(){
+        switch (Xbox2.getPOV()){
+            case 180:
+            shooterConfigInt = 1;
+            break;
+            case 270:
+            shooterConfigInt = 2;
+            break;
+            case 0:
+            shooterConfigInt = 3;
+            break;
+        }
+        switch (shooterConfigInt){
+            case 1: //at the edge of tarmac
+                hoodAutomatedPos = 0;
+                shootAutomatedSpeed = -13250;
+                SmartDashboard.putString("Shooter Configuration", "Edge of Tarmack");
+            break;
+            case 2: //from launchpad
+                hoodAutomatedPos = 1322;
+                shootAutomatedSpeed = -15750;
+                SmartDashboard.putString("Shooter Configuration", "Launchpad");
+            break;
+            case 3: //from back wall
+                hoodAutomatedPos = 1830;
+                shootAutomatedSpeed = -20000;            
+                SmartDashboard.putString("Shooter Configuration", "Back Wall");
+
+            break;
+        }
+    }
+
+    public double hoodConfigs(){
     return hoodAutomatedPos;
     }
-    double shootConfigs(){
-    return shootAutomatedPos;
+    public double shootConfigs(){
+    return shootAutomatedSpeed;
     }
 
 

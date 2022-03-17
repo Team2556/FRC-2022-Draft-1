@@ -1,7 +1,4 @@
 package frc.robot;
-
-import javax.lang.model.util.ElementScanner6;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Auto {
@@ -10,10 +7,6 @@ public class Auto {
     Intake intake;
     Shooter shooter;
     int step = 0;
-
-    public Auto(){
-
-    }
 
     public Auto(Drive drv, Intake in, Shooter shot, Limelight lim){
         drive = drv;
@@ -33,9 +26,9 @@ public class Auto {
         // boolean twoBallsPickedUp = false;
         // boolean oneBallPickedUp = false;
         // double shooterDeadzone = 100;
-        SmartDashboard.putNumber("currDist", currentDistance);
-        SmartDashboard.putNumber("targetDist", targetDistance);
-        SmartDashboard.putNumber("auto step", step);
+        // SmartDashboard.putNumber("currDist", currentDistance);
+        // SmartDashboard.putNumber("targetDist", targetDistance);
+        // SmartDashboard.putNumber("auto step", step);
         switch(step){
             case 0:
                 shooter.shooterMotor(shooterSpeed);

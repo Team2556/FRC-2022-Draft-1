@@ -22,11 +22,12 @@ public class Climber {
     private DoubleSolenoid clampPiston = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.clampForwardChannel, Constants.clampReverseChannel); //double solenoid 4,5
     private TalonSRX winchMotor = new TalonSRX(Constants.winchMotorPort);
     private DutyCycleEncoder winchEncoder = new DutyCycleEncoder(Constants.winchEncoderPort);
-    //private CANSparkMax yellowMotor = new CANSparkMax(Constants.yellowMotorPort, MotorType.kBrushless);
-    //RelativeEncoder yellowEncoder = yellowMotor.getEncoder();
+    private CANSparkMax yellowMotor = new CANSparkMax(Constants.yellowMotorPort, MotorType.kBrushless);
+    RelativeEncoder yellowEncoder = yellowMotor.getEncoder();
+
     public void climbInit(){
-        yellowLeft.set(Value.kReverse);
-        yellowRight.set(Value.kReverse);
+        // yellowLeft.set(Value.kReverse);
+        // yellowRight.set(Value.kReverse);
         clampPiston.set(Value.kReverse);
         winchMotor.configFactoryDefault();
         winchMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
@@ -35,9 +36,8 @@ public class Climber {
     }
 
     public void climbTeleop(){
-       // winchMotor(oi.winchSpeed());
-       // winchPistons(oi.winchUp());
-        //clampPiston(oi.clampOut());
+        winchPistons(oi.winchUp());
+        clampPiston(oi.clampOut());
         yellowMotor(oi.winchSpeed());
     }
 
@@ -46,10 +46,9 @@ public class Climber {
 
 
 
-    public void winchMotor(double winchSpeed){
-        winchMotor.set(ControlMode.PercentOutput, winchSpeed);
-        } // temp b button and y button
-        // y in b out. negative speed in, positive speed out.
+    // public void winchMotor(double winchSpeed){
+    //     winchMotor.set(ControlMode.PercentOutput, winchSpeed);
+    //     } 
 
 
 
@@ -66,7 +65,7 @@ public class Climber {
     }
 
     public void yellowMotor(double yellowSpeed){
-
+        yellowMotor.set(yellowSpeed);
     }
            
     public void clampPiston(boolean clampOn){

@@ -63,7 +63,6 @@ public class Drive {
     }
 
     public void drivebaseInit(){
-        
         // rFMotor.setInverted(true);
         // rRMotor.setInverted(true);
         // SmartDashboard.putString("Right motors reversed", "Yes");
