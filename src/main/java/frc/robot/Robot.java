@@ -14,21 +14,29 @@ public class Robot extends TimedRobot {
   Shooter shooter = new Shooter();
   Climber climber = new Climber();
   Limelight limelight = new Limelight();
+  CargoVision cargoVision = new CargoVision();
   OI oi = new OI();
-  Auto auto = new Auto(drive, intake, shooter, limelight);
-  private static final String kDefaultAuto = "Default";
-  private static final String kCustomAuto = "My Auto";
+  Auto auto = new Auto(drive, intake, shooter, limelight, cargoVision);
+  private static final String kRedAuto = "Red Auto";
+  private static final String kBlueAuto = "Blue Auto";
   private String m_autoSelected;
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
-
+  public final SendableChooser<String> m_chooser = new SendableChooser<>();
+  
 
   @Override
   public void robotInit() {
-    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("My Auto", kCustomAuto);
+    m_chooser.setDefaultOption("Red Auto", kRedAuto);
+    m_chooser.addOption("Blue Auto", kBlueAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    //drive.drivebaseInit(); apparently motors can't be reversed 
-    //shooter.shooterInit();
+    if (m_chooser.getSelected() == kRedAuto) {
+      auto.autoInit(Constants.redAlliance);
+    }
+    else if (m_chooser.getSelected() == kBlueAuto) {
+      auto.autoInit(Constants.blueAlliance);
+    }
+    drive.drivebaseInit(); 
+    shooter.shooterInit();
+    intake.intakeInit();
   }
 
  
@@ -42,15 +50,13 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autoSelected = m_chooser.getSelected();
-    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
+    m_autoSelected = SmartDashboard.getString("Auto Selector", kRedAuto);
     System.out.println("Auto selected: " + m_autoSelected);
-    auto.step = 0;
-    drive.lFEncoder.setPosition(0);
   }
 
   @Override
   public void autonomousPeriodic() {
-  //auto.autoDraft1();
+  auto.auto();
   }
 
   @Override
@@ -63,7 +69,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    drive.reverseRightMotors(oi.Xbox1.getAButtonReleased());
     drive.driveTeleop();
     intake.intakeTeleop();
     shooter.shooterTeleop();

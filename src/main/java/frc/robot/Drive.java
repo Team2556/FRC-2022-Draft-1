@@ -25,6 +25,7 @@ public class Drive {
 
     OI oi = new OI();
     Limelight limeLight = new Limelight();
+    CargoVision cargoVision = new CargoVision();
 
     private CANSparkMax rFMotor = new CANSparkMax(Constants.rFMotorPort, MotorType.kBrushless);
     private CANSparkMax rRMotor = new CANSparkMax(Constants.rRMotorPort, MotorType.kBrushless);
@@ -63,8 +64,12 @@ public class Drive {
     }
 
     public void drivebaseInit(){
-        // rFMotor.setInverted(true);
-        // rRMotor.setInverted(true);
+        rFMotor.restoreFactoryDefaults();
+        rRMotor.restoreFactoryDefaults();
+        lFMotor.restoreFactoryDefaults();
+        lRMotor.restoreFactoryDefaults();
+        rFMotor.setInverted(true);
+        rRMotor.setInverted(true);
         // SmartDashboard.putString("Right motors reversed", "Yes");
     }
 
@@ -170,6 +175,16 @@ public class Drive {
 
 
 
+    public void driveToCargo() {
+        if(oi.cargoTurn) {
+            if(oi.dropped){
+                differentialDrive.arcadeDrive(0, cargoVision.getRotationValue());
+            }
+            else if(oi.dropped == false){
+                driveMecanum.driveCartesian(0, 0, cargoVision.getRotationValue());
+            }
+        }
+    }
 }
 
 

@@ -6,16 +6,24 @@ public class Auto {
     Limelight limelight;
     Intake intake;
     Shooter shooter;
+    CargoVision cargoVision;
     int step = 0;
 
-    public Auto(Drive drv, Intake in, Shooter shot, Limelight lim){
+    public Auto(Drive drv, Intake in, Shooter shot, Limelight lim, CargoVision cVis){
         drive = drv;
         intake = in;
         shooter = shot;
         limelight = lim;
+        cargoVision = cVis;
     }
    
-    public void autoDraft1(){
+    public void autoInit(int alliance) {
+        cargoVision.visionInit(alliance);
+        step = 0;
+        drive.lFEncoder.setPosition(0);
+    }
+
+    public void auto(){
         //go forwards and pick up ball, then shoot both balls. 
         double currentDistance = limelight.limeLightDistanceInches();
         double targetDistance = 135;
@@ -33,22 +41,20 @@ public class Auto {
             case 0:
                 shooter.shooterMotor(shooterSpeed);
                 if (currentDistance < targetDistance || drive.lFEncoder.getPosition() > encoderSafetyVal){
-                  drive.mecanumDrive(-0.2, 0, 0);
+                    drive.mecanumDrive(-0.2, 0, cargoVision.getRotationValue());
                 }
                 else if (currentDistance >= targetDistance && drive.lFEncoder.getPosition() < encoderSafetyVal){
                     step = 1;
-                }
-                else
-                {
                     drive.mecanumDrive(0, 0, 0);
                 }
+      
                 intake.intakeSolenoid(false);
                 intake.intakeMotor(-0.8);
                 intake.translateMotor(0);
             break;
             case 1: 
                 if (currentDistance > targetDistance2){
-                    drive.mecanumDrive(0.1, 0, 0);
+                    drive.mecanumDrive(0.1, 0, cargoVision.getRotationValue());
                 }
                 else{
                     drive.mecanumDrive(0, 0, 0);
@@ -71,5 +77,5 @@ public class Auto {
     
 
         }   
-}
+    }
 }

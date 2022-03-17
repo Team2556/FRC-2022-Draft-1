@@ -28,6 +28,12 @@ public class Constants {
     public static int shooterMotorPort = 7;
     public static int hoodMotorPort = 8;
 
+    //cargo vision PID constants
+    public static double visionP = 0.0075;
+
+    //cargo vision pipeline constants
+    public static int redAlliance = 1;
+    public static int blueAlliance = 2;
 
 
 

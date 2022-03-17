@@ -16,6 +16,10 @@ public class Intake {
     DigitalInput translateSwitch = new DigitalInput(8);
     DoubleSolenoid intakeSolenoid = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.intakeForwardChannel, Constants.intakeReverseChannel);
 
+    public void intakeInit() {
+        intake.restoreFactoryDefaults();
+    }
+
     public void intakeTeleop(){
         intakeMotor(oi.intakeSpeed());
         

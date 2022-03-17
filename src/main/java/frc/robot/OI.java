@@ -274,7 +274,17 @@ public class OI {
 
 
 
-
+    boolean cargoTurn = false;
+    boolean cargoTurn(){
+    if(Xbox1.getYButton()){
+        cargoTurn = true;
+    }    
+    else{
+        cargoTurn = false;
+    }
+    return cargoTurn;
+    
+    }
 
  
 
