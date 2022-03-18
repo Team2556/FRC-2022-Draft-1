@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 // import edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 
@@ -15,10 +14,8 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.DigitalInput;
 
-import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxRelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Drive {
@@ -128,9 +125,15 @@ public class Drive {
         if(oi.limeLightTurn)         {
             if(oi.dropped){
                 differentialDrive.arcadeDrive(0, limeLight.PIDC());
+                if (limeLight.PIDC() == 0) {
+                    SmartDashboard.putBoolean("Shooter Aimed", true);
+                }
+                else {
+                    SmartDashboard.putBoolean("Shooter Aimed", false);
+                }
             }
             else if(oi.dropped == false){
-                //driveMecanum.driveCartesian(0, 0, limeLight.PIDC(), 0);
+                driveMecanum.driveCartesian(0, 0, limeLight.PIDC(), 0);
             }
         }
         

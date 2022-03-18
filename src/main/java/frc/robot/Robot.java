@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
   Drive drive = new Drive();
   Intake intake = new Intake();
-  Shooter shooter = new Shooter();
+  Shooter shooter = new Shooter(intake);
   Climber climber = new Climber();
   Limelight limelight = new Limelight();
   CargoVision cargoVision = new CargoVision();
@@ -28,12 +28,12 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Red Auto", kRedAuto);
     m_chooser.addOption("Blue Auto", kBlueAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    if (m_chooser.getSelected() == kRedAuto) {
-      auto.autoInit(Constants.redAlliance);
-    }
-    else if (m_chooser.getSelected() == kBlueAuto) {
-      auto.autoInit(Constants.blueAlliance);
-    }
+    // if (m_chooser.getSelected() == kRedAuto) {
+    //   auto.autoInit(Constants.redAlliance);
+    // }
+    // else if (m_chooser.getSelected() == kBlueAuto) {
+    //   auto.autoInit(Constants.blueAlliance);
+    // }
     drive.drivebaseInit(); 
     shooter.shooterInit();
     intake.intakeInit();
@@ -49,6 +49,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    auto.autoInit(1);
     m_autoSelected = m_chooser.getSelected();
     m_autoSelected = SmartDashboard.getString("Auto Selector", kRedAuto);
     System.out.println("Auto selected: " + m_autoSelected);
@@ -56,7 +57,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-  auto.auto();
+  auto.autoEncoder();
+  SmartDashboard.putNumber("lFEncoder", drive.lFEncoderValue());
+
   }
 
   @Override
@@ -65,13 +68,20 @@ public class Robot extends TimedRobot {
     drive.lFEncoder.setPosition(0);
     shooter.shooterInit();
     //climber.clampPiston(true);
+    climber.climbInit();
   }
 
   @Override
   public void teleopPeriodic() {
+    cargoVision.getDriverView();
     drive.driveTeleop();
     intake.intakeTeleop();
     shooter.shooterTeleop();
+    climber.climbTeleop();
+    SmartDashboard.putNumber("lFEncoder", drive.lFEncoderValue());
+    // if (oi.climb) {
+    //   climber.hook();
+    // }
   }
 
   @Override

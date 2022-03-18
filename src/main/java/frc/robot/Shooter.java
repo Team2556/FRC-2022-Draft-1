@@ -10,19 +10,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter {
     OI oi = new OI();
-    
+    Intake intake; 
     private TalonFX shooterMotor;
     private TalonSRX hoodMotor;
     private double percentOutput;
     private double LastOutput; 
     private double Kp;
 
-    public Shooter(){
+    public Shooter(Intake in){
         shooterMotor = new TalonFX(Constants.shooterMotorPort);
         hoodMotor = new TalonSRX(Constants.hoodMotorPort);
         percentOutput = 0;
         LastOutput = 0;
         Kp = 0.00000105;
+        intake = in;
     }
 
     public void shooterInit(){
@@ -34,13 +35,13 @@ public class Shooter {
     }
 
     public void shooterTeleop(){
-       // shooterMotor(Math.abs(oi.targetSpeedManual()));
+    shooterMotor(Math.abs(oi.targetSpeedManual()));
         //hoodMotor(oi.hoodSpeed());
-        shooterMotor(oi.shootConfigs());
+        // shooterMotor(oi.shootConfigs());
         hoodMotor(oi.hoodConfigs());
     }
 
-
+    boolean shouldShoot;
     
     public void shooterMotor(double targetSpeed){
         shooterMotor.setNeutralMode(NeutralMode.Coast);
@@ -57,18 +58,29 @@ public class Shooter {
             difference = 0;
             error = 0;
             LastOutput = 0;
+        }  
+        if(Math.abs(difference)<100){
+            shouldShoot=true;
+           // intake.translateMotor(oi.translateRunSpeed);
         }
+        else{shouldShoot=false;}   
+        SmartDashboard.putBoolean("ShouldYouShoot", shouldShoot);
+
+
+
+
+    
        // if(oi.Xbox2.getRightBumper()){
         shooterMotor.set(ControlMode.PercentOutput, -percentOutput);
        // }
         // else{
         //     shooterMotor.set(ControlMode.PercentOutput, 0);
         // }
-        SmartDashboard.putNumber("difference", difference);
+        // SmartDashboard.putNumber("difference", difference);
         SmartDashboard.putNumber("FX speed", fxspd);
         SmartDashboard.putNumber("oitargetSpeed", oi.targetSpeedManual());
-        SmartDashboard.putNumber("percentOutput", percentOutput);
-        SmartDashboard.putNumber("error", error);
+        // SmartDashboard.putNumber("percentOutput", percentOutput);
+        // SmartDashboard.putNumber("error", error);
     }
 
     public void hoodMotor(double hoodSpeed){

@@ -21,4 +21,8 @@ public class CargoVision extends TimedRobot {
         }
         return rotationValue;
     }
+
+    public void getDriverView() {
+        camera.setDriverMode(true);
+    }
 }

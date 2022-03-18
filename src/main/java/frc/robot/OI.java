@@ -73,6 +73,8 @@ public class OI {
         return Xbox1.getRightX();
     }
 
+    boolean climb = Xbox2.getBButton();
+
 
 
 
@@ -90,7 +92,7 @@ public class OI {
 
     double winchSpeed(){
         if(Xbox2.getRightTriggerAxis() >=0.5){
-            return -1;
+            return -0.5;
         }
         else if(Xbox2.getLeftTriggerAxis() >=0.5){
             return 1;
@@ -119,7 +121,7 @@ public class OI {
     double yellowMotorSpeed(){
         if(Xbox2.getRightTriggerAxis() >= 0.5)
         {
-            return 0.5;
+            return 0.25;
         }
         else if (Xbox2.getLeftTriggerAxis() >=0.5)
         {
@@ -128,6 +130,29 @@ public class OI {
         else{
             return 0; 
         }
+    }
+    boolean climbStepBool1 = false;
+    boolean climbStepBool2 = false;
+    boolean climbStepBool3 = false;
+    public boolean climbStep(){
+        // if(climbStepBool2 == true && climbStepBool1 == false){
+        //     climbStepBool2 = false;
+        // }
+        // if(Xbox2.getBButtonReleased() && climbStepBool1 != true){
+        //     climbStepBool1 = true;
+        // }
+        // else if(Xbox2.getBButtonReleased() && climbStepBool1 == true){
+        //     climbStepBool2 = true;
+        //     climbStepBool1 = false;
+        // }
+        // if(climbStepBool2){
+        //     return true;
+
+        // }
+        // else{
+        //     return false;
+        // }
+        return Xbox2.getBButtonReleased();
     }
 
 
@@ -179,7 +204,7 @@ public class OI {
         // return Xbox1.getAButton();
     }
 
-    double speed = -19250;
+    double speed = -13250;
     double targetSpeedManual(){
      SmartDashboard.putNumber("Target Shooter Speed", speed);
         if(Xbox2.getBackButtonReleased()){
