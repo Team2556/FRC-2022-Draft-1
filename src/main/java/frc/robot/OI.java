@@ -13,7 +13,8 @@ public class OI {
     double deadzone = 0.2;
     double shootAutomatedSpeed = 0;
     double hoodAutomatedPos = 0;
-
+    boolean shootNow = false;
+    
 
    
    
@@ -121,7 +122,7 @@ public class OI {
     double yellowMotorSpeed(){
         if(Xbox2.getRightTriggerAxis() >= 0.5)
         {
-            return 0.25;
+            return 0.75;
         }
         else if (Xbox2.getLeftTriggerAxis() >=0.5)
         {
@@ -135,6 +136,8 @@ public class OI {
     boolean climbStepBool2 = false;
     boolean climbStepBool3 = false;
     public boolean climbStep(){
+        return Xbox2.getBButtonPressed();
+
         // if(climbStepBool2 == true && climbStepBool1 == false){
         //     climbStepBool2 = false;
         // }
@@ -152,10 +155,20 @@ public class OI {
         // else{
         //     return false;
         // }
-        return Xbox2.getBButtonReleased();
     }
 
-
+    boolean winchPosBool = false;
+    double winchPos(){
+        if(Xbox2.getBButtonReleased()){
+            winchPosBool = !winchPosBool;
+        }
+        if(winchPosBool){
+            return -80;
+        }
+        else{
+            return 0;
+        }
+    }
 
 
    
@@ -183,7 +196,7 @@ public class OI {
     double translateSpeed(){
         if(Xbox2.getLeftBumper()){
             return translateRunSpeed;
-        }   
+        }  
         // else if(Xbox1.getRightBumper()){
         //     return 1;
         // }
@@ -241,13 +254,13 @@ public class OI {
     int shooterConfigInt = 1;
     public void shooterTeleopConfigSwitch(){
         switch (Xbox2.getPOV()){
-            case 180:
+            case 270:
             shooterConfigInt = 1;
             break;
-            case 270:
+            case 0:
             shooterConfigInt = 2;
             break;
-            case 0:
+            case 90:
             shooterConfigInt = 3;
             break;
         }
@@ -273,9 +286,15 @@ public class OI {
 
     public double hoodConfigs(){
     return hoodAutomatedPos;
+
     }
     public double shootConfigs(){
-    return shootAutomatedSpeed;
+        if(Xbox2.getRightBumper()){
+            return shootAutomatedSpeed;
+            }
+            else{
+                return 0;
+            }
     }
 
 

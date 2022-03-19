@@ -36,8 +36,8 @@ public class Constants {
     public static int blueAlliance = 2;
 
 
-
-
+    public static double maxYellowEncoderValue = -65.5;
+    
 
 
     //PCMs

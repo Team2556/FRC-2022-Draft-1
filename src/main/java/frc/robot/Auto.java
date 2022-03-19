@@ -25,7 +25,7 @@ public class Auto {
 
     public void autoEncoder() {
         double encoderDistance1 = 32;
-        double shooterSpeed = Math.abs(-14000);
+        double shooterSpeed = Math.abs(-14500);
         SmartDashboard.putNumber("autoEncoder step", step);
         switch(step) {
             case 0:
@@ -66,7 +66,7 @@ public class Auto {
         double encoderSafetyVal = -20;
         double encoderDistance1 = 32
         ;
-        double shooterSpeed = Math.abs(-14000); //0
+        double shooterSpeed = Math.abs(-14250); //0
         // boolean twoBallsPickedUp = false;
         // boolean oneBallPickedUp = false;
         // double shooterDeadzone = 100;

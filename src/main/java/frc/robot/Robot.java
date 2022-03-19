@@ -37,6 +37,7 @@ public class Robot extends TimedRobot {
     drive.drivebaseInit(); 
     shooter.shooterInit();
     intake.intakeInit();
+    climber.climbInit();
   }
 
  
@@ -78,6 +79,7 @@ public class Robot extends TimedRobot {
     intake.intakeTeleop();
     shooter.shooterTeleop();
     climber.climbTeleop();
+    //intake.translateSwitchTest();
     SmartDashboard.putNumber("lFEncoder", drive.lFEncoderValue());
     // if (oi.climb) {
     //   climber.hook();

@@ -35,10 +35,14 @@ public class Shooter {
     }
 
     public void shooterTeleop(){
-    shooterMotor(Math.abs(oi.targetSpeedManual()));
+        shooterMotor(Math.abs(oi.targetSpeedManual()));
+        
         //hoodMotor(oi.hoodSpeed());
+
+
         // shooterMotor(oi.shootConfigs());
-        hoodMotor(oi.hoodConfigs());
+        //hoodMotor(oi.hoodConfigs());
+        
     }
 
     boolean shouldShoot;
@@ -59,9 +63,11 @@ public class Shooter {
             error = 0;
             LastOutput = 0;
         }  
-        if(Math.abs(difference)<100){
-            shouldShoot=true;
-           // intake.translateMotor(oi.translateRunSpeed);
+        if(Math.abs(difference)<50){
+            if(targetSpeed != 0){
+                shouldShoot=true;
+                
+                intake.translateMotor(oi.translateRunSpeed);}
         }
         else{shouldShoot=false;}   
         SmartDashboard.putBoolean("ShouldYouShoot", shouldShoot);
