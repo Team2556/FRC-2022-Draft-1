@@ -82,7 +82,7 @@ public class Climber {
         SmartDashboard.putNumber("yellowEncoder", yellowEncoder.getPosition());
 
 
-       traversalClimbAutomation(oi.climbStep());
+       traversalClimbAutomation(oi.climbStep(), oi.resetClimber());
     }
 
     // public void hook() {
@@ -150,23 +150,26 @@ public class Climber {
 
 
 
-    public void traversalClimbAutomation(boolean climstep){
+    public void traversalClimbAutomation(boolean climstep, boolean climbreset){
         boolean cone = true;
         boolean ctwo = !cone;
         boolean wone = true;
         boolean wtwo = !wone;
         SmartDashboard.putNumber("climbStepper", climbStepper);
-        if(climstep){
+        if(climstep) {
             climbStepper+= 5;
+        }
+        else if(climbreset) {
+            climbStepper = 10;
         }
         switch(climbStepper){
             case 5:
                 yellowMotor.set(0.25);
-                if(!topWinchSwitch.get()){
-                yellowMotor.set(0);
-                yellowEncoder.setPosition(0);
-                climbStepper = 10;
-            }
+                if(!topWinchSwitch.get()) {
+                    yellowMotor.set(0);
+                    yellowEncoder.setPosition(0);
+                    climbStepper = 10;
+                }
             break;
             case 10:
             // yellowMotor(-1, 5); //up
@@ -175,13 +178,13 @@ public class Climber {
             break;
             case 20:
             //yellowMotorRunToPos(90); //down
-            yellowMotor(0.75, 1);
+            yellowMotor(1, 1);
             if (!topWinchSwitch.get()) {
                 climbStepper = 30;
             }
             break;
             case 30: 
-            yellowMotor(0.75, 1);
+            yellowMotor(1, 1);
             clampPiston(cone); //clamped on
             break;
             case 35:
@@ -192,22 +195,22 @@ public class Climber {
             clampPiston(cone); //clamped on
             yellowMotorRunToPos(-40);
             break;
-             case 45:
-             winchPistons(wone); //winch diagonal
-             break;
-             case 50: 
-             yellowMotorRunToPos(-80); //goes up 
-             break;
-             case 55:
-             winchPistons(wtwo); //winch perpendicular
-             break;
-            case 60:
-             yellowMotor(.5, 1); //winch down
-            break;
-            case 65:
-             clampPiston(ctwo); //clamps off
-             climbStepper = 20;
-            break;
+            //  case 45:
+            //  winchPistons(wone); //winch diagonal
+            //  break;
+            //  case 50: 
+            //  yellowMotorRunToPos(-80); //goes up 
+            //  break;
+            //  case 55:
+            //  winchPistons(wtwo); //winch perpendicular
+            //  break;
+            // case 60:
+            //  yellowMotor(.5, 1); //winch down
+            // break;
+            // case 65:
+            //  clampPiston(ctwo); //clamps off
+            //  climbStepper = 20;
+            // break;
             // case 100:
             // clampPiston(cone); //yellow motor needs to continue and then clamps on so they don't catch
             // yellowMotor(1,5);

@@ -29,7 +29,7 @@ public class OI {
     boolean dropped = false;
     boolean dropped(){
        
-        if(Xbox1.getBButtonReleased() && Xbox1.getLeftTriggerAxis() >= 0.5){
+        if(Xbox1.getBButtonReleased()){ //&& Xbox1.getLeftTriggerAxis() >= 0.5){
             dropped = !dropped;
         }
         return dropped;
@@ -170,7 +170,14 @@ public class OI {
         }
     }
 
-
+    boolean resetClimber(){
+        if(Xbox2.getPOV()==180) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
    
    
    

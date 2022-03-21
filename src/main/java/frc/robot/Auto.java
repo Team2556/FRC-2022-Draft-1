@@ -21,6 +21,7 @@ public class Auto {
         // cargoVision.visionInit(alliance);
         step = 0;
         drive.lFEncoder.setPosition(0);
+        //drive.dualDrivebase(false);
     }
 
     public void autoEncoder() {
@@ -43,7 +44,7 @@ public class Auto {
             break;
             case 1: 
                 drive.mecanumDrive(0, 0, 0);
-                intake.intakeMotor(0);
+                intake.intakeMotor(-0.8);
                 intake.translateMotor(-0.5);
                 shooter.shooterMotor(shooterSpeed);
             break;
@@ -53,7 +54,34 @@ public class Auto {
     }
 
 
+    public void autoEncoderV2() {
+        double encoderDistance1 = 32;
+        double shooterSpeed = Math.abs(-14500);
+        SmartDashboard.putNumber("autoEncoder step", step);
+        switch(step) {
+            case 0:
+                shooter.shooterMotor(shooterSpeed);
+                if (drive.lFEncoder.getPosition() < encoderDistance1){//currentDistance < targetDistance || drive.lFEncoder.getPosition() > encoderSafetyVal){
+                    drive.mecanumDrive(0.2, 0, 0);
+                }
+                else if (drive.lFEncoder.getPosition() >= encoderDistance1){//currentDistance >= targetDistance && drive.lFEncoder.getPosition() <= encoderSafetyVal){
+                    step = 1;
+                    drive.mecanumDrive(0, 0, 0);
+                }
+                intake.intakeSolenoid(false);
+                intake.intakeMotor(-0.8);
+                intake.translateMotor(0);
+            break;
+            case 1: 
+                drive.mecanumDrive(0, 0, 0);
+                intake.intakeMotor(-0.8);
+                intake.translateMotor(-0.5);
+                shooter.shooterMotor(shooterSpeed);
+            break;
+        }
 
+           
+    }
 
 
     

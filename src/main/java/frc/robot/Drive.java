@@ -57,7 +57,7 @@ public class Drive {
 
 
     public void driveTeleop(){
-        dualDrivebase();
+        dualDrivebase(oi.dropped());
     }
 
     public void drivebaseInit(){
@@ -81,8 +81,8 @@ public class Drive {
 
     //limit switches for drivebase tested and work. logic works.
     
-    public void dualDrivebase(){
-        boolean dropped = oi.dropped(); 
+    public void dualDrivebase(boolean droppedP){
+        boolean dropped = droppedP; 
         SmartDashboard.putBoolean("dropped drive", dropped);
         
         double mForward = -oi.mForward(); 
@@ -147,12 +147,12 @@ public class Drive {
 
     public void triDrivebase(){
         //This if statement decides if the limelight turn button is clicked and changes how its driven accordingly.
-        if(oi.limeLightTurn()){
-            limelightDrive();
-        }
-        else{
-            dualDrivebase();
-        }
+        // if(oi.limeLightTurn()){
+        //     limelightDrive();
+        // }
+        // else{
+        //     dualDrivebase();
+        // }
     }
 
 
