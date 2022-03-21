@@ -34,10 +34,10 @@ public class Shooter {
     }
 
     public void shooterTeleop(){
-       // shooterMotor(Math.abs(oi.targetSpeedManual()));
-        //hoodMotor(oi.hoodSpeed());
-        shooterMotor(oi.shootConfigs());
-        hoodMotor(oi.hoodConfigs());
+        shooterMotor(Math.abs(oi.targetSpeedManual()));
+        // hoodMotor(oi.hoodSpeed());
+        // shooterMotor(oi.shootConfigs());
+        // hoodMotor(oi.hoodConfigs());
     }
 
 
