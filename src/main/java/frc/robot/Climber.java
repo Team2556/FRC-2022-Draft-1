@@ -39,9 +39,9 @@ public class Climber {
     
         winchPistons(false); // winch perpendicular
         yellowMotor.setIdleMode(IdleMode.kBrake);
-        yellowPID.setP(1);
+        yellowPID.setP(0.05);
         yellowPID.setI(0);
-        yellowPID.setD(0);
+        yellowPID.setD(0.0005);
         yellowPID.setIZone(0);
         yellowPID.setFF(0);
         yellowPID.setOutputRange(-1,1);
@@ -87,7 +87,7 @@ public class Climber {
 
     public void traversalClimbAutomation(boolean climstep, boolean climbreset){
         boolean cone = true;
-        boolean ctwo = !cone;
+        boolean ctwo = false;
         boolean wone = true;
         boolean wtwo = !wone;
         SmartDashboard.putNumber("climbStepper", climbStepper);
@@ -107,7 +107,7 @@ public class Climber {
                 }
             break;
             case 10:
-            yellowMotorRunToPos(-620); // up
+            yellowMotorRunToPos(-700); // up
             clampPiston(false);
             break;
             case 20:
@@ -135,25 +135,30 @@ public class Climber {
             break;
             case 50: 
             clampPiston(cone); //clamped on
-            yellowMotorRunToPos(-620); //goes up 
+            yellowMotorRunToPos(-700); //goes up 
             break;
             case 55:
             clampPiston(cone); //clamped on
             yellowMotorRunToPos(-300); //goes up 
             winchPistons(wtwo); //winch perpendicular
-            clampPiston(ctwo); //clamped off
+            if (yellowEncoder.getPosition() > -650) {
+                clampPiston(ctwo); //clamped off
+            }
             break;
             case 60:
+            clampPiston(ctwo);
+            break;
+            case 65:
             yellowMotor(1, 1);
             if (!topWinchSwitch.get()) {
                 yellowMotor(0, 1);
-                climbStepper = 65;
+                climbStepper = 70;
             }
             break;
-            case 65:
+            case 70:
             clampPiston(cone);
             break;
-            case 70:
+            case 75:
             clampPiston(ctwo); //clamps off
             climbStepper = 20;
             break;
