@@ -58,6 +58,10 @@ public class Drive {
 
     public void driveTeleop(){
         dualDrivebase(oi.dropped());
+        // limelightDrive();
+        if (oi.Xbox1.getAButton()) {
+            mecanumDrive(0, 0, limeLight.limeLightTurn());
+        }
     }
 
     public void drivebaseInit(){
@@ -120,24 +124,24 @@ public class Drive {
 
 
 
-    public void limelightDrive(){
-        //changes the way the robot turns based on if the robot is in mecanum or arcade mode
-        if(oi.limeLightTurn)         {
-            if(oi.dropped){
-                differentialDrive.arcadeDrive(0, limeLight.PIDC());
-                if (limeLight.PIDC() == 0) {
-                    SmartDashboard.putBoolean("Shooter Aimed", true);
-                }
-                else {
-                    SmartDashboard.putBoolean("Shooter Aimed", false);
-                }
-            }
-            else if(oi.dropped == false){
-                driveMecanum.driveCartesian(0, 0, limeLight.PIDC(), 0);
-            }
-        }
+    // public void limelightDrive(){
+    //     //changes the way the robot turns based on if the robot is in mecanum or arcade mode
+    //     if(oi.limeLightTurn)         {
+    //         if(oi.dropped){
+    //             differentialDrive.arcadeDrive(0, limeLight.PIDC());
+    //             if (limeLight.PIDC() == 0) {
+    //                 SmartDashboard.putBoolean("Shooter Aimed", true);
+    //             }
+    //             else {
+    //                 SmartDashboard.putBoolean("Shooter Aimed", false);
+    //             }
+    //         }
+    //         else if(oi.dropped == false){
+    //             driveMecanum.driveCartesian(0, 0, limeLight.PIDC(), 0);
+    //         }
+    //     }
         
-    }
+    // }
 
 
 
@@ -145,49 +149,49 @@ public class Drive {
 
 
 
-    public void triDrivebase(){
-        //This if statement decides if the limelight turn button is clicked and changes how its driven accordingly.
-        // if(oi.limeLightTurn()){
-        //     limelightDrive();
-        // }
-        // else{
-        //     dualDrivebase();
-        // }
-    }
+    // public void triDrivebase(){
+    //     //This if statement decides if the limelight turn button is clicked and changes how its driven accordingly.
+    //     if(oi.limeLightTurn()){
+    //         limelightDrive();
+    //     }
+    //     else{
+    //         dualDrivebase(oi.dropped());
+    //     }
+    // }
 
 
 
-    boolean toggle = false;
-    public void reverseRightMotors(boolean input){
+    // boolean toggle = false;
+    // public void reverseRightMotors(boolean input){
     
-        if (input){
-            toggle = !toggle;
-        }
-        boolean reverse = toggle;
+    //     if (input){
+    //         toggle = !toggle;
+    //     }
+    //     boolean reverse = toggle;
 
-            rFMotor.setInverted(reverse);
-            rRMotor.setInverted(reverse);
-            SmartDashboard.putBoolean("rF is Inverted", rFMotor.getInverted());
-    }
-    public boolean rightMotorsReversed(){
-        return rFMotor.getInverted();
-    }
-    public double lFEncoderValue(){
-        return lFEncoder.getPosition(); //negative position is forward
-    }
+    //         rFMotor.setInverted(reverse);
+    //         rRMotor.setInverted(reverse);
+    //         SmartDashboard.putBoolean("rF is Inverted", rFMotor.getInverted());
+    // }
+    // public boolean rightMotorsReversed(){
+    //     return rFMotor.getInverted();
+    // }
+    // public double lFEncoderValue(){
+    //     return lFEncoder.getPosition(); //negative position is forward
+    // }
 
 
 
-    public void driveToCargo() {
-        if(oi.cargoTurn) {
-            if(oi.dropped){
-                differentialDrive.arcadeDrive(0, cargoVision.getRotationValue());
-            }
-            else if(oi.dropped == false){
-                driveMecanum.driveCartesian(0, 0, cargoVision.getRotationValue());
-            }
-        }
-    }
+    // public void driveToCargo() {
+    //     if(oi.cargoTurn) {
+    //         if(oi.dropped){
+    //             differentialDrive.arcadeDrive(0, cargoVision.getRotationValue());
+    //         }
+    //         else if(oi.dropped == false){
+    //             driveMecanum.driveCartesian(0, 0, cargoVision.getRotationValue());
+    //         }
+    //     }
+    // }
 }
 
 

@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
  
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putBoolean("rF is Inverted", drive.rightMotorsReversed());
+    // SmartDashboard.putBoolean("rF is Inverted", drive.rightMotorsReversed());
     // drive.lFEncoder.setInverted(true);
     // SmartDashboard.putBoolean("lFEncoder Inverted", drive.lFEncoder.getInverted());
   }
@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
   auto.autoEncoder();
-  SmartDashboard.putNumber("lFEncoder", drive.lFEncoderValue());
+  // SmartDashboard.putNumber("lFEncoder", drive.lFEncoderValue());
 
   }
 
@@ -80,10 +80,7 @@ public class Robot extends TimedRobot {
     shooter.shooterTeleop();
     climber.climbTeleop();
     //intake.translateSwitchTest();
-    SmartDashboard.putNumber("lFEncoder", drive.lFEncoderValue());
-    // if (oi.climb) {
-    //   climber.hook();
-    // }
+    // SmartDashboard.putNumber("lFEncoder", drive.lFEncoderValue());
   }
 
   @Override
