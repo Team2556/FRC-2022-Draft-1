@@ -95,6 +95,7 @@ public class Climber {
             climbStepper+= 5;
         }
         else if(climbreset) {
+            winchPistons(wtwo);
             climbStepper = 10;
         }
         switch(climbStepper){
@@ -107,7 +108,7 @@ public class Climber {
                 }
             break;
             case 10:
-            yellowMotorRunToPos(-700); // up
+            yellowMotorRunToPos(-150); // up
             clampPiston(false);
             break;
             case 20:
@@ -127,7 +128,7 @@ public class Climber {
             break;
             case 40:
             clampPiston(cone); //clamped on
-            yellowMotorRunToPos(-300);
+            yellowMotorRunToPos(-75);
             break;
             case 45:
             clampPiston(cone); //clamped on
@@ -135,13 +136,13 @@ public class Climber {
             break;
             case 50: 
             clampPiston(cone); //clamped on
-            yellowMotorRunToPos(-700); //goes up 
+            yellowMotorRunToPos(-150); //goes up 
             break;
             case 55:
             clampPiston(cone); //clamped on
-            yellowMotorRunToPos(-300); //goes up 
+            yellowMotorRunToPos(-75); //goes up 
             winchPistons(wtwo); //winch perpendicular
-            if (yellowEncoder.getPosition() > -650) {
+            if (yellowEncoder.getPosition() > -130) {
                 clampPiston(ctwo); //clamped off
             }
             break;

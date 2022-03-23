@@ -50,7 +50,7 @@ public class Limelight extends TimedRobot {
 
     public double limeLightTurn() {
         double turn;
-        turn = -limelightPID.calculate(tx.getDouble(-0.5));
+        turn = -limelightPID.calculate(tx.getDouble(-1));
         return turn;
     }
 
