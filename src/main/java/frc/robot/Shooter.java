@@ -6,7 +6,6 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter {
     OI oi = new OI();
@@ -32,6 +31,7 @@ public class Shooter {
         hoodMotor.setSelectedSensorPosition(0);
         shooterMotor.configFactoryDefault();
         shooterMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
+        shooterMotor.setNeutralMode(NeutralMode.Coast);
     }
 
     public void shooterTeleop(){
@@ -48,7 +48,6 @@ public class Shooter {
     boolean shouldShoot;
     
     public void shooterMotor(double targetSpeed){
-        shooterMotor.setNeutralMode(NeutralMode.Coast);
         double fxspd = shooterMotor.getSelectedSensorVelocity();
         double difference  = Math.abs(targetSpeed) - Math.abs(fxspd);
         double error = difference*Kp;
@@ -65,29 +64,17 @@ public class Shooter {
         }  
         if(Math.abs(difference)<50){
             if(targetSpeed != 0){
-                shouldShoot=true;
-                
+                shouldShoot=true;                
                 intake.translateMotor(oi.translateRunSpeed);}
         }
         else{shouldShoot=false;}   
-        SmartDashboard.putBoolean("ShouldYouShoot", shouldShoot);
-
-
-
-
-    
-       // if(oi.Xbox2.getRightBumper()){
         shooterMotor.set(ControlMode.PercentOutput, -percentOutput);
-       // }
-        // else{
-        //     shooterMotor.set(ControlMode.PercentOutput, 0);
-        // }
-        // SmartDashboard.putNumber("difference", difference);
-        SmartDashboard.putNumber("FX speed", fxspd);
-        SmartDashboard.putNumber("oitargetSpeed", oi.targetSpeedManual());
-        // SmartDashboard.putNumber("percentOutput", percentOutput);
-        // SmartDashboard.putNumber("error", error);
     }
+
+
+
+
+
 
     public void hoodMotor(double hoodSpeed){
         if(hoodSpeed!=0){
@@ -104,7 +91,6 @@ public class Shooter {
 
     public double hoodEncoder(){
         double hoodPos = hoodMotor.getSelectedSensorPosition();
-        SmartDashboard.putNumber("HoodPosition", hoodPos);
         return hoodPos;
     }
     
@@ -113,6 +99,13 @@ public class Shooter {
     }
     
     
+    
+
+
+
+
+
+
     
 }
 

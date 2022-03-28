@@ -9,7 +9,6 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class Climber {
@@ -48,9 +47,7 @@ public class Climber {
     }
 
     public void climbTeleop(){
-        clampPiston(oi.clampOut());
-        SmartDashboard.putBoolean("top switch", topWinchSwitch.get());
-        SmartDashboard.putNumber("yellowEncoder", yellowEncoder.getPosition());
+       clampPiston(oi.clampOut());
        traversalClimbAutomation(oi.climbStep(), oi.resetClimber());
     }
 
@@ -90,7 +87,6 @@ public class Climber {
         boolean ctwo = false;
         boolean wone = true;
         boolean wtwo = !wone;
-        SmartDashboard.putNumber("climbStepper", climbStepper);
         if(climstep) {
             climbStepper+= 5;
         }

@@ -80,10 +80,18 @@ public class Drive {
 
    
 
-
-
-
-    //limit switches for drivebase tested and work. logic works.
+    //has not been tested. will allow for easier initialization and cleaner code
+    public void dropMotors(boolean droppedP){
+        boolean dropped = droppedP;
+        if(dropped){
+            frontdrivePistons.set(Value.kForward);
+            reardrivePistons.set(Value.kForward);
+        }
+        else{
+            frontdrivePistons.set(Value.kReverse);
+            reardrivePistons.set(Value.kReverse);           
+        }
+    }
     
     public void dualDrivebase(boolean droppedP){
         boolean dropped = droppedP; 
