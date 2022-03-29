@@ -1,4 +1,5 @@
 package frc.robot;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Auto {
@@ -6,7 +7,7 @@ public class Auto {
     Limelight limelight;
     Intake intake;
     Shooter shooter;
-    // CargoVision cargoVision;
+    CargoVision cargoVision;
     int step = 0;
 
     public Auto(Drive drv, Intake in, Shooter shot, Limelight lim, CargoVision cVis) {
@@ -14,7 +15,7 @@ public class Auto {
         intake = in;
         shooter = shot;
         limelight = lim;
-        // cargoVision = cVis;
+        cargoVision = cVis;
     }
    
     public void autoInit(int alliance) {
@@ -83,7 +84,6 @@ public class Auto {
            
     }
 
-
     
     public void autoLimelight() {
         //go forwards and pick up ball, then shoot both balls.
@@ -142,7 +142,12 @@ public class Auto {
                 shooter.shooterMotor(shooterSpeed);
             break;
         }
-
-           
     }
+    public void complexAuto(){
+        drive.mecanumDrive(0, 0, cargoVision.getRotationValue()); //turn to ball
+        drive.mecanumDrive(0, 0, cargoVision.getRotationValue()); //go to ball
+        intake.intakeMotor(0); intake.translateMotor(0); //intake
+        shooter.shooterMotor(Math.abs(-14500);); //shoot
+
+}
 }
