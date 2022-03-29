@@ -258,7 +258,9 @@ public class OI {
     }
 
     
-    int shooterConfigInt = 1;
+    //int shooterConfigInt = 1;
+    Shooter_range shooter_range= new Shooter_range();
+    int shooterConfigInt = shooter_range.shootdist();
     public void shooterTeleopConfigSwitch(){
         switch (Xbox2.getPOV()){
             case 270:

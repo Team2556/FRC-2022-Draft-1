@@ -92,7 +92,7 @@ public class Auto {
         double targetDistance = 135;
         double targetDistance2 = 120;
         double encoderSafetyVal = -20;
-        double encoderDistance1 = 32
+        //double encoderDistance1 = 32
         ;
         double shooterSpeed = Math.abs(-14250); //0
         // boolean twoBallsPickedUp = false;
