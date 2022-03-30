@@ -1,6 +1,5 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -138,7 +137,6 @@ public class Limelight extends TimedRobot {
     
     //calculate distance
     double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/Math.tan(angleToGoalRadians);
-        SmartDashboard.putNumber("Distance To Goal", distanceFromLimelightToGoalInches);
        
         return distanceFromLimelightToGoalInches;
         // SmartDashboard.putNumber("test", ty.getDouble(0.0));

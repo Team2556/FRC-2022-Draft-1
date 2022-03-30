@@ -1,5 +1,4 @@
 package frc.robot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Auto {
     Drive drive;
@@ -21,20 +20,19 @@ public class Auto {
         // cargoVision.visionInit(alliance);
         step = 0;
         drive.lFEncoder.setPosition(0);
-        //drive.dualDrivebase(false);
+        // drive.dualDrivebase(false);
     }
 
     public void autoEncoder() {
         double encoderDistance1 = 32;
         double shooterSpeed = Math.abs(-14500);
-        SmartDashboard.putNumber("autoEncoder step", step);
         switch(step) {
             case 0:
                 shooter.shooterMotor(shooterSpeed);
-                if (drive.lFEncoder.getPosition() < encoderDistance1){//currentDistance < targetDistance || drive.lFEncoder.getPosition() > encoderSafetyVal){
+                if (drive.lFEncoder.getPosition() < encoderDistance1){
                     drive.mecanumDrive(0.2, 0, 0);
                 }
-                else if (drive.lFEncoder.getPosition() >= encoderDistance1){//currentDistance >= targetDistance && drive.lFEncoder.getPosition() <= encoderSafetyVal){
+                else if (drive.lFEncoder.getPosition() >= encoderDistance1){
                     step = 1;
                     drive.mecanumDrive(0, 0, 0);
                 }
@@ -54,41 +52,40 @@ public class Auto {
     }
 
 
-    public void autoEncoderV2() {
-        double encoderDistance1 = 32;
-        double shooterSpeed = Math.abs(-14500);
-        SmartDashboard.putNumber("autoEncoder step", step);
-        switch(step) {
-            case 0:
-                shooter.shooterMotor(shooterSpeed);
-                if (drive.lFEncoder.getPosition() < encoderDistance1){//currentDistance < targetDistance || drive.lFEncoder.getPosition() > encoderSafetyVal){
-                    drive.mecanumDrive(0.2, 0, 0);
-                }
-                else if (drive.lFEncoder.getPosition() >= encoderDistance1){//currentDistance >= targetDistance && drive.lFEncoder.getPosition() <= encoderSafetyVal){
-                    step = 1;
-                    drive.mecanumDrive(0, 0, 0);
-                }
-                intake.intakeSolenoid(false);
-                intake.intakeMotor(-0.8);
-                intake.translateMotor(0);
-            break;
-            case 1: 
-                drive.mecanumDrive(0, 0, 0);
-                intake.intakeMotor(-0.8);
-                intake.translateMotor(-0.5);
-                shooter.shooterMotor(shooterSpeed);
-            break;
-        }
+    // public void autoEncoderV2() {
+    //     double encoderDistance1 = 32;
+    //     double shooterSpeed = Math.abs(-14500);
+    //     SmartDashboard.putNumber("autoEncoder step", step);
+    //     switch(step) {
+    //         case 0:
+    //             shooter.shooterMotor(shooterSpeed);
+    //             if (drive.lFEncoder.getPosition() < encoderDistance1){//currentDistance < targetDistance || drive.lFEncoder.getPosition() > encoderSafetyVal){
+    //                 drive.mecanumDrive(0.2, 0, 0);
+    //             }
+    //             else if (drive.lFEncoder.getPosition() >= encoderDistance1){//currentDistance >= targetDistance && drive.lFEncoder.getPosition() <= encoderSafetyVal){
+    //                 step = 1;
+    //                 drive.mecanumDrive(0, 0, 0);
+    //             }
+    //             intake.intakeSolenoid(false);
+    //             intake.intakeMotor(-0.8);
+    //             intake.translateMotor(0);
+    //         break;
+    //         case 1: 
+    //             drive.mecanumDrive(0, 0, 0);
+    //             intake.intakeMotor(-0.8);
+    //             intake.translateMotor(-0.5);
+    //             shooter.shooterMotor(shooterSpeed);
+    //         break;
+    //     }
 
            
-    }
+    // }
 
 
     
     public void autoLimelight() {
         //go forwards and pick up ball, then shoot both balls.
         double currentDistance = limelight.limeLightDistanceInches();
-        SmartDashboard.putNumber("currentDistance", currentDistance); 
         double targetDistance = 135;
         double targetDistance2 = 120;
         double encoderSafetyVal = -20;
@@ -98,9 +95,6 @@ public class Auto {
         // boolean twoBallsPickedUp = false;
         // boolean oneBallPickedUp = false;
         // double shooterDeadzone = 100;
-        SmartDashboard.putNumber("currDist", currentDistance);
-        SmartDashboard.putNumber("targetDist", targetDistance);
-        SmartDashboard.putNumber("auto step", step);
         switch(step) {
             case 0:
                 shooter.shooterMotor(shooterSpeed);

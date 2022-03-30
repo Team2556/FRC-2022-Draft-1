@@ -17,6 +17,7 @@ public class Robot extends TimedRobot {
   CargoVision cargoVision = new CargoVision();
   OI oi = new OI();
   Auto auto = new Auto(drive, intake, shooter, limelight, cargoVision);
+  SDash smartDash = new SDash(drive, intake, shooter, limelight, climber, auto, cargoVision);
   private static final String kRedAuto = "Red Auto";
   private static final String kBlueAuto = "Blue Auto";
   private String m_autoSelected;
@@ -79,8 +80,7 @@ public class Robot extends TimedRobot {
     intake.intakeTeleop();
     shooter.shooterTeleop();
     climber.climbTeleop();
-    //intake.translateSwitchTest();
-    // SmartDashboard.putNumber("lFEncoder", drive.lFEncoderValue());
+    smartDash.dashTele();
   }
 
   @Override
@@ -93,5 +93,7 @@ public class Robot extends TimedRobot {
   public void testInit() {}
 
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    smartDash.dashTest();
+  }
 }
