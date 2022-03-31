@@ -94,7 +94,8 @@ public class Auto {
         double encoderSafetyVal = -20;
         double encoderDistance1 = 32
         ;
-        double shooterSpeed = Math.abs(-14250); //0
+        //double shooterSpeed = Math.abs(-14250); //0
+        double shooterSpeed = Constants.shooterSpeed; 
         // boolean twoBallsPickedUp = false;
         // boolean oneBallPickedUp = false;
         // double shooterDeadzone = 100;
@@ -144,10 +145,12 @@ public class Auto {
         }
     }
     public void complexAuto(){
+        double shooterSpeed = Constants.shooterSpeed;
         drive.mecanumDrive(0, 0, cargoVision.getRotationValue()); //turn to ball
-        drive.mecanumDrive(0, 0, cargoVision.getRotationValue()); //go to ball
-        intake.intakeMotor(0); intake.translateMotor(0); //intake
-        shooter.shooterMotor(Math.abs(-14500);); //shoot
+        drive.mecanumDrive(0, 0, 0); //go to ball
+        intake.intakeMotor(0); //intake
+        intake.translateMotor(0); //intake
+        shooter.shooterMotor(shooterSpeed);//shoot
 
 }
 }

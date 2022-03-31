@@ -27,6 +27,7 @@ public class Constants {
     //shooter FX and hood SRX motors
     public static int shooterMotorPort = 7;
     public static int hoodMotorPort = 8;
+    public static double shooterSpeed = 14250; 
 
     //cargo vision PID constants
     public static double visionP = 0.0075;
