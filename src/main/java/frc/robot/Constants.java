@@ -23,6 +23,7 @@ public class Constants {
     //intake and translate motor ports
     public static int intakeMotorPort = 12;
     public static int translateMotorPort = 2;
+    public static int translateSwitch = 8;
 
     //shooter FX and hood SRX motors
     public static int shooterMotorPort = 7;

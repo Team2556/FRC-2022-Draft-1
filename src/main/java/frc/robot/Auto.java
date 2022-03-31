@@ -1,6 +1,5 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Auto {
@@ -10,10 +9,10 @@ public class Auto {
     Shooter shooter;
     CargoVision cargoVision;
     int step = 0;
-    Constants constants; 
-    //DigitalInput digitalInput; 
-    DigitalInput limitSwitch = new DigitalInput(Constants.rFLimitPort);
-
+    
+    DigitalInput rFlimitSwitch = new DigitalInput(Constants.rFLimitPort);
+    DigitalInput translateSwitch = new DigitalInput(Constants.translateSwitch);
+    double shooterSpeed = Constants.shooterSpeed;
 
     public Auto(Drive drv, Intake in, Shooter shot, Limelight lim, CargoVision cVis) {
         drive = drv;
@@ -149,18 +148,29 @@ public class Auto {
             break;
         }
     }
-    public void complexAuto(){
-        double shooterSpeed = Constants.shooterSpeed;
 
+    public void complexAuto(){
+        
+        //turn and drive to cargo
         drive.mecanumDrive(0, 0, cargoVision.getRotationValue()); //turn to ball
-        if (limitSwitch.get()){ //limit switch returns true if circuit open
+        if (rFlimitSwitch.get()){ //limit switch returns true if circuit open
             drive.mecanumDrive(0.2, 0, 0); //go to ball
         }
         else{
             drive.mecanumDrive(0, 0, 0);
         }
-        intake.intakeMotor(0); //intake
-        intake.translateMotor(0); //intake
+
+        //intake; CHECK SPEEDS
+        if (translateSwitch.get()){
+            intake.intakeMotor(-0.8);
+            intake.translateMotor(-0.5);
+        }
+        else{
+            intake.intakeMotor(0);
+            intake.translateMotor(0);
+        }
+
+
         shooter.shooterMotor(shooterSpeed);//shoot
 
 }
