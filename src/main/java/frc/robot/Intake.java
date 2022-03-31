@@ -13,7 +13,7 @@ public class Intake {
     
     private CANSparkMax intake = new CANSparkMax(Constants.intakeMotorPort, MotorType.kBrushless);
     private CANSparkMax translate = new CANSparkMax(Constants.translateMotorPort, MotorType.kBrushless);
-    DigitalInput translateSwitch = new DigitalInput(8);
+    DigitalInput translateSwitch = new DigitalInput(Constants.translateSwitch);
     DoubleSolenoid intakeSolenoid = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.intakeForwardChannel, Constants.intakeReverseChannel);
 
     public void intakeInit() {

@@ -9,7 +9,7 @@ public class Auto {
     Shooter shooter;
     CargoVision cargoVision;
     int step = 0;
-    
+
     DigitalInput rFlimitSwitch = new DigitalInput(Constants.rFLimitPort);
     DigitalInput translateSwitch = new DigitalInput(Constants.translateSwitch);
     double shooterSpeed = Constants.shooterSpeed;
@@ -170,8 +170,9 @@ public class Auto {
             intake.translateMotor(0);
         }
 
-
+        drive.mecanumDrive(0, 0, limelight.limeLightTurn());
         shooter.shooterMotor(shooterSpeed);//shoot
+        //include hood adjustment
 
-}
+    }
 }
