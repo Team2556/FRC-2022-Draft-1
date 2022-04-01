@@ -64,5 +64,6 @@ public class Constants {
     public static int intakeForwardChannel = 6;
     public static int intakeReverseChannel = 7;
 
+    public static double potMax = 360;
 
 }

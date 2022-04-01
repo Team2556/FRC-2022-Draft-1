@@ -90,10 +90,18 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {}
  
   @Override
-  public void testInit() {}
+  public void testInit() {
+    climber.climbInit();
+    // cargoVision.visionInit(1);
+
+  }
 
   @Override
   public void testPeriodic() {
     smartDash.dashTest();
+    // SmartDashboard.putNumber("cargoVisionRotateValue", cargoVision.getRotationValue());
+    climber.traversalClimbAutomationV2(oi.climbStep());
+    // climber.winchPistons(oi.winchUp());
+    // climber.clampPiston(oi.clampOut());
   }
 }

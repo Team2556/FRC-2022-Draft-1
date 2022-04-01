@@ -136,7 +136,7 @@ public class OI {
     boolean climbStepBool2 = false;
     boolean climbStepBool3 = false;
     public boolean climbStep(){
-        return Xbox2.getBButtonPressed();
+        return Xbox2.getBButtonReleased();
 
         // if(climbStepBool2 == true && climbStepBool1 == false){
         //     climbStepBool2 = false;
