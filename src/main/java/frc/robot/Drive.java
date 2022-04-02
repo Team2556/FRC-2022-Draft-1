@@ -21,7 +21,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class Drive {
 
     OI oi = new OI();
-    Limelight limeLight = new Limelight();
+    Limelight limelight = new Limelight();
     CargoVision cargoVision = new CargoVision();
 
     private CANSparkMax rFMotor = new CANSparkMax(Constants.rFMotorPort, MotorType.kBrushless);
@@ -57,7 +57,8 @@ public class Drive {
 
 
     public void driveTeleop(){
-        dualDrivebase(oi.dropped());
+        triDrivebase();
+        //dualDrivebase(oi.dropped());
         // limelightDrive();
         // if (oi.Xbox1.getAButton()) {
         //     mecanumDrive(0, 0, limeLight.limeLightTurn());
@@ -131,7 +132,9 @@ public class Drive {
 
 
 
-
+    public void limelightTurn(){
+            differentialDrive.arcadeDrive(0, limelight.limeLightTurn());
+    }
     // public void limelightDrive(){
     //     //changes the way the robot turns based on if the robot is in mecanum or arcade mode
     //     if(oi.limeLightTurn)         {
@@ -157,15 +160,15 @@ public class Drive {
 
 
 
-    // public void triDrivebase(){
-    //     //This if statement decides if the limelight turn button is clicked and changes how its driven accordingly.
-    //     if(oi.limeLightTurn()){
-    //         limelightDrive();
-    //     }
-    //     else{
-    //         dualDrivebase(oi.dropped());
-    //     }
-    // }
+    public void triDrivebase(){
+        //This if statement decides if the limelight turn button is clicked and changes how its driven accordingly.
+        if(oi.limeLightTurn()){
+            limelightTurn();
+        }
+        else{
+            dualDrivebase(oi.dropped());
+        }
+    }
 
 
 

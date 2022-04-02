@@ -15,6 +15,7 @@ public class Shooter {
     private double percentOutput;
     private double LastOutput; 
     private double Kp;
+    double difference = 0;
 
     public Shooter(Intake in){
         shooterMotor = new TalonFX(Constants.shooterMotorPort);
@@ -23,6 +24,7 @@ public class Shooter {
         LastOutput = 0;
         Kp = 0.00000105;
         intake = in;
+        
     }
 
     public void shooterInit(){
@@ -35,7 +37,10 @@ public class Shooter {
     }
 
     public void shooterTeleop(){
-        shooterMotor(Math.abs(oi.targetSpeedManual()));
+        if(oi.limeLightTurn()){
+            shooterMotor(Math.abs(-13250));
+        }
+        // shooterMotor(Math.abs(oi.targetSpeedManual()));
         
         //hoodMotor(oi.hoodSpeed());
 
@@ -49,7 +54,7 @@ public class Shooter {
     
     public void shooterMotor(double targetSpeed){
         double fxspd = shooterMotor.getSelectedSensorVelocity();
-        double difference  = Math.abs(targetSpeed) - Math.abs(fxspd);
+        difference  = Math.abs(targetSpeed) - Math.abs(fxspd);
         double error = difference*Kp;
         LastOutput = LastOutput + error;
         percentOutput = LastOutput;

@@ -99,9 +99,26 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
     smartDash.dashTest();
-    // SmartDashboard.putNumber("cargoVisionRotateValue", cargoVision.getRotationValue());
-    climber.traversalClimbAutomationV2(oi.climbStep());
-    // climber.winchPistons(oi.winchUp());
-    // climber.clampPiston(oi.clampOut());
+    // if(oi.Xbox1.getAButton()){
+    // drive.limelightTurn();}
+    // else{
+    // drive.dualDrivebase(oi.dropped());
+    // }
+    drive.triDrivebase();
+    if(oi.limeLightTurn()){
+      shooter.shooterMotor(Math.abs(-13750));
+    }
+    else{
+      shooter.shooterMotor(0);
+    } 
+    if(oi.limeLightTurn()){
+      if(Math.abs(limelight.x) <= 5 && Math.abs(shooter.difference) <=50){
+      intake.translateMotor(oi.translateRunSpeed);
+      }
+      else
+      {
+        intake.translateMotor(0);
+      } 
+    }
   }
 }

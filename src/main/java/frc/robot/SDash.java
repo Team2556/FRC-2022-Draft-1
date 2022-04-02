@@ -32,15 +32,7 @@ public class SDash {
     }
 
     public void dashTest(){
-        //SmartDashboard.putBoolean("translateSwitch", intake.translateSwitch.get());
-        SmartDashboard.putNumber("pot", climber.pot.get());
-        SmartDashboard.putNumber("avgPot", climber.analogPotentiometerAverageBounded());
-        SmartDashboard.putNumber("boundedPot", climber.boundedPot);
-        SmartDashboard.putNumber("climbStepper", climber.climbStepper);
-        SmartDashboard.putBoolean("top switch", climber.topWinchSwitch.get());
-        // SmartDashboard.putNumber("cargoVisionRotateValue", cargoVision.getRotationValue());
-
-
+        SmartDashboard.putNumber("limelightDistanceInInches", limelight.limeLightDistanceInches());
     }
 
     public void dashAuto(){
