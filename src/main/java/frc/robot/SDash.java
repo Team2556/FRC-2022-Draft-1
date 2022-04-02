@@ -36,6 +36,7 @@ public class SDash {
         SmartDashboard.putNumber("avgPot", climber.analogPotentiometerAverageBounded());
         SmartDashboard.putNumber("boundedPot", climber.boundedPot);
         SmartDashboard.putBoolean("top switch", climber.topWinchSwitch.get());
+        
         // SmartDashboard.putNumber("cargoVisionRotateValue", cargoVision.getRotationValue());
 
 

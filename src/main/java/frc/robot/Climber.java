@@ -26,13 +26,19 @@ public class Climber {
     DigitalInput topWinchSwitch = new DigitalInput(7);
     AnalogPotentiometer pot = new AnalogPotentiometer(3, Constants.potMax, 0);
     int climbStepperV2 = 0;
+    boolean clampOff = false;
+    boolean clampOn = true;
+    boolean winchDiagonal = true;
+    boolean winchUpright = false;
+    int up = -1;
+    int down = -up;
 
 
     //1 yellow motor 
     public void climbInit(){
         clampPiston.set(Value.kReverse); //clamp off
         climbStepperV2 = 0;
-        winchPistons(false); // winch perpendicular
+        winchPistons(winchUpright); // winch perpendicular
         yellowMotor.setIdleMode(IdleMode.kBrake);
         yellowPID.setP(0.05);
         yellowPID.setI(0);
@@ -59,13 +65,28 @@ public class Climber {
     }
 
     public void yellowMotor(double yellowSpeed, double rate){
-        yellowMotor.set(yellowSpeed);
         yellowMotor.setClosedLoopRampRate(rate);
+        yellowMotor.set(yellowSpeed);
+    }
+
+    public void yellowMotorManual(double yellowSpeed, double rate){
+        yellowMotor.setClosedLoopRampRate(rate);
+        if(!topWinchSwitch.get() && yellowSpeed <0){
+            yellowMotor.set(yellowSpeed);
+        }
+        else if(!topWinchSwitch.get()) {
+            yellowMotor.set(0);
+        }
+        else if(topWinchSwitch.get()){
+            yellowMotor.set(yellowSpeed);
+        }
     }
    
     public void yellowMotorRunToPos(double targetPos){
         yellowPID.setReference(targetPos, ControlType.kPosition);
     }
+    
+    
 
     public void clampPiston(boolean clampOn){
         // false is the clamps not being clamped on
@@ -84,12 +105,7 @@ public class Climber {
 
 
     public void traversalClimbAutomationV2(boolean climStepUp){
-        boolean clampOff = false;
-        boolean clampOn = true;
-        boolean winchDiagonal = true;
-        boolean winchUpright = false;
-        int up = -1;
-        int down = -up;
+
         SmartDashboard.putNumber("climbStepperV2", climbStepperV2);
         SmartDashboard.putNumber("climbMotorVoltage", yellowMotor.getBusVoltage());
         SmartDashboard.putNumber("climbMotorAmpOutput", yellowMotor.getOutputCurrent());
@@ -114,11 +130,12 @@ public class Climber {
                 yellowMotor(down,1); //yellow hooks come down until limit switch hit
                 if (!topWinchSwitch.get()) {
                     yellowMotor(0, 0.5);
+                    clampPiston(clampOn);//now hooked on mid rung
                     climbStepperV2 = 4;
                 }
             break;
             case 4:
-                clampPiston(clampOn);//now hooked on mid rung
+                yellowMotor(0, 0.5);
             break;
             case 5:
                 yellowMotor(up,1); 
@@ -136,7 +153,7 @@ public class Climber {
             break;
             case 8:
                 yellowMotor(down,1); 
-                if(analogPotentiometerAverageBounded() <= 280){
+                if(analogPotentiometerAverageBounded() <= 265){
                     yellowMotor(0,1);
                     climbStepperV2 = 9;
                 } 
@@ -159,43 +176,47 @@ public class Climber {
             case 11:
                 yellowMotor(0,0.5);
             break;
-            // on high rung between these steps
+
             case 12:
-                yellowMotor(up, 1); 
-                if(analogPotentiometerAverageBounded() >= 50){
-                    yellowMotor(0,1);
-                    climbStepperV2 = 13;
-                }
+                climbStepperV2 = 5;
             break;
-            case 13:
-                winchPistons(winchDiagonal); 
-                yellowMotor(up, 1);
-            break;
-            case 14:
-                winchPistons(winchUpright); // ready to try traversal
-            break;
-            case 15:
-                yellowMotor(down,1); 
-                if(analogPotentiometerAverageBounded() <= 280){
-                    yellowMotor(0,1);
-                    climbStepperV2 = 16;
-                } 
-            break;
-            case 16:
-                clampPiston(clampOff);
-                yellowMotor(down,1);
-                climbStepperV2 = 17;
-            break;
-            case 17: 
-                if (!topWinchSwitch.get()) {
-                    yellowMotor(0, 0.5);
-                    climbStepperV2 = 18;
-                }
-                yellowMotor(down, 1); //climbs to traversal
-            break;
-            case 18:
-                clampPiston(clampOn);
-            break;
+            // on high rung between these steps
+            // case 12:
+            //     yellowMotor(up, 1); 
+            //     if(analogPotentiometerAverageBounded() >= 50){
+            //         yellowMotor(0,1);
+            //         climbStepperV2 = 13;
+            //     }
+            // break;
+            // case 13:
+            //     winchPistons(winchDiagonal); 
+            //     yellowMotor(up, 1);
+            // break;
+            // case 14:
+            //     winchPistons(winchUpright); // ready to try traversal
+            // break;
+            // case 15:
+            //     yellowMotor(down,1); 
+            //     if(analogPotentiometerAverageBounded() <= 280){
+            //         yellowMotor(0,1);
+            //         climbStepperV2 = 16;
+            //     } 
+            // break;
+            // case 16:
+            //     clampPiston(clampOff);
+            //     yellowMotor(down,1);
+            //     climbStepperV2 = 17;
+            // break;
+            // case 17: 
+            //     if (!topWinchSwitch.get()) {
+            //         yellowMotor(0, 0.5);
+            //         climbStepperV2 = 18;
+            //     }
+            //     yellowMotor(down, 1); //climbs to traversal
+            // break;
+            // case 18:
+            //     clampPiston(clampOn);
+            // break;
             case 900:
                 yellowMotor(0, 0.5);
             break;
@@ -206,18 +227,7 @@ public class Climber {
 
     }
 
-    public void yellowMotorPCalibration(){
-        if(oi.winchPosBool){
-            yellowPID.setP(0.05);
-        }
-        else{
-            yellowPID.setP(0.1);
-        }
-    }
-
-
-
-
+    
         double runningAvg = 0;
         double oldPotRead = 0;
         double boundedPot = 0;

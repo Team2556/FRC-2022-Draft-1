@@ -120,13 +120,13 @@ public class OI {
     }
 
     double yellowMotorSpeed(){
-        if(Xbox2.getRightTriggerAxis() >= 0.5)
+        if(Xbox2.getPOV() == 180)
         {
-            return 0.75;
+            return 1; //down
         }
-        else if (Xbox2.getLeftTriggerAxis() >=0.5)
+        else if (Xbox2.getPOV() == 0)
         {
-            return -0.5;
+            return -1; //up
         }
         else{
             return 0; 

@@ -100,8 +100,17 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     smartDash.dashTest();
     // SmartDashboard.putNumber("cargoVisionRotateValue", cargoVision.getRotationValue());
-    climber.traversalClimbAutomationV2(oi.climbStep());
-    // climber.winchPistons(oi.winchUp());
-    // climber.clampPiston(oi.clampOut());
+    SmartDashboard.putNumber("xbox2pov", oi.Xbox2.getPOV());
+
+  
+    if(oi.Xbox2.getRightTriggerAxis() >=0.8){
+      climber.yellowMotorManual(oi.yellowMotorSpeed(), 1);
+   }
+    else{
+      climber.traversalClimbAutomationV2(oi.climbStep());
+
+    }
+
+
   }
 }
