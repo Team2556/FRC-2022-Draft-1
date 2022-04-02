@@ -25,22 +25,13 @@ public class Climber {
     SparkMaxPIDController yellowPID = yellowMotor.getPIDController();
     DigitalInput topWinchSwitch = new DigitalInput(7);
     AnalogPotentiometer pot = new AnalogPotentiometer(3, Constants.potMax, 0);
+    int climbStepperV2 = 0;
 
-    int climbStepper = 10;    
 
     //1 yellow motor 
     public void climbInit(){
         clampPiston.set(Value.kReverse); //clamp off
-        climbStepper = 0;
         climbStepperV2 = 0;
-        // if (topWinchSwitch.get()) {
-        //     yellowMotor.set(0.5);
-        // }
-        // else {
-        //     yellowMotor.set(0);
-        //     yellowEncoder.setPosition(0);
-        // }
-    
         winchPistons(false); // winch perpendicular
         yellowMotor.setIdleMode(IdleMode.kBrake);
         yellowPID.setP(0.05);
@@ -87,92 +78,11 @@ public class Climber {
         }
     }
 
-    // public void traversalClimbAutomation(boolean climstep, boolean climbreset){
-    //     boolean cone = true;
-    //     boolean ctwo = false;
-    //     boolean wone = true;
-    //     boolean wtwo = !wone;
-    //     if(climstep) {
-    //         climbStepper+= 5;
-    //     }
-    //     else if(climbreset) {
-    //         winchPistons(wtwo);
-    //         climbStepper = 10;
-    //     }
-    //     switch(climbStepper){
-    //         case 5:
-    //             yellowMotor.set(1);
-    //             if(!topWinchSwitch.get()) {
-    //                 yellowMotor.set(0);
-    //                 yellowEncoder.setPosition(0);
-    //                 climbStepper = 10;
-    //             }
-    //         break;
-    //         case 10:
-    //         yellowMotorRunToPos(-150); // up
-    //         clampPiston(false);
-    //         break;
-    //         case 20:
-    //         yellowMotor(1, 1);
-    //         if (!topWinchSwitch.get()) {
-    //             yellowMotor(0, 0.5);
-    //             climbStepper = 30;
-    //         }
-    //         break;
-    //         case 30: 
-    //         yellowMotor(0, 1);
-    //         clampPiston(cone); //clamped on
-    //         break;
-    //         case 35:
-    //         clampPiston(cone);
-    //         yellowMotor(0, 1);
-    //         break;
-    //         case 40:
-    //         clampPiston(cone); //clamped on
-    //         yellowMotorRunToPos(-75);
-    //         break;
-    //         case 45:
-    //         clampPiston(cone); //clamped on
-    //         winchPistons(wone); //winch diagonal
-    //         break;
-    //         case 50: 
-    //         clampPiston(cone); //clamped on
-    //         yellowMotorRunToPos(-150); //goes up 
-    //         break;
-    //         case 55:
-    //         clampPiston(cone); //clamped on
-    //         yellowMotorRunToPos(-75); //goes up 
-    //         winchPistons(wtwo); //winch perpendicular
-    //         if (yellowEncoder.getPosition() > -130) {
-    //             clampPiston(ctwo); //clamped off
-    //         }
-    //         break;
-    //         case 60:
-    //         clampPiston(ctwo);
-    //         break;
-    //         case 65:
-    //         yellowMotor(1, 1);
-    //         if (!topWinchSwitch.get()) {
-    //             yellowMotor(0, 1);
-    //             climbStepper = 70;
-    //         }
-    //         break;
-    //         case 70:
-    //         clampPiston(cone);
-    //         break;
-    //         case 75:
-    //         clampPiston(ctwo); //clamps off
-    //         climbStepper = 20;
-    //         break;
-    //     default:
-    //         yellowMotor(0,0);
-    //         break;
-    //     }
-    // }
 
 
 
-    int climbStepperV2 = 0;
+
+
     public void traversalClimbAutomationV2(boolean climStepUp){
         boolean clampOff = false;
         boolean clampOn = true;
@@ -194,7 +104,6 @@ public class Climber {
                 yellowMotor.set(down);
                 if(!topWinchSwitch.get()) {
                     yellowMotor.set(0);
-                    // climbStepper = 2;
                 }
                 clampPiston(clampOff);
             break;
@@ -316,11 +225,7 @@ public class Climber {
         double newPotRead = pot.get();
         if(Math.abs(newPotRead) > Math.abs(Constants.potMax) || newPotRead < 0){
             newPotRead = oldPotRead;
-            boundedPot = boundedPot;
         }
-        // else if(Math.abs(newPotRead) - Math.abs(oldPotRead) >= Constants.potMax){
-        //     newPotRead = oldPotRead;
-        // }
         else{
             oldPotRead = newPotRead;
             boundedPot = pot.get();

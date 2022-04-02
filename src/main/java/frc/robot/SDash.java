@@ -26,7 +26,6 @@ public class SDash {
     public void dashTele(){
         SmartDashboard.putBoolean("top switch", climber.topWinchSwitch.get());
         SmartDashboard.putNumber("yellowEncoder", climber.yellowEncoder.getPosition());
-        SmartDashboard.putNumber("climbStepper", climber.climbStepper);
         SmartDashboard.putNumber("Distance To Goal", limelight.limeLightDistanceInches());
         SmartDashboard.putBoolean("ShouldYouShoot", shooter.shouldShoot);
     }
@@ -36,7 +35,6 @@ public class SDash {
         SmartDashboard.putNumber("pot", climber.pot.get());
         SmartDashboard.putNumber("avgPot", climber.analogPotentiometerAverageBounded());
         SmartDashboard.putNumber("boundedPot", climber.boundedPot);
-        SmartDashboard.putNumber("climbStepper", climber.climbStepper);
         SmartDashboard.putBoolean("top switch", climber.topWinchSwitch.get());
         // SmartDashboard.putNumber("cargoVisionRotateValue", cargoVision.getRotationValue());
 
