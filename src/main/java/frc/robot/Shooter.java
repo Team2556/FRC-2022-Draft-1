@@ -6,9 +6,12 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 public class Shooter {
     OI oi = new OI();
+    Limelight limelight = new Limelight();
     Intake intake; 
     private TalonFX shooterMotor;
     private TalonSRX hoodMotor;
@@ -36,10 +39,30 @@ public class Shooter {
         shooterMotor.setNeutralMode(NeutralMode.Coast);
     }
 
-    public void shooterTeleop(){
+    public void shooterIntakeTeleop(){
+
+        intake.intakeSolenoid(oi.intakeSolenoid());
+
         if(oi.limeLightTurn()){
-            shooterMotor(Math.abs(-13250));
+            shooterMotor(Math.abs(-13750));
+                if(Math.abs(limelight.x) <= 5 && shouldShoot){ // runs with limelight turning and shoot
+                    intake.translateMotor(oi.translateRunSpeed);
+                }
+                else
+                {
+                    intake.translateMotor(0);
+                } 
         }
+        else if(oi.Xbox1.getRightTriggerAxis() >=0.9 && intake.translateSwitch.get() == true){ //runs with intake
+                intake.translateMotor(-0.1);
+            }
+        else{ // runs manually
+                intake.translateMotor(oi.translateSpeed());
+                shooterMotor(oi.targetSpeedManual());
+            }
+        // if(oi.limeLightTurn()){
+        //     shooterMotor(Math.abs(-13250));
+        // }
         // shooterMotor(Math.abs(oi.targetSpeedManual()));
         
         //hoodMotor(oi.hoodSpeed());
@@ -48,11 +71,16 @@ public class Shooter {
         // shooterMotor(oi.shootConfigs());
         //hoodMotor(oi.hoodConfigs());
         
+        // if(oi.limeLightTurn()){
+        //     shooterMotor(Math.abs(-13750));
+        //   }
+        
     }
 
     boolean shouldShoot;
     
     public void shooterMotor(double targetSpeed){
+        SmartDashboard.putNumber("shooterMotor targetSpeed", targetSpeed);
         double fxspd = shooterMotor.getSelectedSensorVelocity();
         difference  = Math.abs(targetSpeed) - Math.abs(fxspd);
         double error = difference*Kp;

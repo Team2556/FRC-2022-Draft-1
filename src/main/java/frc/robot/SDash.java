@@ -25,10 +25,8 @@ public class SDash {
 
     public void dashTele(){
         SmartDashboard.putBoolean("top switch", climber.topWinchSwitch.get());
-        SmartDashboard.putNumber("yellowEncoder", climber.yellowEncoder.getPosition());
-        SmartDashboard.putNumber("climbStepper", climber.climbStepper);
+        SmartDashboard.putNumber("climbStepper", climber.climbStepperV2);
         SmartDashboard.putNumber("Distance To Goal", limelight.limeLightDistanceInches());
-        SmartDashboard.putBoolean("ShouldYouShoot", shooter.shouldShoot);
     }
 
     public void dashTest(){

@@ -135,24 +135,7 @@ public class Drive {
     public void limelightTurn(){
             differentialDrive.arcadeDrive(0, limelight.limeLightTurn());
     }
-    // public void limelightDrive(){
-    //     //changes the way the robot turns based on if the robot is in mecanum or arcade mode
-    //     if(oi.limeLightTurn)         {
-    //         if(oi.dropped){
-    //             differentialDrive.arcadeDrive(0, limeLight.PIDC());
-    //             if (limeLight.PIDC() == 0) {
-    //                 SmartDashboard.putBoolean("Shooter Aimed", true);
-    //             }
-    //             else {
-    //                 SmartDashboard.putBoolean("Shooter Aimed", false);
-    //             }
-    //         }
-    //         else if(oi.dropped == false){
-    //             driveMecanum.driveCartesian(0, 0, limeLight.PIDC(), 0);
-    //         }
-    //     }
-        
-    // }
+
 
 
 

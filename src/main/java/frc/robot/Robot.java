@@ -77,8 +77,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     cargoVision.getDriverView();
     drive.driveTeleop();
-    intake.intakeTeleop();
-    shooter.shooterTeleop();
+    shooter.shooterIntakeTeleop();
     climber.climbTeleop();
     smartDash.dashTele();
   }

@@ -9,26 +9,22 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class Intake {
     OI oi = new OI();
+    Limelight limelight = new Limelight();
     
     private CANSparkMax intake = new CANSparkMax(Constants.intakeMotorPort, MotorType.kBrushless);
     private CANSparkMax translate = new CANSparkMax(Constants.translateMotorPort, MotorType.kBrushless);
     DigitalInput translateSwitch = new DigitalInput(8);
     DoubleSolenoid intakeSolenoid = new DoubleSolenoid(Constants.PCMRPort, PneumaticsModuleType.CTREPCM, Constants.intakeForwardChannel, Constants.intakeReverseChannel);
 
+
     public void intakeInit() {
         intake.restoreFactoryDefaults();
     }
 
     public void intakeTeleop(){
-        intakeMotor(oi.intakeSpeed());
+        // intakeMotor(oi.intakeSpeed());
         
-        if(oi.Xbox1.getRightTriggerAxis() >=0.9 && translateSwitch.get() == true){
-            translateMotor(-0.1);
-        }
-        else{
-            translateMotor(oi.translateSpeed());
-        }
-        intakeSolenoid(oi.intakeSolenoid());
+   
     }
 
     public void intakeMotor(double intakeSpeed){

@@ -226,7 +226,7 @@ public class OI {
 
     double speed = -13250;
     double targetSpeedManual(){
-     SmartDashboard.putNumber("Target Shooter Speed", speed);
+     SmartDashboard.putNumber("Manual Target Shooter Speed", speed);
         if(Xbox2.getBackButtonReleased()){
             speed += 250;
         }
@@ -313,7 +313,7 @@ public class OI {
 
     boolean limeLightTurn = false;
     boolean limeLightTurn(){
-    if(Xbox1.getAButton()){
+    if(Xbox1.getLeftTriggerAxis() >=0.8){
         limeLightTurn = true;
     }    
     else{
