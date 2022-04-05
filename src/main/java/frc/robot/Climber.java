@@ -217,8 +217,8 @@ public class Climber {
         }
         oldPotRead = newPotRead;
         runningAvg = runningAvg * 0.75 + newPotRead * 0.25;
-        SmartDashboard.putNumber("oldPotRead", oldPotRead);
-        SmartDashboard.putNumber("newPotRead", newPotRead);
+        // SmartDashboard.putNumber("oldPotRead", oldPotRead);
+        // SmartDashboard.putNumber("newPotRead", newPotRead);
         return runningAvg;
     }
 }

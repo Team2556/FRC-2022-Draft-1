@@ -24,10 +24,10 @@ public class SDash {
 
 
     public void dashTele(){
-        SmartDashboard.putBoolean("top switch", climber.topWinchSwitch.get());
+        // SmartDashboard.putBoolean("top switch", climber.topWinchSwitch.get());
         SmartDashboard.putNumber("climbStepper", climber.climbStepperV2);
-        SmartDashboard.putNumber("Distance To Goal", limelight.limeLightDistanceInches());
-        SmartDashboard.putNumber("avg pot", climber.analogPotentiometerAverageBounded());
+        // SmartDashboard.putNumber("Distance To Goal", limelight.limeLightDistanceInches());
+        // SmartDashboard.putNumber("avg pot", climber.analogPotentiometerAverageBounded());
     }
 
     public void dashTest(){

@@ -142,6 +142,14 @@ public class Limelight extends TimedRobot {
         // SmartDashboard.putNumber("test", ty.getDouble(0.0));
     }
     
+    public boolean limelightCentered(){
+        if(Math.abs(x)<=5){
+        return true;}
+        else{
+            return false;
+        }
+
+    }
     
 
 

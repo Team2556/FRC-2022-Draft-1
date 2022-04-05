@@ -209,7 +209,7 @@ public class OI {
         }
       }
 
-    double translateRunSpeed = -0.6;
+    double translateRunSpeed = -0.4;
     double translateSpeed(){
         if(Xbox2.getLeftBumper()){
             return translateRunSpeed;
@@ -270,7 +270,7 @@ public class OI {
     
     int shooterConfigInt = 1;
     public void shooterTeleopConfigSwitch(){
-        switch (Xbox2.getPOV()){
+        switch (Xbox1.getPOV()){
             case 270:
             shooterConfigInt = 1;
             break;
@@ -289,12 +289,12 @@ public class OI {
             break;
             case 2: //from launchpad
                 hoodAutomatedPos = 1322;
-                shootAutomatedSpeed = -15750;
+                shootAutomatedSpeed = -15250;
                 SmartDashboard.putString("Shooter Configuration", "Launchpad");
             break;
             case 3: //from back wall
                 hoodAutomatedPos = 1830;
-                shootAutomatedSpeed = -20000;            
+                shootAutomatedSpeed = -19500;            
                 SmartDashboard.putString("Shooter Configuration", "Back Wall");
 
             break;
@@ -305,7 +305,7 @@ public class OI {
     return hoodAutomatedPos;
 
     }
-    public double shootConfigs(){
+    public double shootConfigsManual(){
         if(Xbox2.getRightBumper()){
             return shootAutomatedSpeed;
             }
@@ -314,7 +314,9 @@ public class OI {
             }
     }
 
-
+    public double shootConfigsNoCheck(){
+        return shootAutomatedSpeed;
+    }
 
 
 

@@ -153,14 +153,15 @@ public class Auto {
         double encoderSafetyVal = 30;
         double encoderDistance1 = 32;
         double shooterSpeed = Math.abs(-14250); //0
-        SmartDashboard.putNumber("step", stepv2);
-        SmartDashboard.putNumber("currentDistance", currentDistance);
-        SmartDashboard.putNumber("lfEncoderAuto", drive.lFEncoder.getPosition());
+        // SmartDashboard.putNumber("step", stepv2);
+        // SmartDashboard.putNumber("currentDistance", currentDistance);
+        // SmartDashboard.putNumber("lfEncoderAuto", drive.lFEncoder.getPosition());
         // boolean twoBallsPickedUp = false;
         // boolean oneBallPickedUp = false;
         // double shooterDeadzone = 100;
         switch(stepv2) {
             case 0:
+                shooter.hoodMotor(-1);
                 intake.intakeSolenoid(false);
                 intake.intakeMotor(-1);
                 intake.translateMotor(0);

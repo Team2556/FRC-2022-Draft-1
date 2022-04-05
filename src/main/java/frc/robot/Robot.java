@@ -82,7 +82,10 @@ public class Robot extends TimedRobot {
     shooter.shooterIntakeTeleop();
     climber.climbTeleop();
     smartDash.dashTele();
-    SmartDashboard.putNumber("mstrafe", oi.mStrafe());
+    SmartDashboard.putNumber("limelighturn", limelight.limeLightTurn());
+    SmartDashboard.putNumber("limelightX", limelight.x);
+    SmartDashboard.putBoolean("limelIghtcentered", limelight.limelightCentered());
+    SmartDashboard.putNumber("limedistancer", limelight.limeLightDistanceInches());
 
   }
 
@@ -103,6 +106,8 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
     smartDash.dashTest();
+      //shooter.hoodMotorRunToPosManual(500);
+     shooter.hoodMotor(oi.hoodSpeed());
     // climber.winchPistons(oi.winchUp());
     // climber.clampPiston(oi.clampOut());
     // if(oi.Xbox1.getAButton()){

@@ -40,42 +40,33 @@ public class Shooter {
     }
 
     public void shooterIntakeTeleop(){
-
+        oi.shooterTeleopConfigSwitch();
         intake.intakeSolenoid(oi.intakeSolenoid());
         intake.intakeMotor(oi.intakeSpeed());
+        hoodMotorRunToPosManual(oi.hoodConfigs());
         if(oi.limeLightTurn()){
-            shooterMotor(Math.abs(-13750));
+            //shooterMotor(Math.abs(-13750));
             //shooterMotor(Math.abs(shooterEquation()));
-                if(Math.abs(limelight.x) <= 5 && shouldShoot){ // runs with limelight turning and shoot
-                    intake.translateMotor(oi.translateRunSpeed);
-                }
-                else
-                {
-                    intake.translateMotor(0);
-                } 
+            // shooterMotorAuto(oi.shootConfigsNoCheck());
+            //     if(Math.abs(limelight.x) <= 5 && shouldShoot){ // runs with limelight turning and shoot
+            //         intake.translateMotor(oi.translateRunSpeed);
+            //     }
+            //     else
+            //     {
+            //         intake.translateMotor(0);
+            //     } 
+            shooterMotorLimelight(oi.shootConfigsNoCheck(), limelight.limelightCentered());
         }
         else if(oi.Xbox1.getRightTriggerAxis() >=0.9 && intake.translateSwitch.get() == true){ //runs with intake
                 intake.translateMotor(-0.1);
             }
         else{ // runs manually
                 intake.translateMotor(oi.translateSpeed());
-                shooterMotor(oi.targetSpeedManual());
+                //shooterMotor(oi.targetSpeedManual());
+                shooterMotor(0);
                 
             }
-        // if(oi.limeLightTurn()){
-        //     shooterMotor(Math.abs(-13250));
-        // }
-        // shooterMotor(Math.abs(oi.targetSpeedManual()));
-        
-        //hoodMotor(oi.hoodSpeed());
-        // hoodMotor(hoodEquation());
 
-        // shooterMotor(oi.shootConfigs());
-        //hoodMotor(oi.hoodConfigs());
-        
-        // if(oi.limeLightTurn()){
-        //     shooterMotor(Math.abs(-13750));
-        //   }
         
     }
 
@@ -132,7 +123,31 @@ public class Shooter {
     }
 
 
-
+    public void shooterMotorLimelight(double targetSpeed, boolean limelightCentered){
+        SmartDashboard.putNumber("shooterLimelight", targetSpeed);
+        double fxspd = shooterMotor.getSelectedSensorVelocity();
+        difference  = Math.abs(targetSpeed) - Math.abs(fxspd);
+        double error = difference*Kp;
+        LastOutput = LastOutput + error;
+        percentOutput = LastOutput;
+        if(percentOutput > 1){
+            percentOutput = 1;
+        }
+        if (targetSpeed == 0){
+            percentOutput = 0;
+            difference = 0;
+            error = 0;
+            LastOutput = 0;
+        }  
+        if(Math.abs(difference)<50 && limelightCentered){
+            if(targetSpeed != 0){
+                shouldShoot=true;                
+                intake.translateMotor(oi.translateRunSpeed);}
+        }
+        else{shouldShoot=false;}   
+        shooterMotor.set(ControlMode.PercentOutput, -percentOutput);
+        SmartDashboard.putBoolean("shouldShoot", shouldShoot);
+    }
 
     public void hoodMotor(double hoodSpeed){
         if(hoodSpeed!=0){
@@ -145,6 +160,16 @@ public class Shooter {
 
     public void hoodMotorRunToPos(double targetPos){
         hoodMotor.set(ControlMode.Position, targetPos);
+    }
+
+    public void hoodMotorRunToPosManual(double targetPos){
+        double currentPos = hoodMotor.getSelectedSensorPosition();
+        double difference = currentPos - targetPos;
+        double k = 0.001;
+        double sign = -1;
+        hoodMotor(difference * k *  sign);
+        // SmartDashboard.putNumber("hoodSpeed", difference * k * sign);
+        // SmartDashboard.putNumber("difference", difference);
     }
 
     public double hoodEncoder(){
