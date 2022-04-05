@@ -28,9 +28,19 @@ public class OI {
     //drive piston drops
     boolean dropped = false;
     boolean dropped(){
-       
+        // if(!dropped){
+        //     if(mStrafe() >= 0.05 || mStrafe() <= -.05)
+        //     {
+        //         dropped = false;
+        //     }
+        //     else if(Xbox1.getBButtonReleased() && mStrafe() == 0){ 
+        //         dropped = !dropped;
+                
+        //     }
+        // }
         if(Xbox1.getBButtonReleased()){ //&& Xbox1.getLeftTriggerAxis() >= 0.5){
             dropped = !dropped;
+            
         }
         return dropped;
        
@@ -48,7 +58,7 @@ public class OI {
     }
     double mStrafeSpeed = 0;
     double mStrafe(){
-        if (Math.abs(Xbox1.getLeftX()) <= deadzone){
+        if (Math.abs(Xbox1.getLeftX()) <= deadzone){ //|| dropped){
             mStrafeSpeed = 0;
         }
         else{
@@ -120,11 +130,11 @@ public class OI {
     }
 
     double yellowMotorSpeed(){
-        if(Xbox2.getRightTriggerAxis() >= 0.5)
+        if(Xbox2.getPOV() == 180)
         {
-            return 0.75;
+            return 0.5;
         }
-        else if (Xbox2.getLeftTriggerAxis() >=0.5)
+        else if (Xbox2.getPOV() == 0)
         {
             return -0.5;
         }
@@ -199,7 +209,7 @@ public class OI {
         }
       }
 
-    double translateRunSpeed = -0.5;
+    double translateRunSpeed = -0.6;
     double translateSpeed(){
         if(Xbox2.getLeftBumper()){
             return translateRunSpeed;

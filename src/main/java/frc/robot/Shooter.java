@@ -42,9 +42,10 @@ public class Shooter {
     public void shooterIntakeTeleop(){
 
         intake.intakeSolenoid(oi.intakeSolenoid());
-
+        intake.intakeMotor(oi.intakeSpeed());
         if(oi.limeLightTurn()){
             shooterMotor(Math.abs(-13750));
+            //shooterMotor(Math.abs(shooterEquation()));
                 if(Math.abs(limelight.x) <= 5 && shouldShoot){ // runs with limelight turning and shoot
                     intake.translateMotor(oi.translateRunSpeed);
                 }
@@ -59,6 +60,7 @@ public class Shooter {
         else{ // runs manually
                 intake.translateMotor(oi.translateSpeed());
                 shooterMotor(oi.targetSpeedManual());
+                
             }
         // if(oi.limeLightTurn()){
         //     shooterMotor(Math.abs(-13250));
@@ -66,7 +68,7 @@ public class Shooter {
         // shooterMotor(Math.abs(oi.targetSpeedManual()));
         
         //hoodMotor(oi.hoodSpeed());
-
+        // hoodMotor(hoodEquation());
 
         // shooterMotor(oi.shootConfigs());
         //hoodMotor(oi.hoodConfigs());
@@ -104,7 +106,30 @@ public class Shooter {
         shooterMotor.set(ControlMode.PercentOutput, -percentOutput);
     }
 
-
+    public boolean shooterMotorAuto(double targetSpeed){
+        SmartDashboard.putNumber("shooterMotor targetSpeed", targetSpeed);
+        double fxspd = shooterMotor.getSelectedSensorVelocity();
+        difference  = Math.abs(targetSpeed) - Math.abs(fxspd);
+        double error = difference*Kp;
+        LastOutput = LastOutput + error;
+        percentOutput = LastOutput;
+        if(percentOutput > 1){
+            percentOutput = 1;
+        }
+        if (targetSpeed == 0){
+            percentOutput = 0;
+            difference = 0;
+            error = 0;
+            LastOutput = 0;
+        }  
+        if(Math.abs(difference)<50){
+            if(targetSpeed != 0){
+                return true;   }             
+        }
+        else{return false;}   
+        shooterMotor.set(ControlMode.PercentOutput, -percentOutput);
+        return false;
+    }
 
 
 
@@ -131,9 +156,15 @@ public class Shooter {
         return shooterMotor.getSelectedSensorVelocity();
     }
     
-    
-    
+    public double shooterEquation(){
+        double sofX = -41.00625 * limelight.limeLightDistanceInches() - 10406.56305;
+        return sofX;
+    }
 
+    public double hoodEquation(){
+        double hofX = 19.63731 * limelight.limeLightDistanceInches() - 1787.57969;
+        return hofX;
+    }
 
 
 

@@ -52,6 +52,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     auto.autoInit(1);
+    //drive.lFEncoder.setPosition(0);
     m_autoSelected = m_chooser.getSelected();
     m_autoSelected = SmartDashboard.getString("Auto Selector", kRedAuto);
     System.out.println("Auto selected: " + m_autoSelected);
@@ -59,7 +60,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-  auto.autoEncoder();
+  // auto.autoEncoder();
+  auto.autoLimelightV2();
   // SmartDashboard.putNumber("lFEncoder", drive.lFEncoderValue());
 
   }
@@ -80,6 +82,8 @@ public class Robot extends TimedRobot {
     shooter.shooterIntakeTeleop();
     climber.climbTeleop();
     smartDash.dashTele();
+    SmartDashboard.putNumber("mstrafe", oi.mStrafe());
+
   }
 
   @Override
@@ -90,34 +94,43 @@ public class Robot extends TimedRobot {
  
   @Override
   public void testInit() {
-    climber.climbInit();
+    //climber.climbInit();
     // cargoVision.visionInit(1);
+    drive.lFEncoder.setPosition(0);
 
   }
 
   @Override
   public void testPeriodic() {
     smartDash.dashTest();
+    // climber.winchPistons(oi.winchUp());
+    // climber.clampPiston(oi.clampOut());
     // if(oi.Xbox1.getAButton()){
     // drive.limelightTurn();}
     // else{
     // drive.dualDrivebase(oi.dropped());
     // }
-    drive.triDrivebase();
-    if(oi.limeLightTurn()){
-      shooter.shooterMotor(Math.abs(-13750));
-    }
-    else{
-      shooter.shooterMotor(0);
-    } 
-    if(oi.limeLightTurn()){
-      if(Math.abs(limelight.x) <= 5 && Math.abs(shooter.difference) <=50){
-      intake.translateMotor(oi.translateRunSpeed);
-      }
-      else
-      {
-        intake.translateMotor(0);
-      } 
-    }
+    // drive.triDrivebase();
+    // if(oi.limeLightTurn()){
+    //   shooter.shooterMotor(Math.abs(-13750));
+    // }
+    // else{
+    //   shooter.shooterMotor(0);
+    // } 
+    // if(oi.limeLightTurn()){
+    //   if(Math.abs(limelight.x) <= 5 && Math.abs(shooter.difference) <=50){
+    //   intake.translateMotor(oi.translateRunSpeed);
+    //   }
+    //   else
+    //   {
+    //     intake.translateMotor(0);
+    //   } 
+    // }
   }
+
+
+
+
 }
+
+

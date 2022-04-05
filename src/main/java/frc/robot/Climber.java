@@ -106,15 +106,15 @@ public class Climber {
 
     public void traversalClimbAutomationV2(boolean climStepUp){
 
-        SmartDashboard.putNumber("climbStepperV2", climbStepperV2);
-        SmartDashboard.putNumber("climbMotorVoltage", yellowMotor.getBusVoltage());
-        SmartDashboard.putNumber("climbMotorAmpOutput", yellowMotor.getOutputCurrent());
+        // SmartDashboard.putNumber("climbStepperV2", climbStepperV2);
+        // SmartDashboard.putNumber("climbMotorVoltage", yellowMotor.getBusVoltage());
+        // SmartDashboard.putNumber("climbMotorAmpOutput", yellowMotor.getOutputCurrent());
         if(climStepUp){
             climbStepperV2++;
         }
-        if (!topWinchSwitch.get()) {
-            yellowMotor(0, 0.5);
-        }
+        // if (!topWinchSwitch.get()) {
+        //     yellowMotor(0, 0.5);
+        // }
         switch(climbStepperV2){
             case 1:
                 yellowMotor.set(down);
@@ -153,7 +153,7 @@ public class Climber {
             break;
             case 8:
                 yellowMotor(down,1); 
-                if(analogPotentiometerAverageBounded() <= 265){
+                if(analogPotentiometerAverageBounded() <= 260){
                     yellowMotor(0,1);
                     climbStepperV2 = 9;
                 } 
@@ -216,7 +216,7 @@ public class Climber {
             boundedPot = pot.get();
         }
         oldPotRead = newPotRead;
-        runningAvg = runningAvg * 0.95 + newPotRead * 0.05;
+        runningAvg = runningAvg * 0.75 + newPotRead * 0.25;
         SmartDashboard.putNumber("oldPotRead", oldPotRead);
         SmartDashboard.putNumber("newPotRead", newPotRead);
         return runningAvg;
