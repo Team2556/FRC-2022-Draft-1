@@ -35,7 +35,7 @@ public class Climber {
 
 
     //1 yellow motor 
-    public void climbInit(){
+    public void climbInit() {
         clampPiston(clampOff); //clamp off
         climbStepperV2 = 0;
         winchPistons(winchUpright); // winch perpendicular
@@ -49,7 +49,7 @@ public class Climber {
         yellowPID.setOutputRange(-1,1);
     }
 
-    public void climbTeleop(){
+    public void climbTeleop() {
         if (oi.Xbox2.getRightTriggerAxis() >= 0.8){
             yellowMotorManual(oi.yellowMotorSpeed(), 1);
         }
@@ -58,39 +58,39 @@ public class Climber {
         }
     }
 
-    public void winchPistons(boolean winchUp){  
+    public void winchPistons(boolean winchUp) {  
         if (winchUp) {
             yellowLeft.set(Value.kForward);
             yellowRight.set(Value.kForward);
-            }
+        }
         else {
             yellowLeft.set(Value.kReverse);
             yellowRight.set(Value.kReverse);
-            }
+        }
     }
 
-    public void yellowMotor(double yellowSpeed, double rate){
+    public void yellowMotor(double yellowSpeed, double rate) {
         yellowMotor.set(yellowSpeed);
         yellowMotor.setClosedLoopRampRate(rate);
     }
    
-    public void yellowMotorRunToPos(double targetPos){
+    public void yellowMotorRunToPos(double targetPos) {
         yellowPID.setReference(targetPos, ControlType.kPosition);
     }
 
     public void yellowMotorManual(double yellowSpeed, double rate){
-        if(!topWinchSwitch.get() && yellowSpeed<0){
+        if(!topWinchSwitch.get() && yellowSpeed < 0) {
             yellowMotor.set(yellowSpeed);
         }
-        else if(!topWinchSwitch.get()){
+        else if(!topWinchSwitch.get()) {
             yellowMotor.set(0);
         }
-        else if(topWinchSwitch.get()){
+        else if(topWinchSwitch.get()) {
             yellowMotor.set(yellowSpeed);
         }
     }
 
-    public void clampPiston(boolean clampOn){
+    public void clampPiston(boolean clampOn) {
         // false is the clamps not being clamped on
         // reverse is not being clamped on
         if (clampOn) {
@@ -106,9 +106,6 @@ public class Climber {
 
     public void traversalClimbAutomationV2(boolean climStepUp){
 
-        // SmartDashboard.putNumber("climbStepperV2", climbStepperV2);
-        // SmartDashboard.putNumber("climbMotorVoltage", yellowMotor.getBusVoltage());
-        // SmartDashboard.putNumber("climbMotorAmpOutput", yellowMotor.getOutputCurrent());
         if(climStepUp){
             climbStepperV2++;
         }
@@ -153,11 +150,11 @@ public class Climber {
             break;
             case 8:
                 yellowMotor(down,1); 
-                if(analogPotentiometerAverageBounded() <= 260){
+                if(analogPotentiometerAverageBounded() <= 225){ // originally 260
                     yellowMotor(0,1);
-                    climbStepperV2 = 9;
+                    // climbStepperV2 = 9;
                 } 
-                //needs to go perpedicular first
+                // needs to go perpedicular first
                 // has to go down around to 225 and then it'll hooked onto the thing
             break;
             case 9:
@@ -187,7 +184,6 @@ public class Climber {
                 yellowMotor(0, 1);
             break;
         }
-
     }
 
     public void yellowMotorPCalibration(){
@@ -199,12 +195,9 @@ public class Climber {
         }
     }
 
-
-
-
-        double runningAvg = 0;
-        double oldPotRead = 0;
-        double boundedPot = 0;
+    double runningAvg = 0;
+    double oldPotRead = 0;
+    double boundedPot = 0;
     public double analogPotentiometerAverageBounded(){
         double newPotRead = pot.get();
         if(Math.abs(newPotRead) > Math.abs(Constants.potMax) || newPotRead < 0){

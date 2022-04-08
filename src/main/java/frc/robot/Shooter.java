@@ -40,34 +40,32 @@ public class Shooter {
     }
 
     public void shooterIntakeTeleop(){
+        SmartDashboard.putNumber("talonfX", shooterMotor.getSelectedSensorVelocity());
         oi.shooterTeleopConfigSwitch();
         intake.intakeSolenoid(oi.intakeSolenoid());
         intake.intakeMotor(oi.intakeSpeed());
         hoodMotorRunToPosManual(oi.hoodConfigs());
-        if(oi.limeLightTurn()){
-            //shooterMotor(Math.abs(-13750));
-            //shooterMotor(Math.abs(shooterEquation()));
-            // shooterMotorAuto(oi.shootConfigsNoCheck());
-            //     if(Math.abs(limelight.x) <= 5 && shouldShoot){ // runs with limelight turning and shoot
-            //         intake.translateMotor(oi.translateRunSpeed);
-            //     }
-            //     else
-            //     {
-            //         intake.translateMotor(0);
-            //     } 
+        if (oi.limeLightTurn()) {
             shooterMotorLimelight(oi.shootConfigsNoCheck(), limelight.limelightCentered());
         }
-        else if(oi.Xbox1.getRightTriggerAxis() >=0.9 && intake.translateSwitch.get() == true){ //runs with intake
-                intake.translateMotor(-0.1);
+        else if (intake.translateSwitch.get() == true) { //runs with intake
+            intake.translateMotor(-0.2);
+            shooterMotor(0);
+        }
+        else if (intake.translateSwitch.get() == false) {
+            intake.translateMotor(0);
+            shooterMotor(oi.shootAutomatedSpeed + 1000);   
+        }
+        else { // runs manually
+            intake.translateMotor(oi.translateSpeed());
+            if (intake.translateSwitch.get() == false) {
+                intake.translateMotor(0);
+                shooterMotor(oi.shootAutomatedSpeed + 1000);
             }
-        else{ // runs manually
-                intake.translateMotor(oi.translateSpeed());
-                //shooterMotor(oi.targetSpeedManual());
+            else{
                 shooterMotor(0);
-                
             }
-
-        
+        }
     }
 
     boolean shouldShoot;
@@ -88,13 +86,18 @@ public class Shooter {
             error = 0;
             LastOutput = 0;
         }  
+           
+        shooterMotor.set(ControlMode.PercentOutput, -percentOutput);
+    }
+   
+    public void runIntakeByDiff(double targetSpeed){
+        difference  = Math.abs(targetSpeed) - Math.abs(shooterMotor.getSelectedSensorVelocity());
         if(Math.abs(difference)<50){
             if(targetSpeed != 0){
                 shouldShoot=true;                
-                intake.translateMotor(oi.translateRunSpeed);}
+                intake.translateMotor(oi.translateRunSpeed);
+            }
         }
-        else{shouldShoot=false;}   
-        shooterMotor.set(ControlMode.PercentOutput, -percentOutput);
     }
 
     public boolean shooterMotorAuto(double targetSpeed){

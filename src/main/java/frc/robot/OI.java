@@ -285,7 +285,7 @@ public class OI {
             case 1: //at the edge of tarmac
                 hoodAutomatedPos = 0;
                 shootAutomatedSpeed = -13250;
-                SmartDashboard.putString("Shooter Configuration", "Edge of Tarmack");
+                SmartDashboard.putString("Shooter Configuration", "Edge of Tarmac");
             break;
             case 2: //from launchpad
                 hoodAutomatedPos = 1322;

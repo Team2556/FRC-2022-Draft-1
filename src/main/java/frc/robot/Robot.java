@@ -43,16 +43,11 @@ public class Robot extends TimedRobot {
 
  
   @Override
-  public void robotPeriodic() {
-    // SmartDashboard.putBoolean("rF is Inverted", drive.rightMotorsReversed());
-    // drive.lFEncoder.setInverted(true);
-    // SmartDashboard.putBoolean("lFEncoder Inverted", drive.lFEncoder.getInverted());
-  }
+  public void robotPeriodic() {}
 
   @Override
   public void autonomousInit() {
     auto.autoInit(1);
-    //drive.lFEncoder.setPosition(0);
     m_autoSelected = m_chooser.getSelected();
     m_autoSelected = SmartDashboard.getString("Auto Selector", kRedAuto);
     System.out.println("Auto selected: " + m_autoSelected);
@@ -61,9 +56,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
   // auto.autoEncoder();
-  auto.autoLimelightV2();
-  // SmartDashboard.putNumber("lFEncoder", drive.lFEncoderValue());
-
+  auto.autoLimelightV3();
   }
 
   @Override
@@ -71,7 +64,6 @@ public class Robot extends TimedRobot {
     //intake.intakeSolenoid(true); //up
     drive.lFEncoder.setPosition(0);
     shooter.shooterInit();
-    //climber.clampPiston(true);
     climber.climbInit();
   }
 
@@ -82,11 +74,6 @@ public class Robot extends TimedRobot {
     shooter.shooterIntakeTeleop();
     climber.climbTeleop();
     smartDash.dashTele();
-    SmartDashboard.putNumber("limelighturn", limelight.limeLightTurn());
-    SmartDashboard.putNumber("limelightX", limelight.x);
-    SmartDashboard.putBoolean("limelIghtcentered", limelight.limelightCentered());
-    SmartDashboard.putNumber("limedistancer", limelight.limeLightDistanceInches());
-
   }
 
   @Override
@@ -97,17 +84,21 @@ public class Robot extends TimedRobot {
  
   @Override
   public void testInit() {
-    //climber.climbInit();
+    // climber.climbInit();
     // cargoVision.visionInit(1);
-    drive.lFEncoder.setPosition(0);
+    // drive.lFEncoder.setPosition(0);
 
   }
 
   @Override
   public void testPeriodic() {
-    smartDash.dashTest();
-      //shooter.hoodMotorRunToPosManual(500);
-     shooter.hoodMotor(oi.hoodSpeed());
+    // if (oi.Xbox1.getYButton()) {
+    //   drive.mecanumDrive(0, 0, cargoVision.getRotationValue());
+    // }
+    
+    // smartDash.dashTest();
+    //shooter.hoodMotorRunToPosManual(500);
+    //  shooter.hoodMotor(oi.hoodSpeed());
     // climber.winchPistons(oi.winchUp());
     // climber.clampPiston(oi.clampOut());
     // if(oi.Xbox1.getAButton()){
@@ -132,10 +123,6 @@ public class Robot extends TimedRobot {
     //   } 
     // }
   }
-
-
-
-
 }
 
 

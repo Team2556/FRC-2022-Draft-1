@@ -58,7 +58,6 @@ public class Limelight extends TimedRobot {
 
 
 
-
     // public double PIDC(){
     //     //error is self explanatory
     //     //constant is the number the PID value is multiplied by to make it managable
@@ -144,11 +143,12 @@ public class Limelight extends TimedRobot {
     
     public boolean limelightCentered(){
         if(Math.abs(x)<=5){
-        return true;}
+        return true;
+        }
         else{
             return false;
         }
-
+        
     }
     
 

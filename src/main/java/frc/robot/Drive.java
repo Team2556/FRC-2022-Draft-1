@@ -70,6 +70,12 @@ public class Drive {
         rRMotor.restoreFactoryDefaults();
         lFMotor.restoreFactoryDefaults();
         lRMotor.restoreFactoryDefaults();
+
+        rFMotor.setSmartCurrentLimit(35);
+        rRMotor.setSmartCurrentLimit(35);
+        lFMotor.setSmartCurrentLimit(35);
+        lRMotor.setSmartCurrentLimit(35);
+
         rFMotor.setInverted(true);
         rRMotor.setInverted(true);
         // SmartDashboard.putString("Right motors reversed", "Yes");
