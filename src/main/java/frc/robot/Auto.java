@@ -163,7 +163,7 @@ public class Auto {
             break;
             case 3:
                 shooter.runIntakeByDiff(shooterSpeed);
-                 shooter.shooterMotor(shooterSpeed);
+                shooter.shooterMotor(shooterSpeed);
                 drive.mecanumDrive(0, 0, 0);
             break;
             default:

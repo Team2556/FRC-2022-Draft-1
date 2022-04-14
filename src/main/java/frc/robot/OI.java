@@ -10,7 +10,8 @@ public class OI {
     XboxController Xbox1 = new XboxController(0);
     XboxController Xbox2 = new XboxController(1);
 
-    double deadzone = 0.2;
+    double deadzone = 0.2; //originally 0.2
+    
     double shootAutomatedSpeed = 0;
     double hoodAutomatedPos = 0;
     boolean shootNow = false;
@@ -132,11 +133,11 @@ public class OI {
     double yellowMotorSpeed(){
         if(Xbox2.getPOV() == 180)
         {
-            return 0.5;
+            return 1;
         }
         else if (Xbox2.getPOV() == 0)
         {
-            return -0.5;
+            return -1;
         }
         else{
             return 0; 
@@ -196,15 +197,15 @@ public class OI {
    
    
    
-    double intakeRunSpeed = -1;
+    double intakeRunSpeed = -0.9;
     double intakeSpeed(){
         if(Xbox1.getRightTriggerAxis() >=0.9){
             return intakeRunSpeed;
         }
-        // else if(Xbox1.getRightBumper()){
-        //     return 0.5;
-        // }
-        else{
+        else if(Xbox1.getYButton()) {
+            return 0.5;
+        }
+        else {
             return 0;
         }
       }
@@ -227,6 +228,9 @@ public class OI {
         if(Xbox1.getRightTriggerAxis() >=0.9){
             intakeOut = false;
         }
+        // else if (Xbox1.getYButton()){
+        //     intakeOut = false;
+        // }
         else{
             intakeOut = true;
         }

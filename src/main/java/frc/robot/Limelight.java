@@ -123,10 +123,10 @@ public class Limelight extends TimedRobot {
         double targetOffsetAngle_Vertical = ty.getDouble(0.0);
     
     // how many degrees back is your limelight rotated from perfectly vertical?
-    double limelightMountAngleDegrees = 26.0 ;
+    double limelightMountAngleDegrees = 30.0 ;
     
     // distance from the center of the Limelight lens to the floor
-    double limelightLensHeightInches = 32.0;
+    double limelightLensHeightInches = 30.0;
     
     // distance from the target to the floor
     double goalHeightInches = 104.0;

@@ -4,7 +4,10 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -14,7 +17,8 @@ public class Shooter {
     Limelight limelight = new Limelight();
     Intake intake; 
     private TalonFX shooterMotor;
-    private TalonSRX hoodMotor;
+    private CANSparkMax hoodMotor;
+    private RelativeEncoder hoodEncoder;
     private double percentOutput;
     private double LastOutput; 
     private double Kp;
@@ -22,7 +26,8 @@ public class Shooter {
 
     public Shooter(Intake in){
         shooterMotor = new TalonFX(Constants.shooterMotorPort);
-        hoodMotor = new TalonSRX(Constants.hoodMotorPort);
+        hoodMotor = new CANSparkMax(Constants.hoodMotorPort, MotorType.kBrushless);
+        hoodEncoder = hoodMotor.getEncoder();
         percentOutput = 0;
         LastOutput = 0;
         Kp = 0.00000105;
@@ -31,43 +36,65 @@ public class Shooter {
     }
 
     public void shooterInit(){
-        hoodMotor.configFactoryDefault();
-        hoodMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-        hoodMotor.setSelectedSensorPosition(0);
+        hoodMotor.restoreFactoryDefaults();
+        hoodMotor.setIdleMode(IdleMode.kBrake);
         shooterMotor.configFactoryDefault();
         shooterMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
         shooterMotor.setNeutralMode(NeutralMode.Coast);
     }
 
     public void shooterIntakeTeleop(){
-        SmartDashboard.putNumber("talonfX", shooterMotor.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("Actual Shooter Speed", shooterMotor.getSelectedSensorVelocity());
         oi.shooterTeleopConfigSwitch();
         intake.intakeSolenoid(oi.intakeSolenoid());
         intake.intakeMotor(oi.intakeSpeed());
         hoodMotorRunToPosManual(oi.hoodConfigs());
-        if (oi.limeLightTurn()) {
-            shooterMotorLimelight(oi.shootConfigsNoCheck(), limelight.limelightCentered());
-        }
-        else if (intake.translateSwitch.get() == true) { //runs with intake
-            intake.translateMotor(-0.2);
-            shooterMotor(0);
-        }
-        else if (intake.translateSwitch.get() == false) {
-            intake.translateMotor(0);
-            shooterMotor(oi.shootAutomatedSpeed + 1000);   
-        }
-        else { // runs manually
-            intake.translateMotor(oi.translateSpeed());
-            if (intake.translateSwitch.get() == false) {
-                intake.translateMotor(0);
-                shooterMotor(oi.shootAutomatedSpeed + 1000);
-            }
-            else{
-                shooterMotor(0);
-            }
-        }
+        shooterConstantRev(oi.shootConfigsNoCheck());
+        // if (oi.limeLightTurn()) {
+        //     shooterMotorLimelight(oi.shootConfigsNoCheck(), limelight.limelightCentered());
+        // }
+        // else if (intake.translateSwitch.get() == true) { //runs with intake
+        //     intake.translateMotor(-0.2);
+        //     shooterMotor(0);
+        // }
+        // else if (intake.translateSwitch.get() == false) {
+        //     intake.translateMotor(0);
+        //     shooterMotor(oi.shootAutomatedSpeed);   
+        // }
+        // else { // runs manually
+        //     intake.translateMotor(oi.translateSpeed());
+        //     if (intake.translateSwitch.get() == false) {
+        //         intake.translateMotor(0);
+        //         shooterMotor(oi.shootAutomatedSpeed);
+        //     }
+        //     else{
+        //         shooterMotor(0);
+        //     }
+        // }
     }
 
+    public void shooterConstantRev(double shootingSpeed) {
+        double shootSpeed = 0;
+        intake.translateMotor(oi.translateRunSpeed);
+        if (oi.limeLightTurn()) {
+            shootSpeed = shootingSpeed;
+            if (limelight.limelightCentered() && shouldShoot) {
+                intake.translateMotor(oi.translateRunSpeed);
+            }
+            else {
+                intake.translateMotor(0);
+            }
+        }
+        else if (intake.translateSwitch.get() == false) {
+            shootSpeed = shootingSpeed + 250;
+            intake.translateMotor(0);
+        }
+        shooterMotor(shootSpeed);
+    }
+
+
+
+    
     boolean shouldShoot;
     
     public void shooterMotor(double targetSpeed){
@@ -86,6 +113,14 @@ public class Shooter {
             error = 0;
             LastOutput = 0;
         }  
+        if(Math.abs(difference)<60){
+            if(targetSpeed != 0){
+                shouldShoot=true;                
+            }
+        }
+        else {
+            shouldShoot = false;       
+        }
            
         shooterMotor.set(ControlMode.PercentOutput, -percentOutput);
     }
@@ -154,19 +189,24 @@ public class Shooter {
 
     public void hoodMotor(double hoodSpeed){
         if(hoodSpeed!=0){
-        hoodMotor.set(ControlMode.PercentOutput, hoodSpeed);
+            hoodMotor.set(hoodSpeed);
         }
         else{
-            hoodMotor.set(ControlMode.PercentOutput, 0);
+            hoodMotor.set(0);
         }
         }
 
     public void hoodMotorRunToPos(double targetPos){
-        hoodMotor.set(ControlMode.Position, targetPos);
+        if (hoodEncoder() < targetPos) {
+            hoodMotor(1);
+        }
+        else {
+            hoodMotor(0);
+        }
     }
 
     public void hoodMotorRunToPosManual(double targetPos){
-        double currentPos = hoodMotor.getSelectedSensorPosition();
+        double currentPos = hoodEncoder.getPosition();
         double difference = currentPos - targetPos;
         double k = 0.001;
         double sign = -1;
@@ -176,7 +216,7 @@ public class Shooter {
     }
 
     public double hoodEncoder(){
-        double hoodPos = hoodMotor.getSelectedSensorPosition();
+        double hoodPos = hoodEncoder.getPosition();
         return hoodPos;
     }
     
@@ -194,7 +234,16 @@ public class Shooter {
         return hofX;
     }
 
-
+    public void autoShoot() {
+        if (oi.Xbox1.getAButton()) {
+            hoodMotorRunToPos(hoodEquation());
+            shooterConstantRev(shooterEquation());
+        }
+        else {
+            hoodMotorRunToPos(oi.hoodAutomatedPos);
+            shooterConstantRev(oi.shootAutomatedSpeed);
+        }
+    }
 
 
 

@@ -92,6 +92,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
+    SmartDashboard.putNumber("Limelight Distance", limelight.limeLightDistanceInches());
+    shooter.autoShoot();
+    
     // if (oi.Xbox1.getYButton()) {
     //   drive.mecanumDrive(0, 0, cargoVision.getRotationValue());
     // }

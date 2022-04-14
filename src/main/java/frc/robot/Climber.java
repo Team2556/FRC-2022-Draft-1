@@ -50,6 +50,9 @@ public class Climber {
     }
 
     public void climbTeleop() {
+        if(oi.Xbox2.getAButtonReleased()){
+            climbStepperV2 = 1;
+        }
         if (oi.Xbox2.getRightTriggerAxis() >= 0.8){
             yellowMotorManual(oi.yellowMotorSpeed(), 1);
         }
