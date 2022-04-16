@@ -16,7 +16,10 @@ import edu.wpi.first.wpilibj.DigitalInput;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import org.ejml.dense.row.misc.RrefGaussJordanRowPivot_DDRM;
 
 public class Drive {
 
@@ -76,6 +79,16 @@ public class Drive {
         lFMotor.setSmartCurrentLimit(35);
         lRMotor.setSmartCurrentLimit(35);
 
+        rFMotor.setIdleMode(IdleMode.kBrake);
+        rRMotor.setIdleMode(IdleMode.kBrake);
+        lFMotor.setIdleMode(IdleMode.kBrake);
+        lRMotor.setIdleMode(IdleMode.kBrake);
+
+        // rFMotor.setIdleMode(IdleMode.kCoast);
+        // rRMotor.setIdleMode(IdleMode.kCoast);
+        // lFMotor.setIdleMode(IdleMode.kCoast);
+        // lRMotor.setIdleMode(IdleMode.kCoast);
+
         rFMotor.setInverted(true);
         rRMotor.setInverted(true);
         // SmartDashboard.putString("Right motors reversed", "Yes");
@@ -104,9 +117,9 @@ public class Drive {
         boolean dropped = droppedP; 
         SmartDashboard.putBoolean("dropped drive", dropped);
         
-        double mForward = -oi.mForward(); 
-        double mStrafe = oi.mStrafe(); 
-        double mRotate = 0.75*oi.mRotate();
+        double mForward = -oi.Xbox1.getLeftY(); 
+        double mStrafe = oi.Xbox1.getLeftX(); 
+        double mRotate = 0.75*oi.Xbox1.getRightX();
 
         double aForward = -oi.aForward();
         double aRotate = 0.75 *oi.aRotate();
@@ -130,7 +143,7 @@ public class Drive {
             SmartDashboard.putString("Drivebase", "Mecanum");
         }
         else{
-           // differentialDrive.tankDrive(0, 0);
+            differentialDrive.arcadeDrive(aForward, aRotate);
             SmartDashboard.putString("Drivebase", "Issues with drivebase");
         }    
     }

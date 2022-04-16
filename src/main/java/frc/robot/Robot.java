@@ -74,6 +74,7 @@ public class Robot extends TimedRobot {
     shooter.shooterIntakeTeleop();
     climber.climbTeleop();
     smartDash.dashTele();
+    SmartDashboard.putBoolean("translateswitch", intake.translateSwitch.get());
   }
 
   @Override
@@ -87,44 +88,37 @@ public class Robot extends TimedRobot {
     // climber.climbInit();
     // cargoVision.visionInit(1);
     // drive.lFEncoder.setPosition(0);
+    shooter.shooterInit();
 
   }
 
   @Override
   public void testPeriodic() {
-    SmartDashboard.putNumber("Limelight Distance", limelight.limeLightDistanceInches());
-    shooter.autoShoot();
+    drive.driveTeleop();
+    // SmartDashboard.putNumber("Set Hood", 0);
+    // SmartDashboard.putNumber("Set Shoot Speed", 0);
+    SmartDashboard.putNumber("hood encoder", shooter.hoodEncoder());
+    // shooter.shooterMotor(oi.targetSpeedManual());
+    // shooter.runIntakeByDiff(oi.targetSpeedManual());
+    SmartDashboard.putNumber("targetSpeedManual", oi.targetSpeedManual());
+    SmartDashboard.putNumber("talonFXSpeed", shooter.talonFXSpeed());
+    SmartDashboard.putNumber("distance", limelight.limeLightDistanceInches());
+    SmartDashboard.putBoolean("translateswitch", intake.translateSwitch.get());
+    intake.intakeSolenoid(oi.intakeSolenoid());
+    intake.intakeMotor(oi.intakeSpeed());
+   // shooter.hoodMotor(oi.hoodSpeed());
+    shooter.hoodMotorRunToPosManual(shooter.hoodEquation());
+    if(oi.Xbox2.getBButtonReleased()){
+      shooter.resetHoodEncoder();
+    }
+    shooter.shooterConstantRev(shooter.shooterEquation());
+    // shooter.shooterConstantRev(oi.targetSpeedManual());
+    // shooter.shooterConstantRev(SmartDashboard.getNumber("Set Shoot Speed", 0));
+    // shooter.hoodMotor(SmartDashboard.getNumber("Set Hood", 0));
+    //shooter.hoodMotor(0);
+    // intake.intakeSolenoid(oi.intakeSolenoid());
+    // intake.intakeMotor(oi.intakeSpeed());
     
-    // if (oi.Xbox1.getYButton()) {
-    //   drive.mecanumDrive(0, 0, cargoVision.getRotationValue());
-    // }
-    
-    // smartDash.dashTest();
-    //shooter.hoodMotorRunToPosManual(500);
-    //  shooter.hoodMotor(oi.hoodSpeed());
-    // climber.winchPistons(oi.winchUp());
-    // climber.clampPiston(oi.clampOut());
-    // if(oi.Xbox1.getAButton()){
-    // drive.limelightTurn();}
-    // else{
-    // drive.dualDrivebase(oi.dropped());
-    // }
-    // drive.triDrivebase();
-    // if(oi.limeLightTurn()){
-    //   shooter.shooterMotor(Math.abs(-13750));
-    // }
-    // else{
-    //   shooter.shooterMotor(0);
-    // } 
-    // if(oi.limeLightTurn()){
-    //   if(Math.abs(limelight.x) <= 5 && Math.abs(shooter.difference) <=50){
-    //   intake.translateMotor(oi.translateRunSpeed);
-    //   }
-    //   else
-    //   {
-    //     intake.translateMotor(0);
-    //   } 
-    // }
   }
 }
 

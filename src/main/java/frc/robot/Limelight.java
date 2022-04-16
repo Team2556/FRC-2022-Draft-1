@@ -49,7 +49,7 @@ public class Limelight extends TimedRobot {
 
     public double limeLightTurn() {
         double turn;
-        turn = -limelightPID.calculate(tx.getDouble(-1));
+        turn = -limelightPID.calculate(tx.getDouble(0));
         return turn;
     }
 
@@ -142,7 +142,7 @@ public class Limelight extends TimedRobot {
     }
     
     public boolean limelightCentered(){
-        if(Math.abs(x)<=5){
+        if(Math.abs(limeLightTurn())<=2){
         return true;
         }
         else{

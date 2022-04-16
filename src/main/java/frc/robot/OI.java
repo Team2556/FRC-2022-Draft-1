@@ -117,14 +117,14 @@ public class OI {
     boolean winchUp = false;
     boolean winchUp(){
        
-        if(Xbox2.getXButtonReleased()){
+        if(Xbox1.getXButtonReleased()){
             winchUp = !winchUp;
         }
         return winchUp;
     }
     boolean clampOut = false;
     boolean clampOut(){
-        if(Xbox2.getAButtonReleased()){
+        if(Xbox1.getAButtonReleased()){
             clampOut = !clampOut;
         }
         return clampOut;
@@ -250,20 +250,21 @@ public class OI {
         if(speed > 0){
             speed = 0;
         }
-        if(Xbox2.getRightBumper()){
-              return speed;
-        }
-        else{
-               return 0;
-        }
+        // if(Xbox2.getRightBumper()){
+        //       return speed;
+        // }
+        // else{
+        //        return 0;
+        // }
+        return speed;
       }
       
     double hoodSpeed(){
-        if (Xbox1.getLeftTriggerAxis() == 1){
-            return 0.15;
+        if (Xbox1.getLeftBumper()){
+            return 0.1;
         }
-        else if (Xbox1.getRightTriggerAxis() == 1){
-            return -0.15;
+        else if (Xbox1.getRightBumper()){
+            return -0.1;
         }
         else{
             return 0;

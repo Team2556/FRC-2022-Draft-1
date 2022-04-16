@@ -26,12 +26,13 @@ public class SDash {
     public void dashTele(){
         // SmartDashboard.putBoolean("top switch", climber.topWinchSwitch.get());
         SmartDashboard.putNumber("climbStepper", climber.climbStepperV2);
-        // SmartDashboard.putNumber("Distance To Goal", limelight.limeLightDistanceInches());
+        SmartDashboard.putNumber("Distance To Goal", limelight.limeLightDistanceInches());
         // SmartDashboard.putNumber("avg pot", climber.analogPotentiometerAverageBounded());
     }
 
     public void dashTest(){
         //SmartDashboard.putNumber("encoer value", drive.lFEncoder.getPosition());
+        
         SmartDashboard.putNumber("limelightDistanceInInches", limelight.limeLightDistanceInches());
     }
 
