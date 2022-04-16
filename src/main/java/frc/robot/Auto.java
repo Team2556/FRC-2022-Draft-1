@@ -134,7 +134,7 @@ public class Auto {
         // SmartDashboard.putNumber("lfEncoderAuto", drive.lFEncoder.getPosition());
         switch(stepv3) {
             case 0:
-                shooter.hoodMotor(-1);
+                shooter.hoodMotor(0.1);
                 intake.intakeSolenoid(false);
                 intake.intakeMotor(-1);
                 intake.translateMotor(0);

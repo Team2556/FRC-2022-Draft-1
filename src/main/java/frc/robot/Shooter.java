@@ -38,7 +38,7 @@ public class Shooter {
     public void shooterInit(){
         hoodMotor.restoreFactoryDefaults();
         hoodMotor.setIdleMode(IdleMode.kBrake);
-        
+        resetHoodEncoder();
         shooterMotor.configFactoryDefault();
         shooterMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
         shooterMotor.setNeutralMode(NeutralMode.Coast);
@@ -49,8 +49,8 @@ public class Shooter {
         oi.shooterTeleopConfigSwitch();
         intake.intakeSolenoid(oi.intakeSolenoid());
         intake.intakeMotor(oi.intakeSpeed());
-        hoodMotorRunToPosManual(oi.hoodConfigs());
-        shooterConstantRev(oi.shootConfigsNoCheck());
+        hoodMotorRunToPosManual(hoodEquation());
+        shooterConstantRev(shooterEquation());
         // if (oi.limeLightTurn()) {
         //     shooterMotorLimelight(oi.shootConfigsNoCheck(), limelight.limelightCentered());
         // }

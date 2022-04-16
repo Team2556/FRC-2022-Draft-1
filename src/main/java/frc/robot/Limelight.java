@@ -9,7 +9,7 @@ import edu.wpi.first.math.controller.PIDController;
 public class Limelight extends TimedRobot {
     //Drive drive = new Drive(); 
     OI oi = new OI();
-    PIDController limelightPID = new PIDController(0.05, 0.0, 0.0);
+    PIDController limelightPID = new PIDController(0.045, 0.0, 0.0);
 
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");
