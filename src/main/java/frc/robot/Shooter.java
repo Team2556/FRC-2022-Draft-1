@@ -6,8 +6,10 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxLimitSwitch.Type;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,29 +21,42 @@ public class Shooter {
     private TalonFX shooterMotor;
     private CANSparkMax hoodMotor;
     private RelativeEncoder hoodEncoder;
+    private SparkMaxLimitSwitch hoodSwitch;
     private double percentOutput;
     private double LastOutput; 
     private double Kp;
+    public boolean hoodReset = true;
     double difference = 0;
 
     public Shooter(Intake in){
         shooterMotor = new TalonFX(Constants.shooterMotorPort);
         hoodMotor = new CANSparkMax(Constants.hoodMotorPort, MotorType.kBrushless);
         hoodEncoder = hoodMotor.getEncoder();
+        hoodSwitch = hoodMotor.getForwardLimitSwitch(Type.kNormallyOpen);
         percentOutput = 0;
         LastOutput = 0;
         Kp = 0.00000125;
         intake = in;
-        
+        hoodReset = false;
     }
 
     public void shooterInit(){
         hoodMotor.restoreFactoryDefaults();
         hoodMotor.setIdleMode(IdleMode.kBrake);
-        resetHoodEncoder();
         shooterMotor.configFactoryDefault();
         shooterMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
         shooterMotor.setNeutralMode(NeutralMode.Coast);
+
+    }
+
+    public void hoodResetBySwitch() {
+        hoodMotor(0.1);
+        SmartDashboard.putBoolean("hoodSwitch", hoodSwitch.isPressed());
+        if (hoodSwitch.isPressed()) {
+            hoodMotor(0);
+            resetHoodEncoder();
+            hoodReset = true;
+        }
     }
 
     public void shooterIntakeTeleop(){
@@ -49,7 +64,12 @@ public class Shooter {
         oi.shooterTeleopConfigSwitch();
         intake.intakeSolenoid(oi.intakeSolenoid());
         intake.intakeMotor(oi.intakeSpeed());
+        if(hoodReset){
         hoodMotorRunToPosManual(hoodEquation());
+        }
+        else{
+        hoodResetBySwitch();
+        }
         shooterConstantRev(shooterEquation());
         // if (oi.limeLightTurn()) {
         //     shooterMotorLimelight(oi.shootConfigsNoCheck(), limelight.limelightCentered());
@@ -79,7 +99,7 @@ public class Shooter {
         if (oi.limeLightTurn()) {
             shootSpeed = shootingSpeed;
             if (limelight.limelightCentered() && shouldShoot) {
-                intake.translateMotor(oi.translateRunSpeed);
+                intake.translateMotor(-0.4);
             }
             else {
                 intake.translateMotor(0);
@@ -91,11 +111,12 @@ public class Shooter {
         }
         else if(intake.translateSwitch.get())
         {
-            intake.translateMotor(oi.translateRunSpeed);
+            intake.translateMotor(-0.05);
         }
         else{
             intake.translateMotor(0);
         }
+        
         
         shooterMotor(shootSpeed);
     }
@@ -202,6 +223,9 @@ public class Shooter {
     }
 
     public void hoodMotor(double hoodSpeed){
+        if(hoodEncoder()<-50){
+            hoodMotor.set(0);
+        }
         if(hoodSpeed!=0){
             hoodMotor.set(hoodSpeed);
         }
@@ -224,7 +248,14 @@ public class Shooter {
         double difference = currentPos - targetPos;
         double k = 0.005;
         double sign = -1;
-        hoodMotor(difference * k *  sign);
+        double hoodSoftLimit = -50;
+        if (targetPos < hoodSoftLimit || hoodEncoder() < hoodSoftLimit) {
+            hoodMotor(0);
+            targetPos = hoodSoftLimit;
+        }
+        else {
+            hoodMotor(difference * k *  sign);
+        }
         // SmartDashboard.putNumber("hoodSpeed", difference * k * sign);
         // SmartDashboard.putNumber("difference", difference);
     }
@@ -243,7 +274,7 @@ public class Shooter {
     }
     
     public double shooterEquation(){ //x=31.6513 c=10628.3234
-        double sofX = 31 * limelight.limeLightDistanceInches() + 10628.3234;
+        double sofX = 30 * limelight.limeLightDistanceInches() + 10628.3234;
         return sofX;
     }
 

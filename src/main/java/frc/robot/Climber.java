@@ -1,5 +1,4 @@
 package frc.robot;
-import java.io.OptionalDataException;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;

@@ -39,6 +39,8 @@ public class Robot extends TimedRobot {
     shooter.shooterInit();
     intake.intakeInit();
     climber.climbInit();
+    // drive.lFEncoder.setPosition(0);
+    shooter.hoodReset = false;
   }
 
  
@@ -51,6 +53,7 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     m_autoSelected = SmartDashboard.getString("Auto Selector", kRedAuto);
     System.out.println("Auto selected: " + m_autoSelected);
+    shooter.hoodReset = false;
   }
 
   @Override
@@ -62,9 +65,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     //intake.intakeSolenoid(true); //up
-    drive.lFEncoder.setPosition(0);
-    shooter.shooterInit();
-    climber.climbInit();
+    shooter.hoodReset = false;
   }
 
   @Override
@@ -91,35 +92,22 @@ public class Robot extends TimedRobot {
     shooter.shooterInit();
 
   }
-
+  double testHoodValue = 0;
   @Override
   public void testPeriodic() {
-    drive.driveTeleop();
-    // SmartDashboard.putNumber("Set Hood", 0);
-    // SmartDashboard.putNumber("Set Shoot Speed", 0);
-    SmartDashboard.putNumber("hood encoder", shooter.hoodEncoder());
-    // shooter.shooterMotor(oi.targetSpeedManual());
-    // shooter.runIntakeByDiff(oi.targetSpeedManual());
-    SmartDashboard.putNumber("targetSpeedManual", oi.targetSpeedManual());
-    SmartDashboard.putNumber("talonFXSpeed", shooter.talonFXSpeed());
-    SmartDashboard.putNumber("distance", limelight.limeLightDistanceInches());
-    SmartDashboard.putBoolean("translateswitch", intake.translateSwitch.get());
-    intake.intakeSolenoid(oi.intakeSolenoid());
-    intake.intakeMotor(oi.intakeSpeed());
-   // shooter.hoodMotor(oi.hoodSpeed());
-    shooter.hoodMotorRunToPosManual(shooter.hoodEquation());
-    if(oi.Xbox2.getBButtonReleased()){
-      shooter.resetHoodEncoder();
-    }
-    shooter.shooterConstantRev(shooter.shooterEquation());
-    // shooter.shooterConstantRev(oi.targetSpeedManual());
-    // shooter.shooterConstantRev(SmartDashboard.getNumber("Set Shoot Speed", 0));
-    // shooter.hoodMotor(SmartDashboard.getNumber("Set Hood", 0));
-    //shooter.hoodMotor(0);
-    // intake.intakeSolenoid(oi.intakeSolenoid());
-    // intake.intakeMotor(oi.intakeSpeed());
-    
+    climber.winchPistons(oi.winchUp());
+    // if(oi.Xbox1.getAButtonReleased()){
+    //   testHoodValue --;
+    // }
+    // else if(oi.Xbox1.getBButtonReleased()){
+    //   testHoodValue ++;
+    // }
+    // shooter.hoodMotorRunToPosManual(testHoodValue);  
+    // SmartDashboard.putNumber("hood", testHoodValue);
+    // SmartDashboard.putNumber("hoodEncoder", shooter.hoodEncoder());
+    // drive.driveToCargo();
   }
+  
 }
 
 

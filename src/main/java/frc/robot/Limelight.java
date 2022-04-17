@@ -9,7 +9,7 @@ import edu.wpi.first.math.controller.PIDController;
 public class Limelight extends TimedRobot {
     //Drive drive = new Drive(); 
     OI oi = new OI();
-    PIDController limelightPID = new PIDController(0.045, 0.0, 0.0);
+    PIDController limelightPID = new PIDController(0.035, 0.0, 0.0);
 
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");
@@ -142,7 +142,7 @@ public class Limelight extends TimedRobot {
     }
     
     public boolean limelightCentered(){
-        if(Math.abs(limeLightTurn())<=2){
+        if(Math.abs(limeLightTurn())<=3.5){
         return true;
         }
         else{

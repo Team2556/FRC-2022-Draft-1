@@ -29,59 +29,46 @@ public class OI {
     //drive piston drops
     boolean dropped = false;
     boolean dropped(){
-        // if(!dropped){
-        //     if(mStrafe() >= 0.05 || mStrafe() <= -.05)
-        //     {
-        //         dropped = false;
-        //     }
-        //     else if(Xbox1.getBButtonReleased() && mStrafe() == 0){ 
-        //         dropped = !dropped;
-                
-        //     }
-        // }
-        if(Xbox1.getBButtonReleased()){ //&& Xbox1.getLeftTriggerAxis() >= 0.5){
+        if(Xbox1.getBButtonReleased()){
             dropped = !dropped;
-            
         }
         return dropped;
-       
     }
     //mecanum drive values
-    double mForwardSpeed = 0;
-    double mForward(){
-        if (Math.abs(Xbox1.getLeftY()) <= deadzone){
-            mForwardSpeed = 0;
-        }
-        else{
-            mForwardSpeed = Xbox1.getLeftY();
-        }
-        return mForwardSpeed;
-    }
-    double mStrafeSpeed = 0;
-    double mStrafe(){
-        if (Math.abs(Xbox1.getLeftX()) <= deadzone){ //|| dropped){
-            mStrafeSpeed = 0;
-        }
-        else{
-            mStrafeSpeed = Xbox1.getLeftX();
-        }
-        return mStrafeSpeed;
-    }
-    double mRotateSpeed = 0;
-    double mRotate(){
-        if (Math.abs(Xbox1.getRightX()) <= deadzone){
-            mRotateSpeed = 0;
-        }
-        else{
-            mRotateSpeed = Xbox1.getRightX();
-        }
-        return mRotateSpeed;
-    }
+    // double mForwardSpeed = 0;
+    // double mForward(){
+    //     if(Math.abs(Xbox1.getLeftY()) > 0.0000001 ){
+    //         mForwardSpeed = Xbox1.getLeftY();
+    //     }
+    //     else{
+    //         mForwardSpeed = 0;
+    //     }
+    //     return mForwardSpeed;
+        
+    // }
+    // double mStrafeSpeed = 0;
+    // double mStrafe(){
+    //     return Xbox1.getLeftX();
+    // }
+    // double mRotateSpeed = 0;
+    // double mRotate(){
+    //     return Xbox1.getRightX();
+    // }
     //arcade drive values
-    double aForward(){
-        return Xbox1.getLeftY();
+    // double aForward(){
+    //     return Xbox1.getLeftY();
+    // }
+    // double aRotate(){
+    //     return Xbox1.getRightX();
+    // }
+
+    public double getForward() {
+        return -Xbox1.getLeftY();
     }
-    double aRotate(){
+    public double getStrafe() {
+        return Xbox1.getLeftX();
+    }
+    public double getTurn() {
         return Xbox1.getRightX();
     }
 
@@ -148,24 +135,6 @@ public class OI {
     boolean climbStepBool3 = false;
     public boolean climbStep(){
         return Xbox2.getBButtonReleased();
-
-        // if(climbStepBool2 == true && climbStepBool1 == false){
-        //     climbStepBool2 = false;
-        // }
-        // if(Xbox2.getBButtonReleased() && climbStepBool1 != true){
-        //     climbStepBool1 = true;
-        // }
-        // else if(Xbox2.getBButtonReleased() && climbStepBool1 == true){
-        //     climbStepBool2 = true;
-        //     climbStepBool1 = false;
-        // }
-        // if(climbStepBool2){
-        //     return true;
-
-        // }
-        // else{
-        //     return false;
-        // }
     }
 
     boolean winchPosBool = false;
@@ -182,12 +151,7 @@ public class OI {
     }
 
     boolean resetClimber(){
-        if(Xbox2.getPOV()==180) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return Xbox2.getPOV()==180;
     }
    
    
@@ -215,9 +179,6 @@ public class OI {
         if(Xbox2.getLeftBumper()){
             return translateRunSpeed;
         }  
-        // else if(Xbox1.getRightBumper()){
-        //     return 1;
-        // }
         else{
             return 0;
         }

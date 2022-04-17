@@ -27,6 +27,8 @@ public class SDash {
         // SmartDashboard.putBoolean("top switch", climber.topWinchSwitch.get());
         SmartDashboard.putNumber("climbStepper", climber.climbStepperV2);
         SmartDashboard.putNumber("Distance To Goal", limelight.limeLightDistanceInches());
+        SmartDashboard.putNumber("hoodEncoder", shooter.hoodEncoder());
+        SmartDashboard.putBoolean("hoodReset", shooter.hoodReset);
         // SmartDashboard.putNumber("avg pot", climber.analogPotentiometerAverageBounded());
     }
 

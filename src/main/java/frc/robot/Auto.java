@@ -24,7 +24,7 @@ public class Auto {
     public void autoInit(int alliance) {
         // cargoVision.visionInit(alliance);
         // step = 0;
-        drive.lFEncoder.setPosition(0);
+        // drive.lFEncoder.setPosition(0);
         // stepv2 = 0;
         stepv3 = 0;
         // drive.dualDrivebase(false);
@@ -36,19 +36,19 @@ public class Auto {
         switch(stepE) {
             case 0:
                 shooter.shooterMotor(shooterSpeed);
-                if (drive.lFEncoder.getPosition() < encoderDistance1){
-                    drive.mecanumDrive(0.2, 0, 0);
-                }
-                else if (drive.lFEncoder.getPosition() >= encoderDistance1){
-                    stepE = 1;
-                    drive.mecanumDrive(0, 0, 0);
-                }
+                // if (drive.lFEncoder.getPosition() < encoderDistance1){
+                //     // drive.mecanumDrive(0.2, 0, 0);
+                // }
+                // else if (drive.lFEncoder.getPosition() >= encoderDistance1){
+                //     stepE = 1;
+                //     // drive.mecanumDrive(0, 0, 0);
+                // }
                 intake.intakeSolenoid(false);
                 intake.intakeMotor(-0.8);
                 intake.translateMotor(0);
             break;
             case 1: 
-                drive.mecanumDrive(0, 0, 0);
+                // drive.mecanumDrive(0, 0, 0);
                 intake.intakeMotor(-0.8);
                 intake.translateMotor(-0.5);
                 shooter.shooterMotor(shooterSpeed);
@@ -134,21 +134,22 @@ public class Auto {
         // SmartDashboard.putNumber("lfEncoderAuto", drive.lFEncoder.getPosition());
         switch(stepv3) {
             case 0:
-                shooter.hoodMotor(0.1);
+                //shooter.hoodMotor(0.1);
+                shooter.hoodResetBySwitch();
                 intake.intakeSolenoid(false);
                 intake.intakeMotor(-1);
                 intake.translateMotor(0);
                // shooter.shooterMotor(shooterSpeed);
-               if( currentDistance < targetDistance || drive.lFEncoder.getPosition() < encoderSafetyVal){
-                //if (drive.lFEncoder.getPosition() < encoderDistance1){//currentDistance < targetDistance || drive.lFEncoder.getPosition() > encoderSafetyVal){
-                    drive.differentialDrive.arcadeDrive(0.4, 0);
-                    intake.intakeMotor(-1);
-                }
-                else if(currentDistance >= targetDistance && drive.lFEncoder.getPosition() >= encoderSafetyVal){
-                //else if (drive.lFEncoder.getPosition() >= encoderDistance1){//currentDistance >= targetDistance && drive.lFEncoder.getPosition() <= encoderSafetyVal){
-                    stepv3 = 1;
-                    drive.differentialDrive.arcadeDrive(0, 0);
-                }
+            //    if( currentDistance < targetDistance || drive.lFEncoder.getPosition() < encoderSafetyVal){
+            //     //if (drive.lFEncoder.getPosition() < encoderDistance1){//currentDistance < targetDistance || drive.lFEncoder.getPosition() > encoderSafetyVal){
+            //         // drive.differentialDrive.arcadeDrive(0.4, 0);
+            //         intake.intakeMotor(-1);
+            //     }
+                // else if(currentDistance >= targetDistance && drive.lFEncoder.getPosition() >= encoderSafetyVal){
+                // //else if (drive.lFEncoder.getPosition() >= encoderDistance1){//currentDistance >= targetDistance && drive.lFEncoder.getPosition() <= encoderSafetyVal){
+                //     stepv3 = 1;
+                //     // drive.differentialDrive.arcadeDrive(0, 0);
+                // }
             break;
             case 1: 
             drive.driveMecanum.driveCartesian(0, 0, 0);
@@ -164,7 +165,7 @@ public class Auto {
             case 3:
                 shooter.runIntakeByDiff(shooterSpeed);
                 shooter.shooterMotor(shooterSpeed);
-                drive.mecanumDrive(0, 0, 0);
+                // drive.mecanumDrive(0, 0, 0);
             break;
             default:
                 //stepv2++;
@@ -194,16 +195,16 @@ public class Auto {
         boolean notSwitched = !switched;
         switch(autoStepComplex){
             case 0:
-                drive.differentialDrive.arcadeDrive(forward, 0);
+                // drive.differentialDrive.arcadeDrive(forward, 0);
                 intake.intakeSolenoid(intakeDown);
                 intake.intakeMotor(intakeSpeed);
-                if(currentDistance > tarmacDistanceLimelight && drive.lFEncoder.getPosition() >= encoderSafetyVal){
-                    autoStepComplex = 1;
-                    drive.differentialDrive.arcadeDrive(0, 0);
-                }
+                // if(currentDistance > tarmacDistanceLimelight && drive.lFEncoder.getPosition() >= encoderSafetyVal){
+                //     autoStepComplex = 1;
+                //     // drive.differentialDrive.arcadeDrive(0, 0);
+                // }
             break;
             case 1:
-                drive.differentialDrive.arcadeDrive(0, limelight.limeLightTurn());
+                // drive.differentialDrive.arcadeDrive(0, limelight.limeLightTurn());
                 shooter.shooterMotor(Math.abs(shooterSpeed));
                     if(Math.abs(limelight.x) <= 5 && shooter.shouldShoot){ 
                         intake.translateMotor(translateSpeed);
