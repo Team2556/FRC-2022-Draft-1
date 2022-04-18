@@ -142,7 +142,7 @@ public class Shooter {
             error = 0;
             LastOutput = 0;
         }  
-        if(Math.abs(difference)<400){
+        if(Math.abs(difference)<300){
             if(targetSpeed != 0){
                 shouldShoot=true;                
             }
@@ -153,7 +153,23 @@ public class Shooter {
            
         shooterMotor.set(ControlMode.PercentOutput, -percentOutput);
     }
-   
+    
+    int timesShot = 0;
+    boolean revvedCounter = false;
+    public int shooterCounter(){
+        if(intake.translateSwitch.get() == false){
+            revvedCounter = true;
+        }
+        else if (revvedCounter && intake.translateSwitch.get()){
+            revvedCounter = false;
+            timesShot ++;
+        }
+       
+        SmartDashboard.putNumber("timesShot", timesShot);
+       return timesShot;
+    }
+
+
     public void runIntakeByDiff(double targetSpeed){
         difference  = Math.abs(targetSpeed) - Math.abs(shooterMotor.getSelectedSensorVelocity());
         if(Math.abs(difference)<250){
@@ -243,7 +259,7 @@ public class Shooter {
         }
     }
 
-    public void hoodMotorRunToPosManual(double targetPos){
+    public double hoodMotorRunToPosManual(double targetPos){
         double currentPos = hoodEncoder.getPosition();
         double difference = currentPos - targetPos;
         double k = 0.005;
@@ -256,6 +272,7 @@ public class Shooter {
         else {
             hoodMotor(difference * k *  sign);
         }
+        return difference;
         // SmartDashboard.putNumber("hoodSpeed", difference * k * sign);
         // SmartDashboard.putNumber("difference", difference);
     }

@@ -6,13 +6,13 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 public class CargoVision extends TimedRobot {
-    PhotonCamera camera = new PhotonCamera("photonvision");
+    PhotonCamera camera = new PhotonCamera("photoncamera");
     PIDController turnController = new PIDController(Constants.visionP, 0, 0);
 
     public void visionInit(int allianceColor) {
         camera.setPipelineIndex(allianceColor);
     }
-
+    boolean hasTargets = camera.getLatestResult().hasTargets();
     public double getRotationValue() {
         double rotationValue = 0;
         var result = camera.getLatestResult();

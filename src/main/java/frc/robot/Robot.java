@@ -54,12 +54,13 @@ public class Robot extends TimedRobot {
     m_autoSelected = SmartDashboard.getString("Auto Selector", kRedAuto);
     System.out.println("Auto selected: " + m_autoSelected);
     shooter.hoodReset = false;
+    shooter.timesShot = 0;
   }
 
   @Override
   public void autonomousPeriodic() {
   // auto.autoEncoder();
-  auto.autoLimelightV3();
+  auto.autoLimelightV4();
   }
 
   @Override
@@ -75,6 +76,7 @@ public class Robot extends TimedRobot {
     shooter.shooterIntakeTeleop();
     climber.climbTeleop();
     smartDash.dashTele();
+
     SmartDashboard.putBoolean("translateswitch", intake.translateSwitch.get());
   }
 
@@ -90,12 +92,17 @@ public class Robot extends TimedRobot {
     // cargoVision.visionInit(1);
     // drive.lFEncoder.setPosition(0);
     shooter.shooterInit();
+    cargoVision.visionInit(0);
 
   }
   double testHoodValue = 0;
   @Override
   public void testPeriodic() {
-    climber.winchPistons(oi.winchUp());
+    drive.driveMecanum.driveCartesian(-oi.Xbox1.getLeftY(), oi.Xbox1.getLeftX(), oi.Xbox1.getRightX());
+    if (oi.Xbox1.getYButton()) {
+      drive.driveMecanum.driveCartesian(0, 0, cargoVision.getRotationValue());
+    }
+    //climber.winchPistons(oi.winchUp());
     // if(oi.Xbox1.getAButtonReleased()){
     //   testHoodValue --;
     // }

@@ -32,7 +32,8 @@ public class Drive {
     private CANSparkMax lFMotor = new CANSparkMax(Constants.lFMotorPort, MotorType.kBrushless);
     private CANSparkMax lRMotor = new CANSparkMax(Constants.lRMotorPort, MotorType.kBrushless);
    // RelativeEncoder rFEncoder = new RelativeEncoder(SparkMaxRelativeEncoder.Type,Constants.rFMotorPort);
-    // RelativeEncoder lFEncoder = lFMotor.getEncoder();
+    RelativeEncoder lFEncoder = lFMotor.getEncoder();
+    RelativeEncoder rFEncoder = rFMotor.getEncoder();
     DigitalInput rFLimit = new DigitalInput(Constants.rFLimitPort);
     DigitalInput rRLimit = new DigitalInput(Constants.rRLimitPort);
     DigitalInput lFLimit = new DigitalInput(Constants.lFLimitPort);

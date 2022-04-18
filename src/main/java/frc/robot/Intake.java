@@ -33,6 +33,16 @@ public class Intake {
     public void translateMotor(double translateSpeed){
         translate.set(translateSpeed);
     }
+    boolean translateIsMoving = false;
+    public boolean translateMoving(){
+        if(Math.abs(translate.get()) > 0){
+            translateIsMoving = true;
+        }
+        else{
+            translateIsMoving = false;
+        }
+        return translateIsMoving;
+    }
 
     public void intakeSolenoid(boolean intakeSolenoidOut){
          if (intakeSolenoidOut){ //Takes in boolean and switches solenoid output based on it. 

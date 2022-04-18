@@ -251,17 +251,17 @@ public class OI {
             case 1: //at the edge of tarmac
                 hoodAutomatedPos = 0;
                 shootAutomatedSpeed = -13250;
-                SmartDashboard.putString("Shooter Configuration", "Edge of Tarmac");
+               // SmartDashboard.putString("Shooter Configuration", "Edge of Tarmac");
             break;
             case 2: //from launchpad
                 hoodAutomatedPos = 1322;
                 shootAutomatedSpeed = -15250;
-                SmartDashboard.putString("Shooter Configuration", "Launchpad");
+              //  SmartDashboard.putString("Shooter Configuration", "Launchpad");
             break;
             case 3: //from back wall
                 hoodAutomatedPos = 1830;
                 shootAutomatedSpeed = -19500;            
-                SmartDashboard.putString("Shooter Configuration", "Back Wall");
+                //SmartDashboard.putString("Shooter Configuration", "Back Wall");
 
             break;
         }
