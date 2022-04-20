@@ -32,8 +32,8 @@ public class Constants {
     public static double visionP = 0.0075;
 
     //cargo vision pipeline constants
-    public static int redAlliance = 1;
-    public static int blueAlliance = 2;
+    public static int redAlliance = 0;
+    public static int blueAlliance = 1;
 
 
     public static double maxYellowEncoderValue = -65.5;

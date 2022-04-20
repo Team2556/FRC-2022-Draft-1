@@ -22,19 +22,19 @@ public class Robot extends TimedRobot {
   private static final String kBlueAuto = "Blue Auto";
   private String m_autoSelected;
   public final SendableChooser<String> m_chooser = new SendableChooser<>();
-  
+  private int autoInt;
 
   @Override
   public void robotInit() {
     m_chooser.setDefaultOption("Red Auto", kRedAuto);
     m_chooser.addOption("Blue Auto", kBlueAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    // if (m_chooser.getSelected() == kRedAuto) {
-    //   auto.autoInit(Constants.redAlliance);
-    // }
-    // else if (m_chooser.getSelected() == kBlueAuto) {
-    //   auto.autoInit(Constants.blueAlliance);
-    // }
+    if (m_chooser.getSelected() == kRedAuto) {
+      autoInt = Constants.redAlliance;
+    }
+    else if (m_chooser.getSelected() == kBlueAuto) {
+      autoInt = Constants.blueAlliance;
+    }
     drive.drivebaseInit(); 
     shooter.shooterInit();
     intake.intakeInit();
@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    auto.autoInit(1);
+    auto.autoInit(autoInt);
     m_autoSelected = m_chooser.getSelected();
     m_autoSelected = SmartDashboard.getString("Auto Selector", kRedAuto);
     System.out.println("Auto selected: " + m_autoSelected);
@@ -67,6 +67,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     //intake.intakeSolenoid(true); //up
     shooter.hoodReset = false;
+    cargoVision.getDriverView();
   }
 
   @Override
