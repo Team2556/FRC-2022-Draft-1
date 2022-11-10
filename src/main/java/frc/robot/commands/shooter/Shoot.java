@@ -15,9 +15,13 @@ public class Shoot extends CommandBase {
     Shooter shooter = Shooter.getInstance();
     Intake intake = Intake.getInstance();
     Supplier<Double> trigger;
+    Supplier<Boolean> hoodUp, hoodDown;
 
-    public Shoot(Supplier<Double> trigger) {
+    public Shoot(Supplier<Double> trigger, Supplier<Boolean> hoodUp, Supplier<Boolean> hoodDown) {
         this.trigger = trigger;
+        this.hoodUp = hoodUp;
+        this.hoodDown = hoodDown;
+
         setName("Shooting State");
         addRequirements(shooter);
     }
@@ -32,6 +36,12 @@ public class Shoot extends CommandBase {
         boolean shouldShoot;
         if(!shooter.isHoodReset())
             shooter.hoodResetBySwitch();
+        else {
+            if (!intake.getTranslateSwitch()) {
+                shooter.setHoodSpeed(hoodUp.get() ? 0.1 : (hoodDown.get() ? -0.1 : 0.0));
+            } else
+                shooter.setHoodSpeed(0.0);
+        }
 
         if(trigger.get() > 0.8) {
             SmartDashboard.putNumber("Shooter Equation", shooter.getShooterEquation());

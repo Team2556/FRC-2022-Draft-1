@@ -47,10 +47,11 @@ public class RobotContainer {
                 new Active(xbox1::getRightTriggerAxis,0.0));
 
         shooter.setDefaultCommand(
-                new Shoot(xbox1::getLeftTriggerAxis));
+                new Shoot(xbox1::getLeftTriggerAxis, xbox1::getLeftBumper, xbox1::getRightBumper)
+        );
 
         elevator.setDefaultCommand(
-                new TeleopClimb(xbox1::getYButton, xbox1::getAButton, xbox1::getLeftBumper, xbox1::getRightBumper)
+                new TeleopClimb(xbox1::getYButton, xbox1::getAButton, xbox1::getLeftBumper, xbox1::getRightBumper, xbox1::getXButton)
         );
     }
 

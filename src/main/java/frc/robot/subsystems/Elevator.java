@@ -23,7 +23,7 @@ public class Elevator extends SubsystemBase {
 
     Elevator() {
         clampPistonRelease();
-        winchPistonsUp();
+        winchPistonsDown();
         yellowMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
         yellowPID.setP(0.05);
@@ -35,7 +35,8 @@ public class Elevator extends SubsystemBase {
     }
 
     public void setYellowMotorSpeed(double speed) {
-        yellowMotor.set((topWinchSwitch.get() || speed < 0) ? speed : 0);
+//        yellowMotor.set((topWinchSwitch.get() || speed < 0) ? speed : 0);
+        yellowMotor.set(speed);
     }
 
     public void clampPistonHold() {
